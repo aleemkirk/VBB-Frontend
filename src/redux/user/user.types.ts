@@ -8,5 +8,5 @@ export interface SET_USER_ACTION {
   payload: USER;
 }
 
-export type USER= typeof initUser
-export type USER_ACTIONS = SET_USER_ACTION | LOGOUT_ACTION 
+export type USER = typeof initUser;
+export type USER_ACTIONS = SET_USER_ACTION | LOGOUT_ACTION;

@@ -3,7 +3,7 @@ import { watchLogin } from './actions';
 
 export default function* rootSaga() {
   yield all([
-    watchLogin(),
     // add watch functions here
+    watchLogin(),
   ]);
 }
