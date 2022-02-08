@@ -32,9 +32,6 @@ const Login = () => {
             <Button type="submit" variant="contained">
               Login
             </Button>
-            <Button onClick={() => navigate('/')} sx={{ ml: 2 }}>
-              Cancel
-            </Button>
           </Grid>
         </Grid>
       </Paper>

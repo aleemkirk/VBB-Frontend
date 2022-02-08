@@ -1,28 +1,13 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  GlobalStyles,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Box, GlobalStyles } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 
 const App = () => (
   <>
     <GlobalStyles styles={{ body: { margin: 0 } }} />
-    <AppBar position="fixed">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          VBB Web Portal
-        </Typography>
-        <Button color="inherit" component={Link} to="/login">
-          Login
-        </Button>
-      </Toolbar>
-    </AppBar>
+    <Header />
     <Box pt="64px">
       <Routes>
         <Route path="/" element={<Home />} />
