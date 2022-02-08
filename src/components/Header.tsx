@@ -29,7 +29,7 @@ const Header = () => {
           Village Portal
         </Typography>
         <Box display="flex" justifyContent="flex-end" sx={flexContainerStyles}>
-          <Button color="inherit" component={Link} to="/login">
+          <Button color="inherit" component={Link} to="/login" sx={{ mr: 2 }}>
             Login
           </Button>
           <Button color="inherit" component={Link} to="/register">
