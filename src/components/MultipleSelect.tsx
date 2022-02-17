@@ -17,7 +17,6 @@ interface MultipleSelectProps {
 const MultipleSelect = (props: MultipleSelectProps) => {
   const [selected, setSelected] = useState<string[]>([]);
   const { children, label, name, ...FormControlProps } = props;
-  console.log(selected);
   return (
     <FormControl variant="standard" fullWidth {...FormControlProps}>
       <InputLabel id={label}>{label}</InputLabel>
