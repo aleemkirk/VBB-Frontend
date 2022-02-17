@@ -4,12 +4,10 @@ import {
   FormControlLabel,
   Grid,
   Link,
-  MenuItem,
   TextField,
   Typography,
 } from '@mui/material';
 import formToJson from '../utils/formToJson';
-import MultipleSelect from './MultipleSelect';
 
 interface RegisterMentorFormProps {
   onSubmit: (formData: ReturnType<typeof formToJson>) => void;
