@@ -13,11 +13,37 @@ const Login = () => {
       }}
     >
       <Paper
-        sx={{ pl: 3, mt: 10, maxWidth: '720px', mx: 'auto', display: 'flex' }}
+        sx={{ pr: 3, mt: 10, maxWidth: '720px', mx: 'auto', display: 'flex' }}
         elevation={0}
         variant="outlined"
         square
       >
+        <Paper
+          sx={{
+            p: 3,
+            flexGrow: 1,
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+          elevation={0}
+        >
+          <div>
+            <Typography variant="h6">
+              Welcome to Village Portal new Mentor!
+            </Typography>
+            <Typography variant="h6">Let's give hope...</Typography>
+          </div>
+          <div>
+            <Typography mt={3} variant="h6" alignSelf="flex-end">
+              Already have an account?
+            </Typography>
+            <Button component={Link} to="/login">
+              Login
+            </Button>
+          </div>
+        </Paper>
         <Paper
           sx={{ p: 3, my: -4, maxWidth: '320px' }}
           elevation={0}
@@ -26,7 +52,7 @@ const Login = () => {
         >
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h4">Login</Typography>
+              <Typography variant="h4">Register</Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -47,34 +73,10 @@ const Login = () => {
             </Grid>
             <Grid item xs={12}>
               <Button type="submit" variant="contained">
-                Login
+                Register
               </Button>
             </Grid>
           </Grid>
-        </Paper>
-        <Paper
-          sx={{
-            p: 3,
-            flexGrow: 1,
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}
-          elevation={0}
-        >
-          <div>
-            <Typography variant="h6">Welcome back to Village Portal</Typography>
-            <Typography variant="h6">Let's give hope...</Typography>
-          </div>
-          <div>
-            <Typography mt={3} variant="h6" alignSelf="flex-end">
-              Don't have an account?
-            </Typography>
-            <Button component={Link} to="/register">
-              Register
-            </Button>
-          </div>
         </Paper>
       </Paper>
     </form>
