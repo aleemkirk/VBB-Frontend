@@ -35,6 +35,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "extends": ["react-app"],
     "rules": {
       "quotes": [
         "error",
