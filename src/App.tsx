@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
+import RegisterMentorForm from './components/RegisterMentorForm';
 
 const App = () => (
   <>
@@ -14,6 +15,7 @@ const App = () => (
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/complete-registration" element={<RegisterMentorForm />} />
       </Routes>
     </Box>
   </>

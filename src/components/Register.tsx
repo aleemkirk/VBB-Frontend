@@ -49,7 +49,7 @@ const Register = () => {
         {isMentee ? (
           <RegisterMenteeForm onSubmit={(formData) => console.log(formData)} />
         ) : (
-          <RegisterMentorForm onSubmit={(formData) => console.log(formData)} />
+          <RegisterMentorForm />
         )}
       </Paper>
     </Paper>
