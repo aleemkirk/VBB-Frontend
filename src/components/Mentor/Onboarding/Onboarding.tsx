@@ -36,16 +36,27 @@ const Onboarding = () => {
       </FormGroup>
       </Box>
 
+      <Grid container 
+      justifyContent="flex-end"
+      sx={{
+             width: 500,
+             ml: 23,
+             mt:10,
+        }}>
+    <Grid item xs={6}>
       <Button component={Link} to="/mentor/onboardingDona">
-      NEXT<ArrowCircleRightIcon/>
+      NEXT STEP<ArrowCircleRightIcon/>
     </Button>
+    </Grid>
+    </Grid>
+
     </Item>
     </Grid>
 
  
     <Grid item xs={4}>
     <Item>
-      <p><FiberManualRecordIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/></p>
+      <p><FiberManualRecordIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/></p>
     <Typography variant="h3">Training</Typography>
     </Item>
     </Grid>
