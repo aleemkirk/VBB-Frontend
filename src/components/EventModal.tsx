@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { SlotInfo } from 'react-big-calendar';
 import Modal from './shared/Modal';
-import { CalendarEvent, isCalendarEvent } from './librarian/LibrarianCalendar';
+import { CalendarEvent, isCalendarEvent } from './Advisor/AdvisorCalendar';
 
 interface EventModalProps {
   eventOrSlot: CalendarEvent | SlotInfo | null;

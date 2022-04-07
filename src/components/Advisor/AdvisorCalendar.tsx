@@ -18,7 +18,7 @@ export const isCalendarEvent = (
 
 const localizer = luxonLocalizer(DateTime);
 
-const LibrarianCalendar = () => {
+const AdvisorCalendar = () => {
   const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
 
   return (
@@ -47,4 +47,4 @@ const LibrarianCalendar = () => {
   );
 };
 
-export default LibrarianCalendar;
+export default AdvisorCalendar;

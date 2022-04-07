@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import SideNav from '../shared/SideNav';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import LibrarianCalendar from './LibrarianCalendar';
+import AdvisorCalendar from './AdvisorCalendar';
 
 const menuItems = [
   { label: 'Home', url: '/' },
@@ -12,7 +12,7 @@ const menuItems = [
   { label: 'Mentors/Students', url: '/librarian/mentors' },
 ];
 
-const Scheduler = () => {
+const AdvisorScheduler = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Scheduler = () => {
           />
         </Tabs>
         <Routes>
-          <Route index element={<LibrarianCalendar />} />
+          <Route index element={<AdvisorCalendar />} />
           <Route path="computers" element={<Box>Computers</Box>} />
         </Routes>
       </Box>
@@ -46,4 +46,4 @@ const Scheduler = () => {
   );
 };
 
-export default Scheduler;
+export default AdvisorScheduler;

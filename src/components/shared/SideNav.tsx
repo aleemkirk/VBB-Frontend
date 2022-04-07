@@ -14,7 +14,9 @@ const testPath = (url: string, path: string) =>
   path === '/' ? url === path : path.startsWith(url);
 
 const SideNav = ({ menuItems }: SideNavProps) => {
+
   const { pathname } = useLocation();
+  
   return (
     <Box display="flex" flexDirection="column">
       <Box display="flex" justifyContent="center">
