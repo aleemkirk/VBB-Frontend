@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import SideNav from '../shared/SideNav';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import StudentList from './StudentList';
 
 
 const menuItems = [
@@ -24,7 +25,7 @@ const Librarian = () => {
         <Routes>
           <Route index element={<Box>Librarian Home</Box>} />
           <Route path="announcements" element={<Box>Announcements</Box>} />
-          <Route path="students" element={<Box>List of Student </Box>} />
+          <Route path="students" element={<StudentList/>} />
           <Route path="mentors" element={<Box>List of mentors</Box>} />
         </Routes>
       </Box>
