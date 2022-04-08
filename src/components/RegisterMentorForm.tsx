@@ -13,23 +13,26 @@ import formToJson from '../utils/formToJson';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../redux/rootReducer';
 import { useNavigate } from 'react-router-dom';
-import { autoLogin } from '../redux/actions';
+import { autoLogin, submitMentorRegistration } from '../redux/actions';
+import LanguageDropdown from './LanguageDropdown';
+import CareerDropdown from './CareerDropdown';
+import SubjectDropdown from './SubjectDropdown';
+import TimezonesDropdown from './TimezoneSelect';
 
 interface RegisterMentorFormProps {}
 
 const defaultForm = {
-  careers: [] as string[],
-  // should be a list from all languages in the backend
-  mentoringLanguages: [] as string[],
+  careers: [] as number[],
+  mentoringLanguages: [] as number[],
   // should be a list from all subjects in the backend
-  subjects: [] as string[],
+  subjects: [] as number[],
   applicationVideoUrl: '',
-  // string array the user creates
-  interests: [] as string[],
+  interests: '',
   phoneNumber: '',
   secondaryEmail: '',
   corporateCode: '',
   isOfAge: false,
+  timezone: '',
 };
 
 const RegisterMentorForm = (props: RegisterMentorFormProps) => {
@@ -40,18 +43,19 @@ const RegisterMentorForm = (props: RegisterMentorFormProps) => {
 
   const user = useSelector((store: AppState) => store.user);
   // if the user isn't logged in try to log them in
-  useEffect(() => {
-    if (!user.email) {
-      // TODO gets in endless loop
-      // dispatch(autoLogin({ navigateFunction }));
-    }
-  }, [user.email]);
+  // useEffect(() => {
+  //   if (!user.email) {
+  //     // TODO gets in endless loop
+  //     // dispatch(autoLogin({ navigateFunction }));
+  //   }
+  // }, [user.email]);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         console.log({ formValue });
+        dispatch(submitMentorRegistration(formValue));
       }}
     >
       <Grid container spacing={3}>
@@ -94,7 +98,7 @@ const RegisterMentorForm = (props: RegisterMentorFormProps) => {
             label="Do you a have corporate code?"
             control={
               <Checkbox
-                value={hasCorporateCode}
+                checked={hasCorporateCode}
                 onChange={() => setHasCorporateCode(!hasCorporateCode)}
               />
             }
@@ -131,7 +135,51 @@ const RegisterMentorForm = (props: RegisterMentorFormProps) => {
             />
           )}
         </Grid>
-
+        <Grid item xs={12}>
+          <TimezonesDropdown
+            selectedTimezone={formValue.timezone}
+            handleSelectTimezone={(timezone) =>
+              setFormValue({ ...formValue, timezone: timezone })
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            required
+            variant="standard"
+            label="Interests"
+            value={formValue.interests}
+            onChange={(e) => {
+              setFormValue({ ...formValue, interests: e.target.value });
+            }}
+            name="interests"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SubjectDropdown
+            selectedSubjects={formValue.subjects}
+            handleSelectSubjects={(subjectIds) =>
+              setFormValue({ ...formValue, subjects: subjectIds })
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <LanguageDropdown
+            selectedLanguages={formValue.mentoringLanguages}
+            handleSelectLanguages={(languageIds) =>
+              setFormValue({ ...formValue, mentoringLanguages: languageIds })
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CareerDropdown
+            selectedCareers={formValue.careers}
+            handleSelectCareers={(careerIds) =>
+              setFormValue({ ...formValue, careers: careerIds })
+            }
+          />
+        </Grid>
         <Grid item xs={12}>
           <FormControlLabel
             control={
@@ -139,7 +187,7 @@ const RegisterMentorForm = (props: RegisterMentorFormProps) => {
                 name="isOfAge"
                 required
                 value={formValue.isOfAge}
-                onChange={(e) => {
+                onChange={() => {
                   setFormValue({
                     ...formValue,
                     isOfAge: !formValue.isOfAge,
@@ -149,6 +197,7 @@ const RegisterMentorForm = (props: RegisterMentorFormProps) => {
             }
             label="Verify that you are 18 or older"
           />
+
           <FormControlLabel
             control={<Checkbox name="agreedToTerms" required />}
             label={

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
-import { put, call, takeEvery } from 'redux-saga/effects';
+import { put, call, takeLatest } from 'redux-saga/effects';
 import { setUser } from '../user/user.actions';
 import {
   AUTO_LOGIN,
@@ -15,10 +15,12 @@ interface BackendUser {
   email: string;
   timeZone: string;
   name: string;
+  isStudent: boolean;
+  isLibrarian: boolean;
+  isMentor: boolean;
 }
 interface UserLoginResponse {
   user: BackendUser;
-  users: BackendUser[];
 }
 
 export const login = (payload: LOGIN_PAYLOAD): LOGIN_ACTION => ({
@@ -27,27 +29,17 @@ export const login = (payload: LOGIN_PAYLOAD): LOGIN_ACTION => ({
 });
 
 export function* watchLogin() {
-  yield takeEvery(LOGIN, handleLogin);
+  yield takeLatest(LOGIN, handleLogin);
 }
 function* handleLogin(action: LOGIN_ACTION) {
   try {
     const { username, password, navigateFunction } = action.payload;
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      },
-      body: { username, password },
-    };
-    const url = 'https://localhost.vbb.org/api/login/';
-    // const { data } = yield call(api.post, url, options);
-    const res: AxiosResponse<UserLoginResponse> = yield call(
-      axios.post,
-      url,
-      options
-    );
-    console.log(res);
+    const url = '/api/v1/login/';
+    const data = { username, password };
+
+    const res: AxiosResponse<UserLoginResponse> =
+      yield api.post<UserLoginResponse>(url, { data });
+
     const { user } = res.data;
     yield put(setUser({ ...user }));
     if (res.status === 200) {
@@ -65,26 +57,15 @@ export const autoLogin = (payload: AUTO_LOGIN_PAYLOAD): AUTO_LOGIN_ACTION => ({
   payload,
 });
 export function* watchAutoLogin() {
-  yield takeEvery(AUTO_LOGIN, handleAutoLogin);
+  yield takeLatest(AUTO_LOGIN, handleAutoLogin);
 }
 function* handleAutoLogin(action: AUTO_LOGIN_ACTION) {
   const navigateFunction = action.payload.navigateFunction;
   try {
-    const options = {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      },
-    };
-    const url = 'https://localhost.vbb.org/api/users/me';
-    const res: AxiosResponse<UserLoginResponse> = yield call(
-      axios.get,
-      url,
-      options
-    );
-    console.log(res);
+    const url = '/api/v1/users/me';
+    const res: AxiosResponse<UserLoginResponse> =
+      yield api.get<UserLoginResponse>(url);
     const { user } = res.data;
-    debugger;
     yield put(setUser({ ...user }));
     if (res.status === 200) {
       navigateFunction('/complete-registration');
