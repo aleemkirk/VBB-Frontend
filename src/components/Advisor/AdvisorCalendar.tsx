@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import EventModal from '../EventModal';
+import {getEvents} from '../../utils/api';
+import {Events} from '../../utils/Events';
 
 export interface CalendarEvent {
   id: string;
@@ -21,20 +23,15 @@ const localizer = luxonLocalizer(DateTime);
 const AdvisorCalendar = () => {
   const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
 
+  const events = getEvents();
+
   return (
     <>
       <Calendar<CalendarEvent>
         localizer={localizer}
         defaultView={Views.WEEK}
         views={[Views.WEEK, Views.DAY, Views.AGENDA]}
-        events={[
-          {
-            id: '0',
-            title: 'Test Event',
-            start: DateTime.now().set({ minute: 0 }).toJSDate(),
-            end: DateTime.now().set({ minute: 0 }).plus({ hour: 1 }).toJSDate(),
-          },
-        ]}
+        events={events}
         onSelectEvent={setEvent}
         onSelectSlot={setEvent}
         selectable

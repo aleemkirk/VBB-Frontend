@@ -24,7 +24,7 @@ const EventModal = ({ eventOrSlot, onClose }: EventModalProps) => {
         </Box>
       }
     >
-      test
+      Test Modal
     </Modal>
   );
 };

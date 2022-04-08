@@ -19,11 +19,15 @@ const bull = (
   </Box>
 );
 
-const ProfileCard = (props:any) => {
+interface ProfileCardProps {
+    userProfile:Profile;
+};
 
-const profile:Profile = props.profile;
+const ProfileCard = ({userProfile}:ProfileCardProps) => {
 
-const handleClick = () => {
+const profile:Profile = userProfile;
+
+const handleClick = (e:any) => {
     console.log(profile);
 }
 
@@ -49,7 +53,6 @@ const handleClick = () => {
       {!profile.isVerified && <CardActions><Button size='medium' color='error'>Verify</Button></CardActions>}
     </Card>
     </Box>
-    
   );
 };
 

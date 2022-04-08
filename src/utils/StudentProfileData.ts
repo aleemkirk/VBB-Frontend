@@ -1,9 +1,12 @@
 
 // const Interests = ['Mathematics', 'Physics', 'Science', 'Programming', 'English', 'Music', 'Sports'];
 
+import { ProfileTypes } from './Profile';
+
 // export type Interests = typeof Interests
 
 export interface StudentProfile {
+    type?: ProfileTypes.STUDENT;
     id:string;
     userName: string;
     firstName: string;
@@ -18,7 +21,7 @@ export interface StudentProfile {
 
 
 
-export const studentProfiles: StudentProfile[] = [
+export var studentProfiles: StudentProfile[] = [
     {
         id: '0',
         userName: 'alKhan',

@@ -30,7 +30,7 @@ const StudentList = () => {
             overflow: 'auto',
         }}>
             {studentProfiles.map(student => (
-                <ProfileCard profile={student}/>
+                <ProfileCard userProfile={student}/>
             ))}
         </Box>
         

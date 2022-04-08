@@ -1,5 +1,7 @@
+import { ProfileTypes } from './Profile';
 
 export interface MentorProfile {
+    type?: ProfileTypes.MENTOR;
     firstName: string;
     lastName: string;
     isVerified: boolean;
