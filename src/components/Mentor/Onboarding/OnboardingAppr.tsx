@@ -37,7 +37,7 @@ const OnboardingAppr = () => {
         ml: 30,
         mb:10,
       }}>
-      <Typography variant="body1" align="left">If this box isn't checked yet, it's because we've still
+      <Typography variant="body1" align="left" paragraph>If this box isn't checked yet, it's because we've still
       viewing your application to become a VBB mentor. We'll email you as soon as we've reached 
       a decision!</Typography>
       </Box>

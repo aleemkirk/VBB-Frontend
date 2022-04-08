@@ -13,7 +13,7 @@ import OnboardingAppr from './components/Mentor/Onboarding/OnboardingAppr';
 import OnboardingComm from './components/Mentor/Onboarding/OnboardingComm';
 import OnboardingCongra from './components/Mentor/Onboarding/OnboardingCongra';
 
-import Profile from './components/Mentor/Profile'
+import Profile from './components/Mentor/Profile/Profile'
 
 const App = () => (
   <>
