@@ -24,7 +24,7 @@ const EventModal = ({ eventOrSlot, onClose }: EventModalProps) => {
         </Box>
       }
     >
-      Test Modal
+      {isEvent ? eventOrSlot.title : 'Available Slot'}
     </Modal>
   );
 };

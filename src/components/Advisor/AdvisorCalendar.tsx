@@ -3,7 +3,6 @@ import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import EventModal from '../EventModal';
 import {getEvents} from '../../utils/api';
-import {Events} from '../../utils/Events';
 
 export interface CalendarEvent {
   id: string;
