@@ -23,14 +23,12 @@ const Librarian = () => {
       <Box minWidth={200} flexShrink="0">
         <SideNav menuItems={menuItems} />
       </Box>
-      <Box flex="1 1 auto" maxWidth={800} maxHeight={800} overflow='auto'>
         <Routes>
           <Route index element={<Box>Librarian Home</Box>} />
           <Route path="announcements" element={<AnnouncementList/>} />
           <Route path="students" element={<StudentList/>} />
           <Route path="mentors" element={<MentorList/>} />
         </Routes>
-      </Box>
     </Box>
     );
 
