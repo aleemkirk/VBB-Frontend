@@ -12,7 +12,7 @@ export interface StudentProfile {
     firstName: string;
     lastName: string;
     program: string;
-    dob: Date;
+    dob?: Date;
     interests: string[];
     isVerified: boolean;
     isBooked?: boolean;
@@ -28,19 +28,19 @@ export var studentProfiles: StudentProfile[] = [
         firstName: 'Aleem',
         lastName: 'Khan',
         program: 'Program 1',
-        dob: new Date('17, 10, 1996'),
+        dob: new Date('1996, 10, 17'),
         interests: ['Mathematics', 'Physics', 'Science', 'Programming'],
         isVerified: true,
         isBooked: true, 
     },
     {
         id: '1',
-        userName: 'JD19',
-        firstName: 'Josh',
-        lastName: 'Dunford',
+        userName: 'JoeB',
+        firstName: 'Joe',
+        lastName: 'Bonamassa',
         program: 'Program 1',
-        dob: new Date('17, 10, 1996'),
-        interests: ['Mathematics', 'Sports'],
+        dob: new Date('1996, 10, 17'),
+        interests: ['Guitars', 'Cruises'],
         isVerified: true,
     },
     {

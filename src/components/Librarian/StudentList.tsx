@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 
 
+
 const StudentList = () => {
 
     const studentProfiles: Profile[] = React.useMemo(() => getStduentProfles(), [])
@@ -42,7 +43,7 @@ const StudentList = () => {
                     <SearchIcon />
                 </IconButton>
             </Paper>
-            <Box flex="1 1 auto"  overflow='auto'>
+            <Box flex="1 1 auto"  minWidth={800} maxHeight={800} overflow='auto'>
 
                 {profiles.map(student => (
                         <ProfileCard userProfile={student}/>

@@ -8,6 +8,7 @@ export interface MentorProfile {
     interests: string[];
     isBooked: boolean;
     program: string;
+    dob?: Date;
 }
 
 
