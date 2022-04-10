@@ -6,14 +6,13 @@ import {Profile} from '../../utils/Profile';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
 
 
 const StudentList = () => {
 
-    const studentProfiles: Profile[] = getStduentProfles();
+    const studentProfiles: Profile[] = React.useMemo(() => getStduentProfles(), [])
     //console.log(studentProfiles)
 
     const [profiles, changeProfiles] = React.useState(studentProfiles);
