@@ -1,27 +1,17 @@
+import * as React from 'react';
 import { getMentorProfiles } from '../../utils/api';
-import  ProfileCard from '../shared/ProfileCard';
-import Box from '@mui/material/Box';
+import {Profile} from '../../utils/Profile';
+import ProfileListView from '../shared/ProfileListView';
 
 
 const MentorList = () => {
 
-    const profiles = getMentorProfiles();
+    const mentorProfiles:Profile[] = React.useMemo(() => getMentorProfiles(), []) ;
 
     return(
-        <>
-        <Box flex="1 1 auto" maxWidth={800} maxHeight={800} overflow='auto'>
-        {
-            profiles.map(profile => (
-                <ProfileCard userProfile={profile}/>
-            ))
-        }
-        </Box>
-        </>
-        
-        
-    )
-
-}
+        <ProfileListView profileList={mentorProfiles}/>  
+    );
+};
 
 
 export default MentorList;
