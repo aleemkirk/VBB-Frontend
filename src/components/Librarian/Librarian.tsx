@@ -4,6 +4,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import StudentList from './StudentList';
 import MentorList from './MentorList';
 import AnnouncementList from './AnnouncementList';
+import LibrarianHomePage from './LibrarianHome';
 
 
 const menuItems = [
@@ -24,7 +25,7 @@ const Librarian = () => {
         <SideNav menuItems={menuItems} />
       </Box>
         <Routes>
-          <Route index element={<Box>Librarian Home</Box>} />
+          <Route index element={<LibrarianHomePage/>} />
           <Route path="announcements" element={<AnnouncementList/>} />
           <Route path="students" element={<StudentList/>} />
           <Route path="mentors" element={<MentorList/>} />

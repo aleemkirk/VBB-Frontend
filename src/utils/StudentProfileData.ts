@@ -1,7 +1,7 @@
 
 // const Interests = ['Mathematics', 'Physics', 'Science', 'Programming', 'English', 'Music', 'Sports'];
 
-import { ProfileTypes } from './Profile';
+import { ProfileTypes, Gender } from './Profile';
 
 // export type Interests = typeof Interests
 
@@ -16,6 +16,7 @@ export interface StudentProfile {
     interests: string[];
     isVerified: boolean;
     isBooked?: boolean;
+    gender?: Gender.NONE;
 };
 
 

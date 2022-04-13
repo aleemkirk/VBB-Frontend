@@ -6,3 +6,7 @@ export type Profile = StudentProfile | MentorProfile;
 export enum ProfileTypes {
     MENTOR, STUDENT
 }
+
+export enum Gender {
+    NONE, MALE, FEMALE
+}
