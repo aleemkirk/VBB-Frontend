@@ -40,7 +40,7 @@ const LibrarianCalendar = () => {
         selectable
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 1000 }}
+        style={{ height: 700 }}
       />
       <EventModal eventOrSlot={event} onClose={() => setEvent(null)} />
     </>

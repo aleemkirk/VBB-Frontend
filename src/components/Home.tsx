@@ -10,7 +10,7 @@ const Home = () => (
       <Link to="/register?type=mentee">Register Mentee</Link>
     </Grid>
     <Grid item xs={12}>
-      <Link to="/program">Scheduler</Link>
+      <Link to="/librarian">Librarian Index</Link>
     </Grid>
   </Grid>
 );

@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import LibrarianScheduler from './components/librarian/LibrarianScheduler';
+import LibrarianIndex from './components/librarian/LibrarianIndex';
 
 const App = () => (
   <>
@@ -15,7 +15,7 @@ const App = () => (
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/program/*" element={<LibrarianScheduler />} />
+        <Route path="/librarian/*" element={<LibrarianIndex />} />
       </Routes>
     </Box>
   </>
