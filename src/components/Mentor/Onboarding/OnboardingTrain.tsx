@@ -1,7 +1,7 @@
 import MentorHeader from '../MentorHeader'; 
 import { Checkbox, FormControlLabel, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, } from '@mui/material';
 import { Link } from 'react-router-dom';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+// import{ ArrowCircleRightIcon, FiberManualRecordIcon, FiberManualRecordOutlinedIcon } from '@mui/icons-material';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
@@ -13,15 +13,16 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const OnboardingDona = () => {
+const OnboardingTrain = () => {
     return (
         <>
       <MentorHeader/>
-      <Grid container >
+
+  <Grid container >
       <Grid item xs={8} >
       <Item>
 
-      <Typography variant="h4">View Our Donation Page</Typography>
+      <Typography variant="h4">View mentor training resources</Typography>
       
       <Box sx={{
         width: 300,
@@ -30,24 +31,21 @@ const OnboardingDona = () => {
         mb:10,
       }}>
       <FormGroup>
-      <FormControlLabel control={<Checkbox />}  label="Donation Page:" />
-    
+      <FormControlLabel control={<Checkbox />}  label="Google Doc:" />
+      <FormControlLabel control={<Checkbox  />} label="Notion:" />
       </FormGroup>
       </Box>
 
-      <Grid container sx={{
+      <Grid container 
+      justifyContent="flex-end"
+      sx={{
              width: 500,
              ml: 23,
              mt:10,
         }}>
-      <Grid item xs={6}>
-      <Button component={Link} to="/mentor/onboardingTrain">
-      <ArrowCircleLeftIcon/>PERVIOUS
-    </Button>
-    </Grid>
     <Grid item xs={6}>
-    <Button component={Link} to="/mentor/onboardingProf">
-    NEXT STEP<ArrowCircleRightIcon/>
+      <Button component={Link} to="/mentor/onboardingDona">
+      NEXT STEP<ArrowCircleRightIcon/>
     </Button>
     </Grid>
     </Grid>
@@ -58,16 +56,16 @@ const OnboardingDona = () => {
  
     <Grid item xs={4}>
     <Item>
-      <p><FiberManualRecordOutlinedIcon/><FiberManualRecordIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/></p>
-    <Typography variant="h3">Donation</Typography>
+      <p><FiberManualRecordIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/><FiberManualRecordOutlinedIcon/></p>
+    <Typography variant="h3">Training</Typography>
     </Item>
     </Grid>
 
   </Grid>
-
+    
     </>
       );
   };
   
-  export default OnboardingDona ;
+  export default OnboardingTrain;
   

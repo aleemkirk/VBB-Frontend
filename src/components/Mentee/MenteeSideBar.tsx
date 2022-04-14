@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 const drawerWidth = 120;
 
-export default function MentorSideBar() {
+export default function MenteeSideBar() {
   return (
     <Box sx={{ display: 'flex' }}>
       {/* <CssBaseline /> */}
@@ -32,12 +32,13 @@ export default function MentorSideBar() {
         <Toolbar />
         <Divider />
         <List>
-          {['Profile', 'Session', 'Training', 'Help?'].map((text, index) => (
+          {['Home', 'Booking'].map((text, index) => (
             <ListItem button key={text}>
               {/* <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon> */}
               <ListItemText primary={text} />
+              <Divider/>
             </ListItem>
           ))}
         </List>

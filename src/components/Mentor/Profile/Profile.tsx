@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Checkbox, FormControlLabel, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled } from '@mui/material';
 // import SelectTimezoneMaterialUi from 'select-timezone-material-ui';
-import TimezoneSelect from 'react-timezone-select';
+// import TimezoneSelect from 'react-timezone-select';
 // import TimezonePicker from 'react-bootstrap-timezone-picker';
 // import 'react-bootstrap-timezone-picker/dist/react-bootstrap-timezone-picker.min.css';
 
@@ -52,12 +52,12 @@ const Profile = () => {
      <MultipleSelect/>
 
      <Typography variant='h6'>Time Zone</Typography>
-     <TimezoneSelect
+     {/* <TimezoneSelect
           // value='Africa/Casablanca'
           // value={selectedTimezone}
           value = ''
           onChange={setSelectedTimezone}
-        />
+        /> */}
 <Typography variant='h6'>Which languages would you be comfortable mentoring in?</Typography>
 <Typography variant='h6'>Which topics would you be comfortabele tororing a student in?</Typography>
 <SelectTopic/>
