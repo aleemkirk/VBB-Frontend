@@ -17,6 +17,8 @@ interface ProfileListViewProps {
 
 const ProfileListView = ({profileList}: ProfileListViewProps) => {
 
+    //Needs list of student/mentor profiles    
+
     const [profiles, setProfiles] = React.useState(profileList);
     const [modalProfile, setModalProfile] = React.useState<Profile | null>(null);
 

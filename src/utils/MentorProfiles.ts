@@ -58,5 +58,14 @@ export const MentorProfiles: MentorProfile[] = [
         isBooked: true,
         program: 'Program 2',
     },
+    {
+        type: ProfileTypes.MENTOR,
+        firstName: 'Michael2',
+        lastName: 'King2',
+        isVerified: true,
+        interests: ['Programming', 'Physics', 'Music'],
+        isBooked: true,
+        program: 'Program 2',
+    },
 
 ]

@@ -55,7 +55,7 @@ const handleClose = () => setOpen(false);
           {userProfile.program}
         </Typography>
       </CardContent>
-      {(!userProfile.isVerified && (userProfile.type != ProfileTypes.MENTOR)) && <CardActions><Button size='medium' color='error'>Verify</Button></CardActions>}
+      {(!userProfile.isVerified || (userProfile.type != ProfileTypes.MENTOR)) && <CardActions><Button size='medium' color='error'>Verify</Button></CardActions>}
     </Card>
     </Box>
     

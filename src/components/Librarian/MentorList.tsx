@@ -1,15 +1,28 @@
-import * as React from 'react';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { AppState } from '../../redux/rootReducer';
 import { getMentorProfiles } from '../../utils/api';
 import {Profile} from '../../utils/Profile';
 import ProfileListView from '../shared/ProfileListView';
+import {getMentorList} from '../../redux/actions';
 
 
 const MentorList = () => {
 
-    const mentorProfiles:Profile[] = React.useMemo(() => getMentorProfiles(), []) ;
+    const mentorList = useSelector((state: AppState) => {
+        return state.mentorList;
+    });
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (mentorList.length == 0){
+            dispatch(getMentorList());
+        }
+    }, [mentorList]);
 
     return(
-        <ProfileListView profileList={mentorProfiles}/>  
+        <ProfileListView profileList={mentorList}/>  
     );
 };
 
