@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import SideNav from '../shared/SideNav';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import LibrarianProgram from './LibrarianProgram';
 
 const menuItems = [
@@ -20,6 +20,7 @@ const LibrarianIndex = () => {
       </Box>
       <Box flex="1 1 auto">
         <Routes>
+          <Route index element={<Navigate replace to="program" />} />
           <Route path="program/*" element={<LibrarianProgram />} />
         </Routes>
       </Box>

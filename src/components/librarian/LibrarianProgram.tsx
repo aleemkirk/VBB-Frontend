@@ -1,6 +1,7 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import LibrarianCalendar from './LibrarianCalendar';
+import LibrarianComputers from './LibrarianComputers';
 
 const LibrarianProgram = () => {
   const { pathname } = useLocation();
@@ -25,7 +26,7 @@ const LibrarianProgram = () => {
       </Tabs>
       <Routes>
         <Route index element={<LibrarianCalendar />} />
-        <Route path="computers" element={<Box>Computers</Box>} />
+        <Route path="computers" element={<LibrarianComputers />} />
       </Routes>
     </>
   );

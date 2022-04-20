@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
-import EventModal from '../EventModal';
+import EventModal from '../shared/EventModal';
 
 export interface CalendarEvent {
   id: string;
