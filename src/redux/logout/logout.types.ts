@@ -1,5 +1,5 @@
 export const LOGOUT = 'LOGOUT';
 
-export interface LOGOUT_ACTION {
+export interface LogoutAction {
   type: typeof LOGOUT;
 }

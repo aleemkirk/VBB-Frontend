@@ -1,15 +1,24 @@
 import { Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as actions from '../redux/actions';
 import formToJson from '../utils/formToJson';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(formToJson(e.target as HTMLFormElement));
-        navigate('/');
+        const values = formToJson(e.target as HTMLFormElement);
+        dispatch(
+          actions.login({
+            username: values.username as string,
+            password: values.password as string,
+            navigateFunction: navigate,
+          })
+        );
       }}
     >
       <Paper
