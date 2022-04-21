@@ -32,7 +32,7 @@ const defaultForm = {
   corporateCode: '',
   isOfAge: false,
   timezone: '',
-  dateOfBirth: '', // dd/mm/yyyy
+  dateOfBirth: '', // dd/MM/yyyy
 };
 
 const RegisterMentorForm = ({}: Props) => {

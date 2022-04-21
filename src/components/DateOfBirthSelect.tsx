@@ -2,14 +2,17 @@ interface Props {
   dateOfBirth: string;
   handleDateOfBirthChange: (dateOfBirth: string) => void;
 }
+
 const DateOfBirthSelector = ({
   dateOfBirth,
   handleDateOfBirthChange,
 }: Props) => {
-  const handleDateSelect = () => {
-    handleDateOfBirthChange('11/22/1999');
+  const handleDateSelect = (newValue: Date | null) => {
+    if (newValue) {
+      handleDateOfBirthChange('22/11/1999');
+    }
   };
-  return <div>date of birth</div>;
+  return <div>place holder date picker </div>;
 };
 
 export default DateOfBirthSelector;
