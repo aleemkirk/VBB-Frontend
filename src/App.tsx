@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import Scheduler from './components/Scheduler';
+import LibrarianIndex from './components/librarian/LibrarianIndex';
 
 import Onboarding from './components/Mentor/Onboarding/Onboarding';
 import OnboardingTrain from './components/Mentor/Onboarding/OnboardingTrain';
@@ -27,7 +27,6 @@ const App = () => (
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/scheduler" element={<Scheduler />} />
         
         <Route path = "/mentor/onboarding" element={<Onboarding/>}/>
         <Route path="/mentor/onboardingTrain" element={<OnboardingTrain/>}/>
@@ -40,6 +39,9 @@ const App = () => (
         <Route path="/mentor/profile" element={<Profile/>}/>
 
         <Route path="/mentee/booking" element={<MenteeBooking/>}/>
+
+        <Route path="/librarian/*" element={<LibrarianIndex />} />
+
       </Routes>
     </Box>
   </>
