@@ -1,6 +1,7 @@
-import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
-import { put, call, takeEvery } from 'redux-saga/effects';
-import { setUser } from '../user/user.actions';
+import { AxiosResponse } from 'axios';
+import { put, takeLatest } from 'redux-saga/effects';
+
+import * as api from '../../services/api';
 import {
   AUTO_LOGIN,
   AUTO_LOGIN_ACTION,
@@ -9,46 +10,29 @@ import {
   LOGIN_ACTION,
   LOGIN_PAYLOAD,
 } from './login.types';
-import * as api from '../../services/api';
-interface BackendUser {
-  username: string;
-  email: string;
-  timeZone: string;
-  name: string;
-}
-interface UserLoginResponse {
-  user: BackendUser;
-  users: BackendUser[];
-}
+import { setUser } from '../user/user.actions';
+import { User } from '../user/user.types';
 
+// Login Action and Sagas
 export const login = (payload: LOGIN_PAYLOAD): LOGIN_ACTION => ({
   type: LOGIN,
   payload,
 });
-
 export function* watchLogin() {
-  yield takeEvery(LOGIN, handleLogin);
+  yield takeLatest(LOGIN, handleLogin);
 }
 function* handleLogin(action: LOGIN_ACTION) {
   try {
     const { username, password, navigateFunction } = action.payload;
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      },
-      body: { username, password },
-    };
-    const url = 'https://localhost.vbb.org/api/login/';
-    // const { data } = yield call(api.post, url, options);
-    const res: AxiosResponse<UserLoginResponse> = yield call(
-      axios.post,
-      url,
-      options
-    );
-    console.log(res);
-    const { user } = res.data;
+    const url = '/api/v1/login/';
+    const data = { username, password };
+
+    const res: AxiosResponse<User> = yield api.post<User>(url, {
+      data,
+    });
+
+    const user = res.data;
+    debugger;
     yield put(setUser({ ...user }));
     if (res.status === 200) {
       navigateFunction('/complete-registration');
@@ -60,31 +44,20 @@ function* handleLogin(action: LOGIN_ACTION) {
   }
 }
 
+// Auto-Login Action and Sagas
 export const autoLogin = (payload: AUTO_LOGIN_PAYLOAD): AUTO_LOGIN_ACTION => ({
   type: AUTO_LOGIN,
   payload,
 });
 export function* watchAutoLogin() {
-  yield takeEvery(AUTO_LOGIN, handleAutoLogin);
+  yield takeLatest(AUTO_LOGIN, handleAutoLogin);
 }
 function* handleAutoLogin(action: AUTO_LOGIN_ACTION) {
   const navigateFunction = action.payload.navigateFunction;
   try {
-    const options = {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      },
-    };
-    const url = 'https://localhost.vbb.org/api/users/me';
-    const res: AxiosResponse<UserLoginResponse> = yield call(
-      axios.get,
-      url,
-      options
-    );
-    console.log(res);
-    const { user } = res.data;
-    debugger;
+    const url = '/api/v1/users/me';
+    const res: AxiosResponse<User> = yield api.get<User>(url);
+    const user = res.data;
     yield put(setUser({ ...user }));
     if (res.status === 200) {
       navigateFunction('/complete-registration');

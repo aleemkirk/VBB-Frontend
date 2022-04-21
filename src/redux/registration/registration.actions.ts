@@ -1,15 +1,18 @@
-import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
+import { put, takeLatest } from 'redux-saga/effects';
 import { setUser } from '../user/user.actions';
 import * as api from '../../services/api';
+
 import {
-  MentorRegistraionForm,
   SubmitMentorRegistrationAction,
+  SubmitMentorRegistrationPayload,
   SUBMIT_MENTOR_REGISTRATION,
 } from './registration.types';
-import { USER } from '../user/user.types';
+import { User } from '../user/user.types';
 
-export const submitMentorRegistration = (payload: MentorRegistraionForm) => ({
+export const submitMentorRegistration = (
+  payload: SubmitMentorRegistrationPayload
+) => ({
   type: SUBMIT_MENTOR_REGISTRATION,
   payload,
 });
@@ -22,22 +25,24 @@ function* hanldeSubmitMentorRegistration(
   action: SubmitMentorRegistrationAction
 ) {
   try {
-    const { payload } = action;
+    const {
+      payload: { mentorRegistraionForm, navigateFunction },
+    } = action;
     const url = '/api/v1/mentor-registration/';
-    const data = { ...payload };
-    const res: AxiosResponse<{ data: USER }> = yield api.post<{ data: USER }>(
+    const data = { ...mentorRegistraionForm };
+    const res: AxiosResponse<{ data: User }> = yield api.post<{ data: User }>(
       url,
       { data }
     );
-    console.log({ res });
-    debugger;
-    // const { user } = res.data;
-    // yield put(setUser({ ...user }));
-    // if (res.status === 200) {
-    //   navigateFunction('/complete-registration');
-    // } else {
-    //   navigateFunction('/');
-    // }
+
+    if (res.status === 201) {
+      debugger;
+      const user = res.data.data;
+      yield put(setUser({ ...user }));
+      navigateFunction('/dashboard');
+    } else {
+      navigateFunction('/');
+    }
   } catch (e) {
     console.error('Could not register mentor', e);
   }

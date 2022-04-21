@@ -6,6 +6,7 @@ export const initUser = {
   name: '',
   username: '',
   timeZone: '',
+  dateOfBirth: '',
   isStudent: false,
   isLibrarian: false,
   isMentor: false,

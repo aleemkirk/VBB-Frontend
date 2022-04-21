@@ -20,6 +20,7 @@ export interface User {
   isStudent: boolean;
   isLibrarian: boolean;
   isMentor: boolean;
+  dateOfBirth: string;
   mentorProfile?: MentorProfile;
   studentProfile?: {};
 }
@@ -37,6 +38,7 @@ export interface MentorProfile {
   approvalStatus: ApprovalStatus;
 }
 
+// Values are kept in backend
 enum ApprovalStatus {
   APPROVED = 'Approved',
   NOT_REVIEWED = 'Not Reviewed',
