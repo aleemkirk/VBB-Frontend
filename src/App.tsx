@@ -7,14 +7,10 @@ import Register from './components/Register';
 import LibrarianIndex from './components/librarian/LibrarianIndex';
 
 import Onboarding from './components/Mentor/Onboarding/Onboarding';
-// import OnboardingTrain from './components/Mentor/Onboarding/OnboardingTrain';
-// import OnboardingDona from './components/Mentor/Onboarding/OnboardingDona';
-// import OnboardingProf from './components/Mentor/Onboarding/OnboardingProf';
-// import OnboardingAppr from './components/Mentor/Onboarding/OnboardingAppr';
-// import OnboardingComm from './components/Mentor/Onboarding/OnboardingComm';
-// import OnboardingCongra from './components/Mentor/Onboarding/OnboardingCongra';
 
-import MenteeBooking from './components/Mentee/MenteeBooking';
+
+import MenteeHome from './components/Mentee/MenteeHome';
+import MenteeBooking from'./components/Mentee/MenteeBooking';
 
 import Profile from './components/Mentor/Profile/Profile';
 
@@ -29,16 +25,9 @@ const App = () => (
         <Route path="/register" element={<Register />} />
         
         <Route path = "/mentor/onboarding" element={<Onboarding/>}/>
-        {/* <Route path="/mentor/onboardingTrain" element={<OnboardingTrain/>}/>
-        <Route path="/mentor/onboardingDona" element={<OnboardingDona/>}/>
-        <Route path="/mentor/onboardingProf" element={<OnboardingProf/>}/>
-        <Route path="/mentor/onboardingAppr" element={<OnboardingAppr/>}/>
-        <Route path="/mentor/onboardingComm" element={<OnboardingComm/>}/>
-        <Route path="/mentor/onboardingCongra" element={<OnboardingCongra/>}/> */}
-
         <Route path="/mentor/profile" element={<Profile/>}/>
+        <Route path="/mentee/home" element={<MenteeHome/>}/>
         <Route path="/mentee/booking" element={<MenteeBooking/>}/>
-
         <Route path="/librarian/*" element={<LibrarianIndex />} />
 
       </Routes>

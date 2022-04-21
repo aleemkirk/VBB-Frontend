@@ -1,28 +1,70 @@
-// import Scheduler from '../Scheduler';
+import { useState } from 'react';
+import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
+import { DateTime } from 'luxon';
+import EventModal from '../shared/EventModal';
+import BookingEvent from './BookingEvent';
 import MenteeSideBar from './MenteeSideBar';
-// import MentorHeader from '../MentorHeader'; 
-import { Checkbox, FormControlLabel, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, } from '@mui/material';
-import { Link } from 'react-router-dom';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  TextField,
+} from '@mui/material';
 
-const Item = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(1),
-  height: 500,
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+}
 
+export const isCalendarEvent = (
+  event: CalendarEvent | SlotInfo | null
+): event is CalendarEvent => {
+  return event ? 'id' in event : false;
+};
 
+const localizer = luxonLocalizer(DateTime);
 
 const MenteeBooking = () => {
-    return (
-    <>
-      <MenteeSideBar/>
-      {/* <Scheduler/> */}
+  const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
 
+  return (
+    <>
+    <MenteeSideBar/>
+    <Box sx={{
+        ml: 15,
+        mt: 5,
+        mr: 10}}>
+      <Calendar<CalendarEvent>
+        localizer={localizer}
+        defaultView={Views.WEEK}
+        views={[Views.WEEK, Views.DAY, Views.AGENDA]}
+        events={[
+          {
+            id: '0',
+            title: 'Test Event',
+            start: DateTime.now().set({ minute: 0 }).toJSDate(),
+            end: DateTime.now().set({ minute: 0 }).plus({ hour: 1 }).toJSDate(),
+          },
+        ]}
+        onSelectEvent={setEvent}
+        onSelectSlot={setEvent}
+        selectable
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 700 }}
+      />
+      <BookingEvent eventOrSlot={event} onClose={() => setEvent(null)} />
+      </Box>
 
     </>
-      );
-  };
-  
-  export default MenteeBooking ;
-  
+  );
+};
+
+export default MenteeBooking;
