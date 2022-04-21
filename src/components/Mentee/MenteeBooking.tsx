@@ -1,4 +1,4 @@
-import Scheduler from '../Scheduler';
+// import Scheduler from '../Scheduler';
 import MenteeSideBar from './MenteeSideBar';
 // import MentorHeader from '../MentorHeader'; 
 import { Checkbox, FormControlLabel, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, } from '@mui/material';
@@ -17,7 +17,7 @@ const MenteeBooking = () => {
     return (
     <>
       <MenteeSideBar/>
-      <Scheduler/>
+      {/* <Scheduler/> */}
 
 
     </>
