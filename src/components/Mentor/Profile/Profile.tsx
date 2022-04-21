@@ -7,7 +7,7 @@ import { Checkbox, FormControlLabel, FormGroup, Button, Grid, Paper, TextField, 
 // import TimezonePicker from 'react-bootstrap-timezone-picker';
 // import 'react-bootstrap-timezone-picker/dist/react-bootstrap-timezone-picker.min.css';
 
-import MultipleSelect from '../Profile/MultipleSelect';
+import OpportunitySelect from './OpportunitySelect';
 import SelectTopic from '../Profile/SelectTopic';
 import MentorHeader from '../MentorHeader'; 
 import MentorSideBar from '../MentorSideBar';
@@ -23,15 +23,16 @@ const Profile = () => {
       <MentorHeader/>
       <MentorSideBar/>
       <Box sx={{
-        ml: 30,
-        mt:10
+         ml: 20,
+         mt: 15,
+         mr: 15
       }}>
       <Typography variant='h6'>Video Upload</Typography>
       <Typography variant='body1'>Please uploa  a 2-3 mins video:</Typography>
-      <Grid container xs={9}>
-        <Grid xs={3}><Button variant="outlined">YouTube</Button></Grid>
-        <Grid xs={3}><Button variant="outlined">Google Drive</Button></Grid>
-        <Grid xs={3}><Button variant="outlined">Drop Box</Button></Grid>
+      <Grid container spacing={3} sx={{mt:2}}>
+        <Grid item xs={3}><Button variant="outlined">YouTube</Button></Grid>
+        <Grid item xs={3}><Button variant="outlined">Google Drive</Button></Grid>
+        <Grid item xs={3}><Button variant="outlined">Drop Box</Button></Grid>
       </Grid>
 
       <p><TextField id="standard-basic" label="URL:" variant="standard" />
@@ -39,19 +40,19 @@ const Profile = () => {
       <p><TextField id="standard-basic" label="Year of Birth:" variant="standard" />
       </p>
 
-      <Typography variant='h6'>Do you have any crimes or misdemeanors?</Typography>
+      <Typography variant='h6' sx={{mt:5}}>Do you have any crimes or misdemeanors?</Typography>
       <FormGroup  row>
         <FormControlLabel  control={<Checkbox />} label="YES" />
         <FormControlLabel  control={<Checkbox />} label="NO" />
       </FormGroup>
-      <Typography variant='body1'>If YES, please list every record:</Typography>
+      <Typography variant='body1' sx={{mt:2}}>If YES, please list every record:</Typography>
       <p><TextField id="standard-basic"  variant="standard" />
       </p>
 
-      <Typography variant='h6'>How do you find out this opportunity?</Typography>
-     <MultipleSelect/>
+      <Typography variant='h6' sx={{mt:5}}>How do you find out this opportunity?</Typography>
+     <OpportunitySelect/>
 
-     <Typography variant='h6'>Time Zone</Typography>
+     <Typography variant='h6' sx={{mt:5}}>Time Zone</Typography>
      {/* <TimezoneSelect
           // value='Africa/Casablanca'
           // value={selectedTimezone}

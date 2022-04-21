@@ -39,7 +39,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-export default function MultipleSelectChip() {
+export default function OpportunitySelect() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
 
