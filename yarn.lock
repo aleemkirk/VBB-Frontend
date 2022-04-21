@@ -5476,9 +5476,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.84":
-  version: 1.4.116
-  resolution: "electron-to-chromium@npm:1.4.116"
-  checksum: cffe0ff33711f60886d3918be172fa7b54b2c26153cb67ee6d322ee4e33e9d1a4975494996640f6f48d222c0055894fb02a2378c80ab6ddbc08a405a3804b9e1
+  version: 1.4.117
+  resolution: "electron-to-chromium@npm:1.4.117"
+  checksum: 9a0147824b52b25bdac9e6c70f35810f007bf9c55d72e1b646417a7797cf51e6120c585f220728f8de16ad2b033adfd8d92dbb11f43af1ebdcc085427ae57064
   languageName: node
   linkType: hard
 
@@ -8262,6 +8262,13 @@ __metadata:
   version: 3.2.0
   resolution: "loader-utils@npm:3.2.0"
   checksum: c7b9a8dc4b3bc19e9ef563c48e3a18ea9f8bb2da1ad38a12e4b88358cfba5f148a7baf12d78fe78ffcb718ce1e062ab31fcf5c148459f1247a672a4213471e80
+  languageName: node
+  linkType: hard
+
+"local-storage@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "local-storage@npm:2.0.0"
+  checksum: 921f381cafc4c0cac263a87e9e11093adf0bfb13b3520107bb5065bbccf5e7d22eea81148a40bc10d9f44aba8a5afe0157183205714d0221e02e36cb8afaa70b
   languageName: node
   linkType: hard
 
@@ -12371,6 +12378,7 @@ __metadata:
     "@types/testing-library__jest-dom": ^5.14.3
     eslint-config-react-app: ^7.0.1
     jest-watch-typeahead: ^1.0.0
+    local-storage: ^2.0.0
     luxon: ^2.3.1
     react: ^18.0.0
     react-big-calendar: ^0.40.0
