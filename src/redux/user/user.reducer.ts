@@ -1,14 +1,17 @@
 import { LOGOUT } from '../logout/logout.types';
-import { USER_ACTIONS, SET_USER, USER } from './user.types';
+import { UserActions, SET_USER, User } from './user.types';
 
 export const initUser = {
   email: '',
   name: '',
   username: '',
   timeZone: '',
+  isStudent: false,
+  isLibrarian: false,
+  isMentor: false,
 };
 
-export const user = (state = initUser, action: USER_ACTIONS): USER => {
+export const user = (state = initUser, action: UserActions): User => {
   switch (action.type) {
     case LOGOUT:
       return initUser;

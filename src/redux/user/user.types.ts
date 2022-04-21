@@ -1,12 +1,45 @@
-import { LOGOUT_ACTION } from '../logout/logout.types';
+import { Career } from '../careers/careers.types';
+import { Language } from '../language/language.types';
+import { Library } from '../library/library.types';
+import { LogoutAction } from '../logout/logout.types';
+import { Subject } from '../subjects/subjects.types';
 import { initUser } from './user.reducer';
 
 export const SET_USER = 'SET_USER';
 
-export interface SET_USER_ACTION {
+export interface SetUserAction {
   type: typeof SET_USER;
-  payload: USER;
+  payload: User;
 }
 
-export type USER = typeof initUser;
-export type USER_ACTIONS = SET_USER_ACTION | LOGOUT_ACTION;
+export interface User {
+  email: string;
+  name: string;
+  username: string;
+  timeZone: string;
+  isStudent: boolean;
+  isLibrarian: boolean;
+  isMentor: boolean;
+  mentorProfile?: MentorProfile;
+  studentProfile?: {};
+}
+
+export interface MentorProfile {
+  assignedLibrary: Library;
+  careers: Career[];
+  subjects: Subject[];
+  hasCompletedTraining: boolean;
+  interests: string;
+  phoneNumber: string;
+  secondaryEmail: string;
+  completedRegistration: boolean;
+  mentoringLanguages: Language[];
+  approvalStatus: ApprovalStatus;
+}
+
+enum ApprovalStatus {
+  APPROVED = 'Approved',
+  NOT_REVIEWED = 'Not Reviewed',
+  REJECTED = 'Rejected',
+}
+export type UserActions = SetUserAction | LogoutAction;
