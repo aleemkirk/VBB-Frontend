@@ -26,10 +26,8 @@ const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
   const careers = useSelector((state: AppState) => state.careers);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (careers.length === 0) {
-      dispatch(actions.getCareers());
-    }
-  }, [careers]);
+    dispatch(actions.getCareers());
+  }, []);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;

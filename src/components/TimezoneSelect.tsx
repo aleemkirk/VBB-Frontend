@@ -28,10 +28,8 @@ const TimezonesDropdown = ({
   const timezones = useSelector((state: AppState) => state.timezones);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (timezones.length === 0) {
-      dispatch(getTimezones());
-    }
-  }, [timezones]);
+    dispatch(getTimezones());
+  }, []);
 
   const handleSelect = (e: SelectChangeEvent<string>) => {
     handleSelectTimezone(e.target.value);

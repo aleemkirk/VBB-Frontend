@@ -27,10 +27,8 @@ const SubjectDropdown = ({ selectedSubjects, handleSelectSubjects }: Props) => {
   const subjects = useSelector((state: AppState) => state.subjects);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (subjects.length === 0) {
-      dispatch(actions.getSubjects());
-    }
-  }, [subjects]);
+    dispatch(actions.getSubjects());
+  }, []);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;

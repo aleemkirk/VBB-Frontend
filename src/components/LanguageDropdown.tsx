@@ -33,10 +33,8 @@ const LanguageDropdown = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (languages.length === 0) {
-      dispatch(getLanguages());
-    }
-  }, [languages]);
+    dispatch(getLanguages());
+  }, []);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
