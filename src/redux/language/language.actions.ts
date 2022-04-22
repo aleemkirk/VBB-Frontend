@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put } from 'redux-saga/effects';
 import {
   GET_LANGUAGUES,
   GetLanguagueAction,

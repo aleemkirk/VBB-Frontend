@@ -7,6 +7,7 @@ import {
   watchGetTimezones,
   watchLogin,
   watchSubmitMentorRegistration,
+  watchSubmitStudentRegistration,
 } from './actions';
 
 export default function* rootSaga() {
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     watchGetTimezones(),
     watchLogin(),
     watchSubmitMentorRegistration(),
+    watchSubmitStudentRegistration(),
   ]);
 }
