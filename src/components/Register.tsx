@@ -46,11 +46,7 @@ const Register = () => {
         variant="outlined"
         square
       >
-        {isMentee ? (
-          <RegisterMenteeForm onSubmit={(formData) => console.log(formData)} />
-        ) : (
-          <RegisterMentorForm />
-        )}
+        {isMentee ? <RegisterMenteeForm /> : <RegisterMentorForm />}
       </Paper>
     </Paper>
   );
