@@ -6,7 +6,10 @@ import * as api from '../../services/api';
 import {
   SubmitMentorRegistrationAction,
   SubmitMentorRegistrationPayload,
+  SubmitStudentRegistrationAction,
+  SubmitStudentRegistrationPayload,
   SUBMIT_MENTOR_REGISTRATION,
+  SUBMIT_STUDENT_REGISTRATION,
 } from './registration.types';
 import { User } from '../user/user.types';
 
@@ -30,15 +33,51 @@ function* hanldeSubmitMentorRegistration(
     } = action;
     const url = '/api/v1/mentor-registration/';
     const data = { ...mentorRegistraionForm };
-    const res: AxiosResponse<{ data: User }> = yield api.post<{ data: User }>(
-      url,
-      { data }
-    );
+    const res: AxiosResponse<User> = yield api.post<User>(url, { data });
 
     if (res.status === 201) {
-      debugger;
-      const user = res.data.data;
-      yield put(setUser({ ...user }));
+      const user = res.data;
+      yield put(setUser(user));
+      navigateFunction('/dashboard');
+    } else {
+      navigateFunction('/');
+    }
+  } catch (e) {
+    console.error('Could not register mentor', e);
+  }
+}
+
+/*
+ * Student registration actions
+ */
+export const submitStudentRegistration = (
+  payload: SubmitStudentRegistrationPayload
+): SubmitStudentRegistrationAction => ({
+  type: SUBMIT_STUDENT_REGISTRATION,
+  payload,
+});
+
+export function* watchSubmitStudentRegistration() {
+  yield takeLatest(
+    SUBMIT_STUDENT_REGISTRATION,
+    hanldeSubmitStudentRegistration
+  );
+}
+
+function* hanldeSubmitStudentRegistration(
+  action: SubmitStudentRegistrationAction
+) {
+  try {
+    const {
+      payload: { studentRegistrationForm, navigateFunction },
+    } = action;
+    const url = '/api/v1/student-registration/';
+    const data = { ...studentRegistrationForm };
+    const res: AxiosResponse<User> = yield api.post<User>(url, { data });
+
+    if (res.status === 201) {
+      const user = res.data;
+      yield put(setUser(user));
       navigateFunction('/dashboard');
     } else {
       navigateFunction('/');

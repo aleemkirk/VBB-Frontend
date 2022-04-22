@@ -1,7 +1,7 @@
-import { LOGOUT } from '../logout/logout.types';
+import { LOGOUT, LogoutAction } from '../logout/logout.types';
 import { UserActions, SET_USER, User } from './user.types';
 
-export const initUser = {
+const initUser = {
   email: '',
   name: '',
   username: '',
@@ -12,7 +12,10 @@ export const initUser = {
   isMentor: false,
 };
 
-export const user = (state = initUser, action: UserActions): User => {
+export const user = (
+  state = initUser,
+  action: UserActions | LogoutAction
+): User => {
   switch (action.type) {
     case LOGOUT:
       return initUser;

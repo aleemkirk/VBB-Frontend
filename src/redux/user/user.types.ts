@@ -1,9 +1,7 @@
 import { Career } from '../careers/careers.types';
 import { Language } from '../language/language.types';
 import { Library } from '../library/library.types';
-import { LogoutAction } from '../logout/logout.types';
 import { Subject } from '../subjects/subjects.types';
-import { initUser } from './user.reducer';
 
 export const SET_USER = 'SET_USER';
 
@@ -13,16 +11,16 @@ export interface SetUserAction {
 }
 
 export interface User {
-  email: string;
+  email?: string;
   name: string;
-  username: string;
+  username?: string;
   timeZone: string;
   isStudent: boolean;
   isLibrarian: boolean;
   isMentor: boolean;
-  dateOfBirth: string;
+  dateOfBirth: string | null;
   mentorProfile?: MentorProfile;
-  studentProfile?: {};
+  studentProfile?: StudentProfile;
 }
 
 export interface MentorProfile {
@@ -38,10 +36,18 @@ export interface MentorProfile {
   approvalStatus: ApprovalStatus;
 }
 
+export interface StudentProfile {
+  assignedLibrary: Library;
+  careersOfInterest: Career[];
+  mentoringLanguages: Language[];
+  subjects: Subject[];
+}
+
 // Values are kept in backend
 enum ApprovalStatus {
   APPROVED = 'Approved',
   NOT_REVIEWED = 'Not Reviewed',
   REJECTED = 'Rejected',
 }
-export type UserActions = SetUserAction | LogoutAction;
+
+export type UserActions = SetUserAction;

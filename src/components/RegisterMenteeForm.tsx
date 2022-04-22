@@ -1,17 +1,41 @@
 import { Button, Grid, MenuItem, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { submitStudentRegistration } from '../redux/actions';
 import formToJson from '../utils/formToJson';
+import CareerDropdown from './CareerDropdown';
 import MultipleSelect from './MultipleSelect';
+import SubjectDropdown from './SubjectDropdown';
+import TimezonesDropdown from './TimezoneSelect';
 
-interface RegisterMenteeFormProps {
-  onSubmit: (formData: ReturnType<typeof formToJson>) => void;
-}
+const defaultForm = {
+  careersOfInterest: [] as number[],
+  interests: '',
+  libraryCode: '',
+  mentoringLanguages: [] as number[],
+  name: '',
+  password: '',
+  subjects: [] as number[],
+  timezone: '',
+  username: '',
+};
 
-const RegisterMenteeForm = (props: RegisterMenteeFormProps) => {
+const RegisterMenteeForm = () => {
+  const [formValue, setFormValue] = useState(defaultForm);
+  const navigateFunction = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        props.onSubmit(formToJson(e.target as HTMLFormElement));
+        dispatch(
+          submitStudentRegistration({
+            studentRegistrationForm: formValue,
+            navigateFunction,
+          })
+        );
       }}
     >
       <Grid container spacing={3}>
@@ -23,26 +47,33 @@ const RegisterMenteeForm = (props: RegisterMenteeFormProps) => {
             fullWidth
             required
             variant="standard"
-            label="First Name"
-            name="firstName"
+            label="Name"
+            name="name"
+            value={formValue.name}
+            onChange={(e) => {
+              setFormValue({ ...formValue, name: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            variant="standard"
-            label="Last Name (or last initial)"
-            name="lastName"
+          <TimezonesDropdown
+            selectedTimezone={formValue.timezone}
+            handleSelectTimezone={(timezone) =>
+              setFormValue({ ...formValue, timezone: timezone })
+            }
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
             required
-            type="email"
             variant="standard"
-            label="My Program Director's Email"
-            name="programDirectorEmail"
+            label="Library Code"
+            name="libraryCode"
+            value={formValue.libraryCode}
+            onChange={(e) => {
+              setFormValue({ ...formValue, libraryCode: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -52,6 +83,10 @@ const RegisterMenteeForm = (props: RegisterMenteeFormProps) => {
             required
             label="Username"
             name="username"
+            value={formValue.username}
+            onChange={(e) => {
+              setFormValue({ ...formValue, username: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -62,52 +97,27 @@ const RegisterMenteeForm = (props: RegisterMenteeFormProps) => {
             required
             label="Password"
             name="password"
+            value={formValue.password}
+            onChange={(e) => {
+              setFormValue({ ...formValue, password: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            variant="standard"
-            type="password"
-            fullWidth
-            required
-            label="Verify Password"
-            name="verifyPassword"
+          <SubjectDropdown
+            selectedSubjects={formValue.subjects}
+            handleSelectSubjects={(subjectIds) =>
+              setFormValue({ ...formValue, subjects: subjectIds })
+            }
           />
         </Grid>
         <Grid item xs={12}>
-          <MultipleSelect label="Subjects I'm interested in" name="subjects">
-            {[
-              'ESL',
-              'Elementary School Math',
-              'High School Math',
-              'Reading for Beginners',
-              'Elementary English',
-              'Physics',
-              'Chemistry',
-              'Biology',
-              'Earth Science',
-              'Business',
-              'Computer Skills',
-            ].map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </MultipleSelect>
-        </Grid>
-        <Grid item xs={12}>
-          <MultipleSelect label="Careers I'm interested in" name="careers">
-            {[
-              'Information Technology',
-              'Business and Finance',
-              'Education and Training',
-              'Architecture and Construction',
-            ].map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </MultipleSelect>
+          <CareerDropdown
+            selectedCareers={formValue.careersOfInterest}
+            handleSelectCareers={(careerIds) =>
+              setFormValue({ ...formValue, careersOfInterest: careerIds })
+            }
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -116,6 +126,10 @@ const RegisterMenteeForm = (props: RegisterMenteeFormProps) => {
             variant="standard"
             label="Other subject and career interests"
             name="other"
+            value={formValue.interests}
+            onChange={(e) => {
+              setFormValue({ ...formValue, interests: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12}>

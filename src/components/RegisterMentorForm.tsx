@@ -19,8 +19,6 @@ import SubjectDropdown from './SubjectDropdown';
 import TimezonesDropdown from './TimezoneSelect';
 import DateOfBirthSelector from './DateOfBirthSelect';
 
-interface Props {}
-
 const defaultForm = {
   careers: [] as number[],
   mentoringLanguages: [] as number[],
@@ -35,7 +33,7 @@ const defaultForm = {
   dateOfBirth: '', // dd/MM/yyyy
 };
 
-const RegisterMentorForm = ({}: Props) => {
+const RegisterMentorForm = () => {
   const navigateFunction = useNavigate();
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState(defaultForm);
@@ -58,8 +56,7 @@ const RegisterMentorForm = ({}: Props) => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h4">Register</Typography>
-          <Typography variant="h3">Welcome {user.name}!</Typography>
-          <Typography variant="h3">Primary Email: {user.email}</Typography>
+          <Typography variant="h3">Welcome {user.email}!</Typography>
         </Grid>
         <Grid item xs={12}>
           <TextField

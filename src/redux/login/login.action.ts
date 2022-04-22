@@ -31,11 +31,13 @@ function* handleLogin(action: LOGIN_ACTION) {
       data,
     });
 
-    const user = res.data;
-    debugger;
-    yield put(setUser({ ...user }));
     if (res.status === 200) {
-      navigateFunction('/complete-registration');
+      const user = res.data;
+      yield put(setUser(user));
+      if (user.isMentor && !user.mentorProfile) {
+        navigateFunction('/complete-registration');
+      }
+      navigateFunction('/dashboard');
     } else {
       navigateFunction('/');
     }
@@ -57,9 +59,9 @@ function* handleAutoLogin(action: AUTO_LOGIN_ACTION) {
   try {
     const url = '/api/v1/users/me';
     const res: AxiosResponse<User> = yield api.get<User>(url);
-    const user = res.data;
-    yield put(setUser({ ...user }));
     if (res.status === 200) {
+      const user = res.data;
+      yield put(setUser(user));
       navigateFunction('/complete-registration');
     } else {
       navigateFunction('/');
