@@ -31,8 +31,17 @@ const SessionCard = ({ session, onCheckIn }: SessionProps) => (
         alignItems: 'center',
         flexWrap: 'wrap',
     }}>
-        {session.dayOfWeek} <AccessTimeIcon /> {session.timeOfDay}
-        <PersonIcon/> {session.mentor ? session.mentor : <div style={{color:'grey'}}>'Not paired with a mentor'</div >}
+        <div style={{ flex: '0 0 100px'}}> 
+            {session.dayOfWeek}
+        </div>
+         <AccessTimeIcon /> 
+         <div style={{ flex: '0 0 100px', marginLeft: '10px',}}> 
+            {session.timeOfDay}
+        </div>
+        <PersonIcon/> 
+        <div style={{ flex: '1 1 auto', marginLeft: '10px',}}> 
+            {session.mentor ? session.mentor : <div style={{color:'grey'}}>Not paired with a mentor</div >}
+        </div>
       </div>
     }
       avatar={<CalendarMonthIcon />}
