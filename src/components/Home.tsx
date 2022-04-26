@@ -12,6 +12,9 @@ const Home = () => (
     <Grid item xs={12}>
       <Link to="/advisor">Advisor Index</Link>
     </Grid>
+    <Grid item xs={12}>
+      <Link to="/student">Student Index</Link>
+    </Grid>
   </Grid>
 );
 
