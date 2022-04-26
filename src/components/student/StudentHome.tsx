@@ -6,13 +6,20 @@ import { useState } from 'react';
 const fakeSessions: Session[] = [
     {
         title: 'Session 1',
+        dayOfWeek: 'Monday', 
+        timeOfDay: '1:00 pm',
     },
     {
         title: 'Session 2',
-        meetingLink:'xyz-ABC'
+        meetingLink:'xyz-ABC',
+        dayOfWeek: 'Tuesday', 
+        timeOfDay: '5:00 pm',
+        mentor: 'John Doe',
     },
     {
         title: 'Session 2',
+        dayOfWeek: 'Wednesday', 
+        timeOfDay: '8:00 am',
     },
 ];
 
