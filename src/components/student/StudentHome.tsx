@@ -23,6 +23,18 @@ const fakeSessions: Session[] = [
     },
 ];
 
+
+const EmptySessionMsg = () => {
+
+    return (
+        <Grid item xs={12} pb={2}>
+            <Typography variant="body1">
+                You haven't booked any sessions yet. <Link to='/student/booking'>Book</Link> your sessions now!
+            </Typography>
+        </Grid>
+    );
+};
+
 const StudentHome = () => {
 
     const [checkIn, setCheckIn] = useState<boolean | null>(null);
@@ -35,7 +47,7 @@ const StudentHome = () => {
             <Grid item xs={12}>
             <Typography variant="h4">Upcomming Sessions</Typography>
             </Grid>
-                {fakeSessions.map((session) => (
+                {fakeSessions.length == 0 ? <EmptySessionMsg/> : fakeSessions.map((session) => (
                     <Grid item xs={12}>
                     <SessionCard
                         session={session}
@@ -48,3 +60,4 @@ const StudentHome = () => {
 };
 
 export default StudentHome;
+
