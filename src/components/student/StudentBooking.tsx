@@ -11,7 +11,50 @@ export interface CalendarEvent {
   title: ReactNode;
   start: Date;
   end: Date;
+  computerID?: string;
+  mentor?: string;
+  student?: string;
 }
+
+export interface SlotSessions {
+  id: string;
+  start: Date;
+  end: Date;
+  availableSessions: CalendarEvent[];
+}
+
+////Dummy Data
+const events: CalendarEvent[] = [
+  {
+    id: '0',
+    color: '#9eded0',
+    title: (
+      <Box display="flex" alignItems="center">
+        <ComputerIcon /> 2
+      </Box>
+    ),
+    start: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
+    end: DateTime.now()
+      .set({ hour: 12, minute: 0 })
+      .plus({ hour: 1 })
+      .toJSDate(),
+  },
+  // {
+  //   id: '1',
+  //   color: '#d6e2f0',
+  //   title: (
+  //     <Box display="flex" alignItems="center">
+  //       <ComputerIcon /> 1
+  //     </Box>
+  //   ),
+  //   start: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
+  //   end: DateTime.now()
+  //     .set({ hour: 12, minute: 0 })
+  //     .plus({ hour: 1 })
+  //     .toJSDate(),
+  // },
+]
+
 
 export const isCalendarEvent = (
   event: CalendarEvent | SlotInfo | null
@@ -20,6 +63,7 @@ export const isCalendarEvent = (
 };
 
 const localizer = luxonLocalizer(DateTime);
+
 
 const StudentBooking = () => {
   const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
@@ -30,36 +74,7 @@ const StudentBooking = () => {
         localizer={localizer}
         defaultView={Views.WEEK}
         views={[Views.WEEK, Views.DAY, Views.AGENDA]}
-        events={[
-          {
-            id: '0',
-            color: '#9eded0',
-            title: (
-              <Box display="flex" alignItems="center">
-                <ComputerIcon /> 2
-              </Box>
-            ),
-            start: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
-            end: DateTime.now()
-              .set({ hour: 12, minute: 0 })
-              .plus({ hour: 1 })
-              .toJSDate(),
-          },
-          {
-            id: '1',
-            color: '#d6e2f0',
-            title: (
-              <Box display="flex" alignItems="center">
-                <ComputerIcon /> 1
-              </Box>
-            ),
-            start: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
-            end: DateTime.now()
-              .set({ hour: 12, minute: 0 })
-              .plus({ hour: 1 })
-              .toJSDate(),
-          },
-        ]}
+        events={events}
         eventPropGetter={(event, start, end, isSelected) => ({
           style: { backgroundColor: event.color, color: 'black' },
         })}
