@@ -21,9 +21,10 @@ import {
   PersonAdd,
   PhotoCameraFront,
 } from '@mui/icons-material';
+import { SlotSessions } from '../student/StudentBooking';
 
 interface EventModalProps {
-  eventOrSlot: CalendarEvent | SlotInfo | null;
+  eventOrSlot: CalendarEvent | SlotInfo | null | SlotSessions;
   onClose: () => void;
 }
 

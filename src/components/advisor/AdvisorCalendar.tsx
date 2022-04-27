@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import EventModal from '../shared/EventModal';
 import { Box } from '@mui/material';
 import { Computer as ComputerIcon } from '@mui/icons-material';
+import { SlotSessions } from '../student/StudentBooking';
 
 export interface CalendarEvent {
   id: string;
@@ -14,7 +15,7 @@ export interface CalendarEvent {
 }
 
 export const isCalendarEvent = (
-  event: CalendarEvent | SlotInfo | null
+  event: CalendarEvent | SlotInfo | null | SlotSessions
 ): event is CalendarEvent => {
   return event ? 'id' in event : false;
 };
