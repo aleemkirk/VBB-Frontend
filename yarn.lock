@@ -8348,10 +8348,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "luxon@npm:2.3.1"
-  checksum: ce5eec873a0172a0956618531e28010e8d8319a8b3a836b893d0f92239413a1fc5f77841ca24988e27bd61e8b2748e160e9dfcb13e92d7f031c1e31ad1c8ae91
+"luxon@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "luxon@npm:2.3.2"
+  checksum: ba4f9daa56d03771c2ddf00e3bf996ec7937badfdc2f85f5b58d63c75bb511369b3316f54ab9ce5ab42bfc9118513971f6599128529b68620b876a4b7c16570b
   languageName: node
   linkType: hard
 
@@ -10305,9 +10305,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-big-calendar@npm:^0.40.0":
-  version: 0.40.0
-  resolution: "react-big-calendar@npm:0.40.0"
+"react-big-calendar@npm:^0.40.1":
+  version: 0.40.1
+  resolution: "react-big-calendar@npm:0.40.1"
   dependencies:
     "@babel/runtime": ^7.17.2
     clsx: ^1.1.1
@@ -10324,7 +10324,7 @@ __metadata:
     moment: ^2.29.1
     react: ^16.14.0 || ^17
     react-dom: ^16.14.0 || ^17
-  checksum: 0a0087c6b5275098c5bbf404b42ceb959dce8b8dd88b9145dd91c7fe584c18a18e3d74adc5b5acf1181a4c9ff76720f19ff977d2084c083abc21b77c32022b50
+  checksum: 70a3602e18d2cea11975b0b22e0b5e0b5c4d6b795182d5f6c7a79ea0c668b2cbd96c24145f2005c84b70481f73afa4cbb4b336db0d5b2ae6b79759f624dfb53e
   languageName: node
   linkType: hard
 
@@ -12321,9 +12321,9 @@ __metadata:
     "@types/testing-library__jest-dom": ^5.14.3
     eslint-config-react-app: ^7.0.1
     jest-watch-typeahead: ^1.0.0
-    luxon: ^2.3.1
+    luxon: ^2.3.2
     react: ^18.0.0
-    react-big-calendar: ^0.40.0
+    react-big-calendar: ^0.40.1
     react-dom: ^18.0.0
     react-redux: ^7.2.8
     react-router-dom: ^6.3.0
