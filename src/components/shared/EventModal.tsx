@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { SlotInfo } from 'react-big-calendar';
 import Modal from './Modal';
-import { CalendarEvent, isCalendarEvent } from '../librarian/LibrarianCalendar';
+import { CalendarEvent, isCalendarEvent } from '../advisor/AdvisorCalendar';
 import {
   AccessTime,
   Computer,
