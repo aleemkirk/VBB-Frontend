@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/rootReducer';
-import * as actions from '../redux/actions';
-import { Career } from '../redux/careers/careers.types';
+import { AppState } from '../../redux/rootReducer';
+import * as actions from '../../redux/actions';
+import { Career } from '../../redux/careers/careers.types';
 
 const careerOptions = (careers: Career[]) =>
   careers.map((career) => (

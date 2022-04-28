@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { submitStudentRegistration } from '../redux/actions';
 import formToJson from '../utils/formToJson';
-import CareerDropdown from './CareerDropdown';
+import CareerDropdown from './shared/CareerDropdown';
 import MultipleSelect from './MultipleSelect';
-import SubjectDropdown from './SubjectDropdown';
-import TimezonesDropdown from './TimezoneSelect';
+import SubjectDropdown from './shared/SubjectDropdown';
+import TimezonesDropdown from './shared/TimezoneSelect';
 
 const defaultForm = {
   careersOfInterest: [] as number[],

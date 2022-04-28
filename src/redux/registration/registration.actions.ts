@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import { setUser } from '../user/user.actions';
-import * as api from '../../services/api';
+import { vbbAPIV1 } from '../../services/api';
 
 import {
   SubmitMentorRegistrationAction,
@@ -31,12 +31,11 @@ function* hanldeSubmitMentorRegistration(
     const {
       payload: { mentorRegistraionForm, navigateFunction },
     } = action;
-    const url = '/api/v1/mentor-registration/';
+    const url = 'mentor-registration/';
     const data = { ...mentorRegistraionForm };
-    const res: AxiosResponse<User> = yield api.post<User>(url, { data });
-
-    if (res.status === 201) {
-      const user = res.data;
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
+    const user = res.data;
+    if (res.status === 201 && user) {
       yield put(setUser(user));
       navigateFunction('/dashboard');
     } else {
@@ -71,12 +70,12 @@ function* hanldeSubmitStudentRegistration(
     const {
       payload: { studentRegistrationForm, navigateFunction },
     } = action;
-    const url = '/api/v1/student-registration/';
+    const url = 'student-registration/';
     const data = { ...studentRegistrationForm };
-    const res: AxiosResponse<User> = yield api.post<User>(url, { data });
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
 
-    if (res.status === 201) {
-      const user = res.data;
+    const user = res.data;
+    if (res.status === 201 && user) {
       yield put(setUser(user));
       navigateFunction('/dashboard');
     } else {

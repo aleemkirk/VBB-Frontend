@@ -7,8 +7,8 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/rootReducer';
-import { getTimezones } from '../redux/actions';
+import { AppState } from '../../redux/rootReducer';
+import { getTimezones } from '../../redux/actions';
 
 const timezonesOptions = (timezones: string[]) =>
   timezones.map((timezone) => (

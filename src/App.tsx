@@ -4,8 +4,9 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import RegisterMentorForm from './components/RegisterMentorForm';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
+import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
+import LibrarianIndex from './components/librarian/LibrarianIndex';
 
 const App = () => (
   <>

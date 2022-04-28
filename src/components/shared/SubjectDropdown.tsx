@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/rootReducer';
-import * as actions from '../redux/actions';
-import { Subject } from '../redux/subjects/subjects.types';
+import { AppState } from '../../redux/rootReducer';
+import * as actions from '../../redux/actions';
+import { Subject } from '../../redux/subjects/subjects.types';
 
 const subjectOptions = (subjects: Subject[]) =>
   subjects.map((subject) => (

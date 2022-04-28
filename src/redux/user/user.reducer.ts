@@ -10,7 +10,7 @@ const initUser = {
   isStudent: false,
   isLibrarian: false,
   isMentor: false,
-};
+} as User;
 
 export const user = (
   state = initUser,

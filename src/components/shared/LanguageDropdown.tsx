@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/rootReducer';
-import { getLanguages } from '../redux/actions';
-import { Language } from '../redux/language/language.types';
+import { AppState } from '../../redux/rootReducer';
+import { getLanguages } from '../../redux/actions';
+import { Language } from '../../redux/language/language.types';
 
 const languageOptions = (languages: Language[]) =>
   languages.map((lang) => (

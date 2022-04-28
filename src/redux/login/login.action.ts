@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-import * as api from '../../services/api';
+import { vbbAPIV1 } from '../../services/api';
 import {
   AUTO_LOGIN,
   AUTO_LOGIN_ACTION,
@@ -24,15 +24,15 @@ export function* watchLogin() {
 function* handleLogin(action: LOGIN_ACTION) {
   try {
     const { username, password, navigateFunction } = action.payload;
-    const url = '/api/v1/login/';
+    const url = 'login/';
     const data = { username, password };
 
-    const res: AxiosResponse<User> = yield api.post<User>(url, {
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, {
       data,
     });
+    const user = res.data;
 
-    if (res.status === 200) {
-      const user = res.data;
+    if (res.status === 200 && user) {
       yield put(setUser(user));
       if (user.isMentor && !user.mentorProfile) {
         navigateFunction('/complete-registration');
@@ -57,12 +57,12 @@ export function* watchAutoLogin() {
 function* handleAutoLogin(action: AUTO_LOGIN_ACTION) {
   const navigateFunction = action.payload.navigateFunction;
   try {
-    const url = '/api/v1/users/me';
-    const res: AxiosResponse<User> = yield api.get<User>(url);
-    if (res.status === 200) {
-      const user = res.data;
+    const url = 'users/me';
+    const res: AxiosResponse<User> = yield vbbAPIV1.get<User>(url);
+    const user = res.data;
+    if (res.status === 200 && user) {
       yield put(setUser(user));
-      navigateFunction('/complete-registration');
+      navigateFunction('/dashboard');
     } else {
       navigateFunction('/');
     }
