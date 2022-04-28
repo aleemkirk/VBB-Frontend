@@ -1,4 +1,4 @@
-import { Badge, Grid, IconButton, MenuItem, Select } from '@mui/material';
+import { Badge, Grid, IconButton } from '@mui/material';
 import {
   Add,
   Computer as ComputerIcon,
@@ -6,23 +6,17 @@ import {
 } from '@mui/icons-material';
 import Computer from './Computer';
 import { Box } from '@mui/system';
+import SimpleModal from '../shared/SimpleModal';
+import { useState } from 'react';
 
-const fakePrograms = [
-  'AA Library / AA Program 1',
-  'BB Library / BB Program 2',
-  'CC Library / CC Program 3',
-];
 const fakeComputers = ['Computer 1', 'Computer 2', 'Computer 3'];
 
-const LibrarianComputers = () => {
+const AdvisorComputers = () => {
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
   return (
     <Grid container padding={2} spacing={1}>
       <Grid item xs={12} display="flex" alignItems="center">
-        <Select size="small" defaultValue={fakePrograms[0]}>
-          {fakePrograms.map((program) => (
-            <MenuItem value={program}>{program}</MenuItem>
-          ))}
-        </Select>
         <Box display="flex" ml={2} alignItems="center" mr="auto">
           <Badge badgeContent={3} color="info">
             <ComputerIcon />
@@ -37,11 +31,20 @@ const LibrarianComputers = () => {
       </Grid>
       {fakeComputers.map((computer) => (
         <Grid item xs={12}>
-          <Computer computer={computer} />
+          <Computer
+            computer={computer}
+            onDelete={() => setDeleteId(computer)}
+          />
         </Grid>
       ))}
+      <SimpleModal
+        open={Boolean(deleteId)}
+        onClose={() => setDeleteId(null)}
+        onSubmit={() => console.log('delete computer')}
+        title={`Are you sure you want to delete ${deleteId} from program?`}
+      />
     </Grid>
   );
 };
 
-export default LibrarianComputers;
+export default AdvisorComputers;

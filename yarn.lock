@@ -8404,7 +8404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^2.3.1":
+"luxon@npm:^2.3.2":
   version: 2.3.2
   resolution: "luxon@npm:2.3.2"
   checksum: ba4f9daa56d03771c2ddf00e3bf996ec7937badfdc2f85f5b58d63c75bb511369b3316f54ab9ce5ab42bfc9118513971f6599128529b68620b876a4b7c16570b
@@ -10370,7 +10370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-big-calendar@npm:^0.40.0":
+"react-big-calendar@npm:^0.40.1":
   version: 0.40.1
   resolution: "react-big-calendar@npm:0.40.1"
   dependencies:
@@ -12388,10 +12388,9 @@ __metadata:
     axios: ^0.26.1
     eslint-config-react-app: ^7.0.1
     jest-watch-typeahead: ^1.0.0
-    local-storage: ^2.0.0
-    luxon: ^2.3.1
+    luxon: ^2.3.2
     react: ^18.0.0
-    react-big-calendar: ^0.40.0
+    react-big-calendar: ^0.40.1
     react-dom: ^18.0.0
     react-redux: ^7.2.8
     react-router-dom: ^6.3.0

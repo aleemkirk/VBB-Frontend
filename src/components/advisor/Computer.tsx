@@ -3,9 +3,10 @@ import { Box, Button, Card, CardHeader } from '@mui/material';
 
 interface ComputerProps {
   computer: string;
+  onDelete?: () => void;
 }
 
-const Computer = ({ computer }: ComputerProps) => (
+const Computer = ({ computer, onDelete }: ComputerProps) => (
   <Card>
     <CardHeader
       title={computer}
@@ -13,7 +14,7 @@ const Computer = ({ computer }: ComputerProps) => (
       action={
         <Box display="flex" alignItems="center">
           <Button>Edit</Button>
-          <Button>Delete</Button>
+          <Button onClick={onDelete}>Delete</Button>
         </Box>
       }
     />
