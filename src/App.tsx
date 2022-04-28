@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import Librarian from './components/librarian/Librarian';
+import StudentIndex from './components/student/StudentIndex';
 
 const App = () => (
   <>
@@ -16,6 +17,7 @@ const App = () => (
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/librarian/*" element={<Librarian />} />
+        <Route path="/student/*" element={<StudentIndex />} />
       </Routes>
     </Box>
   </>

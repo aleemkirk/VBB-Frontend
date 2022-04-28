@@ -1,8 +1,12 @@
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import { render as tlRender } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
-const UIWithProviders: FC<{}> = ({ children }) => (
+interface Props {
+  children: ReactNode;
+}
+
+const UIWithProviders = ({ children }: Props) => (
   <BrowserRouter>{children}</BrowserRouter>
 );
 

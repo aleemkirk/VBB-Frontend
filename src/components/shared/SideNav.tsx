@@ -11,7 +11,7 @@ interface SideNavProps {
 }
 
 const testPath = (url: string, path: string) =>
-  path === '/' ? url === path : path.startsWith(url);
+  url.lastIndexOf('/') === 0 ? url === path : path.startsWith(url);
 
 const SideNav = ({ menuItems }: SideNavProps) => {
 
@@ -26,6 +26,7 @@ const SideNav = ({ menuItems }: SideNavProps) => {
         {menuItems?.map((item) => (
           // @ts-expect-error
           <MenuItem
+            key={item.url}
             value={item.url}
             component={Link}
             selected={testPath(item.url, pathname)}
