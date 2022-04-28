@@ -42,8 +42,6 @@ const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
     const [disable, setDisable] = useState<boolean>(true);
 
     const modaltitle = 'Book your sessions now';
-    const fakeStudents = ['Student 1', 'Student 2', 'Student 3'];
-    const fakeMentors = ['Mentor 1', 'Mentor 2', 'Mentor 3'];
     const hasAvailableSessions = isSlotSessions(sessions)
     const computerOptions = () => {
         var availableComps = []
@@ -51,10 +49,10 @@ const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
             for(var i=0; i < sessions.availableSessions.length; i++){
                 availableComps.push(sessions.availableSessions[i].computerID)
             }
-            if (availableComps.length == 0) return  ['none available'];
+            if (availableComps.length == 0) return  [];
             else return availableComps;
         }
-        else return ['none available'];        
+        else return [];        
     }
 
     return (
@@ -63,7 +61,7 @@ const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
         title={modaltitle}
         actions={
             <Box display="flex" justifyContent="center" width="100%">
-              <Button disabled={disable}>Book Session</Button>
+              <Button onClick={() => console.log('Submit Form')} disabled={disable}>Book Session</Button>
             </Box>
           }>
 
@@ -90,8 +88,8 @@ const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
           <TextField
             fullWidth
             label='Date'
-            placeholder={sessions ? sessions.start.toString() : undefined}
-            value={sessions ? sessions.start.toString() : undefined}
+            placeholder={sessions ? sessions.start.toString() : ''}
+            value={sessions ? sessions.start.toString() : ''}
             InputProps={{ startAdornment: <AccessTime /> }}
           />
         </Grid>
