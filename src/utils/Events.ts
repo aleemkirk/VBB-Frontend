@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { CalendarEvent } from '../components/EventModal';
+import { CalendarEvent } from './SessionInterfaces';
 
 
 export type Event = CalendarEvent;

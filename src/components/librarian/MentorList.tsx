@@ -1,8 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { AppState } from '../../redux/rootReducer';
-import { getMentorProfiles } from '../../utils/api';
-import {Profile} from '../../utils/Profile';
 import ProfileListView from '../shared/ProfileListView';
 import {getMentorList} from '../../redux/actions';
 

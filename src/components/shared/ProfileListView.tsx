@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import ProfileCard from '../shared/ProfileCard';
-import { getStduentProfles } from '../../utils/api';
 import {Profile} from '../../utils/Profile';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
