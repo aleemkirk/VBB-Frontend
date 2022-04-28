@@ -6,7 +6,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
-import LibrarianIndex from './components/librarian/LibrarianIndex';
 
 const App = () => (
   <>
