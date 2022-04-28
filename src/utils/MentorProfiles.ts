@@ -1,7 +1,8 @@
 import { ProfileTypes } from './Profile';
 
 export interface MentorProfile {
-    type?: ProfileTypes.MENTOR;
+    type: ProfileTypes.MENTOR;
+    id:string;
     firstName: string;
     lastName: string;
     isVerified: boolean;
@@ -14,6 +15,7 @@ export interface MentorProfile {
 
 export const MentorProfiles: MentorProfile[] = [
     {
+        id:'0',
         type: ProfileTypes.MENTOR,
         firstName: 'Sandra',
         lastName: 'Cook',
@@ -23,6 +25,7 @@ export const MentorProfiles: MentorProfile[] = [
         program: 'Program 2',
     },
     {
+        id:'1',
         type: ProfileTypes.MENTOR,
         firstName: 'Anthony',
         lastName: 'Smith',
@@ -32,15 +35,17 @@ export const MentorProfiles: MentorProfile[] = [
         program: 'Program 1',
     },
     {
+        id:'2',
         type: ProfileTypes.MENTOR,
         firstName: 'Joshua',
         lastName: 'Ricken',
         isVerified: false,
         interests: ['Nothing!'],
-        isBooked: false,
+        isBooked: true,
         program: 'Program 1',
     },
     {
+        id:'3',
         type: ProfileTypes.MENTOR,
         firstName: 'Kyle',
         lastName: 'Smoth',
@@ -50,6 +55,7 @@ export const MentorProfiles: MentorProfile[] = [
         program: 'Program 4',
     },
     {
+        id:'4',
         type: ProfileTypes.MENTOR,
         firstName: 'Michael',
         lastName: 'King',
@@ -59,6 +65,7 @@ export const MentorProfiles: MentorProfile[] = [
         program: 'Program 2',
     },
     {
+        id:'5',
         type: ProfileTypes.MENTOR,
         firstName: 'Michael2',
         lastName: 'King2',

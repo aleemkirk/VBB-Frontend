@@ -6,7 +6,7 @@ import { ProfileTypes, Gender } from './Profile';
 // export type Interests = typeof Interests
 
 export interface StudentProfile {
-    type?: ProfileTypes.STUDENT;
+    type: ProfileTypes.STUDENT;
     id:string;
     userName: string;
     firstName: string;
@@ -24,6 +24,7 @@ export interface StudentProfile {
 
 export var studentProfiles: StudentProfile[] = [
     {
+        type: ProfileTypes.STUDENT,
         id: '0',
         userName: 'alKhan',
         firstName: 'Aleem',
@@ -35,6 +36,7 @@ export var studentProfiles: StudentProfile[] = [
         isBooked: true, 
     },
     {
+        type: ProfileTypes.STUDENT,
         id: '1',
         userName: 'JoeB',
         firstName: 'Joe',
@@ -45,6 +47,7 @@ export var studentProfiles: StudentProfile[] = [
         isVerified: true,
     },
     {
+        type: ProfileTypes.STUDENT,
         id: '2',
         userName: 'rose1',
         firstName: 'Axl',
@@ -56,6 +59,7 @@ export var studentProfiles: StudentProfile[] = [
         isBooked: true, 
     },
     {
+        type: ProfileTypes.STUDENT,
         id: '3',
         userName: 'JJC',
         firstName: 'John',
@@ -66,6 +70,7 @@ export var studentProfiles: StudentProfile[] = [
         isVerified: false, 
     },
     {
+        type: ProfileTypes.STUDENT,
         id: '4',
         userName: 'Slash90',
         firstName: 'Saul',
@@ -77,6 +82,7 @@ export var studentProfiles: StudentProfile[] = [
         isBooked: true, 
     },
     {
+        type: ProfileTypes.STUDENT,
         id: '5',
         userName: 'DGil',
         firstName: 'David',

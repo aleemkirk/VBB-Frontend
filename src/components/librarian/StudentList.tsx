@@ -15,7 +15,7 @@ const StudentList = () => {
     
 
     return(
-        <ProfileListView profileList={studentProfiles}/>
+        <ProfileListView verify profileList={studentProfiles}/>
     );
 
 };

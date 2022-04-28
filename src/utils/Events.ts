@@ -1,5 +1,12 @@
 import { DateTime } from 'luxon';
-import { CalendarEvent } from './SessionInterfaces';
+
+
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+}
 
 
 export type Event = CalendarEvent;

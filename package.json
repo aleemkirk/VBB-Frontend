@@ -21,6 +21,7 @@
     "eslint-config-react-app": "^7.0.1",
     "jest-watch-typeahead": "^1.0.0",
     "luxon": "^2.3.2",
+    "moment": "^2.29.3",
     "react": "^18.0.0",
     "react-big-calendar": "^0.40.1",
     "react-dom": "^18.0.0",

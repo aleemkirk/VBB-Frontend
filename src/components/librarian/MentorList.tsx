@@ -20,7 +20,7 @@ const MentorList = () => {
     }, [mentorList]);
 
     return(
-        <ProfileListView profileList={mentorList}/>  
+        <ProfileListView  profileList={mentorList}/>  
     );
 };
 
