@@ -13,10 +13,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../redux/rootReducer';
 import { useNavigate } from 'react-router-dom';
 import { submitMentorRegistration } from '../redux/actions';
-import LanguageDropdown from './LanguageDropdown';
-import CareerDropdown from './CareerDropdown';
-import SubjectDropdown from './SubjectDropdown';
-import TimezonesDropdown from './TimezoneSelect';
+import LanguageDropdown from './shared/LanguageDropdown';
+import CareerDropdown from './shared/CareerDropdown';
+import SubjectDropdown from './shared/SubjectDropdown';
+import TimezonesDropdown from './shared/TimezoneSelect';
 import DateOfBirthSelector from './DateOfBirthSelect';
 
 const defaultForm = {
