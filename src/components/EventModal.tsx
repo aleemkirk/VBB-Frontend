@@ -1,12 +1,25 @@
 import { Box, Button } from '@mui/material';
 import { SlotInfo } from 'react-big-calendar';
 import Modal from './shared/Modal';
-import { CalendarEvent, isCalendarEvent } from './Advisor/AdvisorCalendar';
+
 
 interface EventModalProps {
   eventOrSlot: CalendarEvent | SlotInfo | null;
   onClose: () => void;
 }
+
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+}
+
+export const isCalendarEvent = (
+  event: CalendarEvent | SlotInfo | null
+): event is CalendarEvent => {
+  return event ? 'id' in event : false;
+};
 
 const EventModal = ({ eventOrSlot, onClose }: EventModalProps) => {
   const isEvent = isCalendarEvent(eventOrSlot);

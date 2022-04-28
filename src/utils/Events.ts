@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { CalendarEvent } from '../components/Advisor/AdvisorCalendar';
+import { CalendarEvent } from '../components/EventModal';
 
 
 export type Event = CalendarEvent;

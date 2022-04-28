@@ -2,7 +2,7 @@ import { studentProfiles } from './StudentProfileData';
 import {Profile} from '../utils/Profile';
 import {Events} from '../utils/Events';
 import { MentorProfiles } from './MentorProfiles';
-import { CalendarEvent } from '../components/Advisor/AdvisorCalendar';
+import { CalendarEvent } from '../components/EventModal';
 import { Announcement, announcements } from '../utils/Announcements';
 
 
