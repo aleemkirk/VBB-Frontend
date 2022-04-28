@@ -7,6 +7,8 @@ import { Computer as ComputerIcon } from '@mui/icons-material';
 import { Card, Grid, Typography } from '@mui/material';
 import StudentBookingModal from './StudentBookingModal';
 
+//TODO: 1. MOVE ALL SHARED INTERFACES, 2. Create Session Interface
+
 export interface CalendarEvent {
   id: string;
   color: string;
