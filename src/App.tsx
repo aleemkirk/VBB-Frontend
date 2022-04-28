@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import Librarian from './components/Librarian/Librarian';
+import Librarian from './components/librarian/Librarian';
 
 const App = () => (
   <>
