@@ -4,7 +4,6 @@ import {
     AccessTime as AccessTimeIcon 
 } from '@mui/icons-material';
 import { Box, Button, Card, CardHeader } from '@mui/material';
-import { CalendarEvent } from '../advisor/AdvisorCalendar';
 
 //TODO: Move shared interfaces
 export interface Session {
