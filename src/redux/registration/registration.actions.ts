@@ -21,18 +21,18 @@ export const submitMentorRegistration = (
 });
 
 export function* watchSubmitMentorRegistration() {
-  yield takeLatest(SUBMIT_MENTOR_REGISTRATION, hanldeSubmitMentorRegistration);
+  yield takeLatest(SUBMIT_MENTOR_REGISTRATION, handleSubmitMentorRegistration);
 }
 
-function* hanldeSubmitMentorRegistration(
+function* handleSubmitMentorRegistration(
   action: SubmitMentorRegistrationAction
 ) {
   try {
     const {
-      payload: { mentorRegistraionForm, navigateFunction },
+      payload: { mentorRegistrationForm, navigateFunction },
     } = action;
     const url = 'mentor-registration/';
-    const data = { ...mentorRegistraionForm };
+    const data = { ...mentorRegistrationForm };
     const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
     const user = res.data;
     if (res.status === 201 && user) {

@@ -1,7 +1,7 @@
 import { NavigateFunction } from 'react-router-dom';
 
 export const SUBMIT_MENTOR_REGISTRATION = 'SUBMIT_MENTOR_REGISTRATION';
-export interface MentorRegistraionForm {
+export interface MentorRegistrationForm {
   careers: number[];
   mentoringLanguages: number[];
   subjects: number[];
@@ -16,21 +16,21 @@ export interface MentorRegistraionForm {
 }
 
 export interface SubmitMentorRegistrationPayload {
-  mentorRegistrationForm: MentorRegistraionForm;
+  mentorRegistrationForm: MentorRegistrationForm;
   navigateFunction: NavigateFunction;
 }
 
 export interface SubmitMentorRegistrationAction {
   type: typeof SUBMIT_MENTOR_REGISTRATION;
   payload: {
-    mentorRegistraionForm: MentorRegistraionForm;
+    mentorRegistrationForm: MentorRegistrationForm;
     navigateFunction: NavigateFunction;
   };
 }
 
 export const SUBMIT_STUDENT_REGISTRATION = 'SUBMIT_STUDENT_REGISTRATION';
 
-export interface StudentRegistraionForm {
+export interface StudentRegistrationForm {
   careersOfInterest: number[];
   interests: string;
   libraryCode: string;
@@ -42,7 +42,7 @@ export interface StudentRegistraionForm {
   username: string;
 }
 export interface SubmitStudentRegistrationPayload {
-  studentRegistrationForm: StudentRegistraionForm;
+  studentRegistrationForm: StudentRegistrationForm;
 
   navigateFunction: NavigateFunction;
 }
