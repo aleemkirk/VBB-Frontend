@@ -9,15 +9,12 @@ export const initErrors = {
   },
 };
 
-export const errors = (
-  state = initErrorState,
-  action: ErrorActions
-): Errors => {
+export const errors = (state = initErrors, action: ErrorActions): Errors => {
   switch (action.type) {
     case SET_ERRORS:
       return action.payload;
     case CLEAR_ERRORS:
-      return initErrorState;
+      return initErrors;
     default:
       return state;
   }

@@ -10,7 +10,7 @@ const defaultForm = {
   password: '',
 };
 
-const RegisterMentorForm = () => {
+const MentorSignUpForm = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const errors = useSelector((state: AppState) => state.errors);
@@ -21,6 +21,7 @@ const RegisterMentorForm = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        console.log({ formValue });
         // redux action
       }}
     >
@@ -75,4 +76,4 @@ const RegisterMentorForm = () => {
   );
 };
 
-export default RegisterMentorForm;
+export default MentorSignUpForm;
