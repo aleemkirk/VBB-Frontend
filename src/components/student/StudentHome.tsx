@@ -1,28 +1,11 @@
 import { Card, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SessionCard from './Session';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Session } from '../../utils/Session';
+import { getSessions } from '../../utils/api';
 
-const fakeSessions: Session[] = [
-    {
-        title: 'Session 1',
-        dayOfWeek: 'Monday', 
-        timeOfDay: '1:00 pm',
-    },
-    {
-        title: 'Session 2',
-        meetingLink:'xyz-ABC',
-        dayOfWeek: 'Tuesday', 
-        timeOfDay: '5:00 pm',
-        mentor: 'John Doe',
-    },
-    {
-        title: 'Session 2',
-        dayOfWeek: 'Wednesday', 
-        timeOfDay: '8:00 am',
-    },
-];
+
 
 
 const EmptySessionMsg = () => {
@@ -39,6 +22,7 @@ const EmptySessionMsg = () => {
 const StudentHome = () => {
 
     const [checkIn, setCheckIn] = useState<boolean | null>(null);
+    const fakeSessions = useMemo(()=>getSessions(), []);
     
     return (
         <Grid container padding={2} spacing={1}>

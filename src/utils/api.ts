@@ -3,7 +3,7 @@ import {Profile, ProfileTypes} from '../utils/Profile';
 import {Events, CalendarEvent} from '../utils/Events';
 import { MentorProfiles } from './MentorProfiles';
 import { Announcement, announcements } from '../utils/Announcements';
-import {Session, Sessions} from '../utils/Sessions';
+import {Session, Sessions} from './Session';
 
 
 
@@ -44,7 +44,8 @@ export const getStudentSessions = (id?:string):Session[] => {
     return Sessions.filter(session => session.studentID == id)
 }
 
-export const getSessions  = (userProfile:Profile) => {
+export const getSessions  = (userProfile?:Profile) => {
+    if(userProfile == undefined) return Sessions;
     if(userProfile.type == ProfileTypes.MENTOR) return getMentorSessions(userProfile.id);
     else if(userProfile.type == ProfileTypes.STUDENT) return getStudentSessions(userProfile.id);
     return [];

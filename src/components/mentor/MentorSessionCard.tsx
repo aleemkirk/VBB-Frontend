@@ -22,19 +22,19 @@ const MentorSessionCard = ({ session, onCheckIn }: SessionProps) => (
         flexWrap: 'wrap',
     }}>
         <div style={{ flex: '0 0 100px'}}> 
-            {session.dayOfWeek}
+            {session.start.toString()}
         </div>
          <AccessTimeIcon /> 
          <div style={{ flex: '0 0 100px', marginLeft: '10px',}}> 
-            {session.timeOfDay}
+            {session.end.toString()}
         </div>
         <PersonIcon/> 
         <div style={{ flex: '1 1 auto', marginLeft: '10px',}}> 
-            {session.mentor ? session.mentor : <div style={{color:'grey'}}>Not paired with a mentor</div >}
+            {session.mentorID ? session.mentorID : <div style={{color:'grey'}}>Not paired with a mentor</div >}
         </div>
       </div>
     }
-      avatar={<CalendarMonthIcon />}
+      avatar={<CalendarMonthIcon />} 
       action={
         <Box display="flex" alignItems="center">
           <Button onClick={onCheckIn}>{session.meetingLink ? 'Meeting Link' : 'Check In'}</Button>
