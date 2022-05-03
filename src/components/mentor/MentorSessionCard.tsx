@@ -2,7 +2,8 @@ import {
     CalendarMonth as CalendarMonthIcon, 
     Person as PersonIcon, 
     AccessTime as AccessTimeIcon 
-} from '@mui/icons-material';
+} 
+from '@mui/icons-material';
 import { Box, Button, Card, CardHeader } from '@mui/material';
 import { Session } from '../../utils/Session';
 import moment from 'moment';
@@ -24,11 +25,11 @@ const MentorSessionCard = ({ session, onCheckIn }: SessionProps) => (
         flexWrap: 'wrap',
     }}>
         <div style={{ flex: '0 0 150px'}}> 
-            { moment(session.start).format('dddd, h:mm a').toString()}
+            { moment(session.start).format('dddd, MMMM Do').toString()}
         </div>
          <AccessTimeIcon /> 
          <div style={{ flex: '0 0 150px', marginLeft: '10px',}}> 
-            {moment(session.end).format('dddd, h:mm a').toString()}
+            {moment(session.start).format('h:mm a').toString()}
         </div>
         <PersonIcon/> 
         <div style={{ flex: '1 1 auto', marginLeft: '10px',}}> 
