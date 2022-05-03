@@ -11,7 +11,7 @@ export interface StudentProfile {
     userName: string;
     firstName: string;
     lastName: string;
-    program: string;
+    libraryID: string;
     dob?: Date;
     interests: string[];
     isVerified: boolean;
@@ -29,7 +29,7 @@ export var studentProfiles: StudentProfile[] = [
         userName: 'alKhan',
         firstName: 'Aleem',
         lastName: 'Khan',
-        program: 'Program 1',
+        libraryID: '1',
         dob: new Date('1996, 10, 17'),
         interests: ['Mathematics', 'Physics', 'Science', 'Programming'],
         isVerified: true,
@@ -41,7 +41,7 @@ export var studentProfiles: StudentProfile[] = [
         userName: 'JoeB',
         firstName: 'Joe',
         lastName: 'Bonamassa',
-        program: 'Program 1',
+        libraryID: '1',
         dob: new Date('1996, 10, 17'),
         interests: ['Guitars', 'Cruises'],
         isVerified: true,
@@ -52,7 +52,7 @@ export var studentProfiles: StudentProfile[] = [
         userName: 'rose1',
         firstName: 'Axl',
         lastName: 'Rose',
-        program: 'Program 4',
+        libraryID: '4',
         dob: new Date('17, 10, 1981'),
         interests: ['Music', 'Piano'],
         isVerified: true,
@@ -64,7 +64,7 @@ export var studentProfiles: StudentProfile[] = [
         userName: 'JJC',
         firstName: 'John',
         lastName: 'Cale',
-        program: 'Program 2',
+        libraryID: '2',
         dob: new Date('17, 10, 1964'),
         interests: ['Blues', 'Rock'],
         isVerified: false, 
@@ -75,7 +75,7 @@ export var studentProfiles: StudentProfile[] = [
         userName: 'Slash90',
         firstName: 'Saul',
         lastName: 'Hudsen',
-        program: 'Program 1',
+        libraryID: '1',
         dob: new Date('17, 10, 1978'),
         interests: ['Rock', 'Blues'],
         isVerified: true,
@@ -87,7 +87,7 @@ export var studentProfiles: StudentProfile[] = [
         userName: 'DGil',
         firstName: 'David',
         lastName: 'Gilmour',
-        program: 'Program 1',
+        libraryID: '1',
         dob: new Date('17, 10, 1960'),
         interests: ['Prog Rock', 'Blues', 'psychedelic Rock'],
         isVerified: false,
