@@ -4,8 +4,8 @@ export const initErrors = {
   loginErrors: {
     message: '',
   },
-  mentorRegistrationErrors: {
-    email: '',
+  mentorSignUpErrors: {
+    message: '',
   },
 };
 
