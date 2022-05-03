@@ -1,7 +1,8 @@
 import { Card, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import SessionCard, {Session} from './Session';
+import SessionCard from './Session';
 import { useState } from 'react';
+import { Session } from '../../utils/Session';
 
 const fakeSessions: Session[] = [
     {

@@ -4,17 +4,8 @@ import {
     AccessTime as AccessTimeIcon 
 } from '@mui/icons-material';
 import { Box, Button, Card, CardHeader } from '@mui/material';
+import { Session } from '../../utils/Session';
 
-//TODO: Move shared interfaces
-export interface Session {
-    title:string;
-    dayOfWeek:string;
-    timeOfDay:string;
-    start?: Date;
-    end?: Date;
-    meetingLink?: string;
-    mentor?: string;
-}
 
 interface SessionProps {
   session: Session;
