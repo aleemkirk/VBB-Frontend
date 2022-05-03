@@ -6,16 +6,13 @@ import { Announcement, announcements } from '../utils/Announcements';
 import {Session, Sessions} from './Session';
 
 
-
-export const getStudentProfles = (program?: string):Profile[] => {
-    return studentProfiles;
-}
-
-
+//Events
 export const getEvents = (program?: string):CalendarEvent[] => {
     return Events
 }
+//--------------------------------------------------------------------------
 
+//Mentor Profiles
 export const getMentorProfiles = async (program?: string):Promise<Profile[]> => {
     const x = () => {
         return new Promise(resolve => {
@@ -26,10 +23,31 @@ export const getMentorProfiles = async (program?: string):Promise<Profile[]> => 
     return MentorProfiles;
 };
 
+export const getMentorProfile = (id?:string):Profile | undefined => {
+    if (id == undefined) return;
+    return MentorProfiles.filter(profile => profile.id == id)[0];
+}
+
+//--------------------------------------------------------------------------
+
+//Student Profiles
+export const getStudentProfles = (program?: string):Profile[] => {
+    return studentProfiles;
+}
+
+export const getStudentProfile = (id?:string):Profile | undefined => {
+    if (id == undefined) return;
+    return studentProfiles.filter(profile => profile.id == id)[0];
+}
+
+//--------------------------------------------------------------------------
+
+//Announcements
 export const getAnnounements = (program?: string):Announcement[] => {
     return announcements;
 }
 
+//--------------------------------------------------------------------------
 
 //Sessions
 export const getMentorSessions = (id?:string):Session[] => {
