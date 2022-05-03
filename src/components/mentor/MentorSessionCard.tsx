@@ -5,6 +5,8 @@ import {
 } from '@mui/icons-material';
 import { Box, Button, Card, CardHeader } from '@mui/material';
 import { Session } from '../../utils/Session';
+import moment from 'moment';
+import {getStudentProfile} from '../../utils/api';
 
 
 interface SessionProps {
@@ -21,23 +23,24 @@ const MentorSessionCard = ({ session, onCheckIn }: SessionProps) => (
         alignItems: 'center',
         flexWrap: 'wrap',
     }}>
-        <div style={{ flex: '0 0 100px'}}> 
-            {session.start.toString()}
+        <div style={{ flex: '0 0 150px'}}> 
+            { moment(session.start).format('dddd, h:mm a').toString()}
         </div>
          <AccessTimeIcon /> 
-         <div style={{ flex: '0 0 100px', marginLeft: '10px',}}> 
-            {session.end.toString()}
+         <div style={{ flex: '0 0 150px', marginLeft: '10px',}}> 
+            {moment(session.end).format('dddd, h:mm a').toString()}
         </div>
         <PersonIcon/> 
         <div style={{ flex: '1 1 auto', marginLeft: '10px',}}> 
-            {session.mentorID ? session.mentorID : <div style={{color:'grey'}}>Not paired with a mentor</div >}
+            {session.studentID ? <>{getStudentProfile(session.studentID)?.firstName + ' '+getStudentProfile(session.studentID)?.lastName}</> 
+            : <div style={{color:'grey'}}>Not paired with student</div >}
         </div>
       </div>
     }
-      avatar={<CalendarMonthIcon />} 
+      avatar={<CalendarMonthIcon />}
       action={
         <Box display="flex" alignItems="center">
-          <Button onClick={onCheckIn}>{session.meetingLink ? 'Meeting Link' : 'Check In'}</Button>
+          <Button onClick={onCheckIn}>{session.meetingLink ? 'Meeting Link' : 'No Meeting Link'}</Button>
         </Box>
       }
     />
