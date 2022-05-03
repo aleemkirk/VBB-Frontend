@@ -4,7 +4,6 @@ import {
     AccessTime as AccessTimeIcon 
 } from '@mui/icons-material';
 import { Box, Button, Card, CardHeader } from '@mui/material';
-import { CalendarEvent } from '../advisor/AdvisorCalendar';
 
 //TODO: Move shared interfaces
 export interface Session {
@@ -15,7 +14,6 @@ export interface Session {
     end?: Date;
     meetingLink?: string;
     mentor?: string;
-    student?:string;
 }
 
 interface SessionProps {
@@ -23,7 +21,7 @@ interface SessionProps {
   onCheckIn?: () => void;
 }
 
-const SessionCard = ({ session, onCheckIn }: SessionProps) => (
+const MentorSessionCard = ({ session, onCheckIn }: SessionProps) => (
   <Card>
     <CardHeader
       title={
@@ -55,4 +53,4 @@ const SessionCard = ({ session, onCheckIn }: SessionProps) => (
   </Card>
 );
 
-export default SessionCard;
+export default MentorSessionCard;

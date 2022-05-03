@@ -15,6 +15,9 @@ const Home = () => (
     <Grid item xs={12}>
       <Link to="/student">Student Index</Link>
     </Grid>
+    <Grid item xs={12}>
+      <Link to="/mentor">Mentor Index</Link>
+    </Grid>
   </Grid>
 );
 
