@@ -29,10 +29,11 @@ import { DateTime } from 'luxon';
     },
     {
       id:'2',
-      start: DateTime.local(2022, 4, 28, 8).toJSDate(),
-      end: DateTime.local(2022, 7, 28, 8).toJSDate(),
+      start: DateTime.local(2022, 5, 3, 13).toJSDate(),
+      end: DateTime.local(2022, 9, 3, 13).toJSDate(),
       libraryID:'1',
       mentorID:'1',
-      studentID: '5'
+      studentID: '5',
+      meetingLink: 'google.meet/abc-xyz-lmnop',
     },
   ]
