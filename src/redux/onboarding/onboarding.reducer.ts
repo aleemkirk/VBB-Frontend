@@ -5,9 +5,6 @@ import { Action, ActionType } from './onboarding.types';
 
 
 const initialState = 0;
-
-
-
 // export const changeTaskNo = (state = initialState, action: TAction) => {
 //     switch(action.type){
 //         case INCREMENT: return state + action.type;
@@ -26,9 +23,10 @@ const initialState = 0;
 // };
 
 export const addTaskNo = (state:number = initialState, action:Action) => {
+
   switch (action.type){
     case ActionType.ADD:
-      return state+action.payload;
+      return state+1;
 
     default:
       return state;

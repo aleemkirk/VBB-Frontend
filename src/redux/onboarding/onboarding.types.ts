@@ -29,15 +29,13 @@
 
 // export type TaskActions = GetTaskNo | SetTaskNo;
 
-
-
 export enum ActionType{
     ADD = 'addnumber',
   }
 
 export interface addAction {
     type: ActionType.ADD
-    payload: number
+    // payload: 1
   }
 
 export type Action = addAction

@@ -7,7 +7,9 @@ import { useState, useEffect } from 'react';
 import { AppState } from '../../../redux/rootReducer';
 import CloseIcon from '@mui/icons-material/Close';
 // import * as actions from '../../../redux/actions';
-import {addTask} from '../../../redux/actions';
+import * as actions from '../../../redux/actions';
+// import {addTask} from '../../../redux/actions';
+
 // import { bindActionCreators } from 'redux';
 // import {actions} from '../../../redux/onboarding/index'
 
@@ -66,19 +68,19 @@ const Onboarding = () => {
   };
 
   const [taskNumber, setTaskNumber]= useState(0);
-  const [checkArray, setCheckArray] = useState([false, false, false, false,false, false]);
-  const [bgcolor, setBgcolor] =useState([false, false, false, false,false, false]);
+  const [checkProcess, setProcess] = useState([false, false, false, false,false, false]);
+  // const [bgcolor, setBgcolor] =useState([false, false, false, false,false, false]);
  
   const incTaskNo = (i:number) =>{
-    if(taskState<6 && !checkArray[i]){
+    if(taskState<6 && !checkProcess[i]){
        
       // setTaskNumber((preNumver) => preNumver +1);
       // console.log('number'+taskNumber);
-     dispatch(addTask(1));
+     dispatch(actions.addTask());
       // addTask(1);
       console.log(taskState);
-      setCheckArray(prevState => prevState.map((temp, idex) => idex ===i? temp = true : temp));
-      setBgcolor(prevColor => prevColor.map((color, idex) => idex ===i? color = true : color));
+      setProcess(prevState => prevState.map((temp, idex) => idex ===i? temp = true : temp));
+      // setBgcolor(prevColor => prevColor.map((color, idex) => idex ===i? color = true : color));
     }
   }
   
@@ -101,7 +103,6 @@ const Onboarding = () => {
       <Typography>
        It looks like you have a couple more things to fill out before you can book your first
         mentoring session! Click each of the boxes below to complete your tasks ({taskState}/6)
-        {taskNumber}
       </Typography>
       </Box>
 
@@ -114,7 +115,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: bgcolor[0]? 'aliceblue': 'white',
+        backgroundColor: checkProcess[0]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -136,7 +137,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: bgcolor[1]? 'aliceblue': 'white',
+        backgroundColor: checkProcess[1]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -158,7 +159,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: bgcolor[2]? 'aliceblue': 'white',
+        backgroundColor: checkProcess[2]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -179,7 +180,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: bgcolor[3]? 'aliceblue': 'white',
+        backgroundColor: checkProcess[3]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -200,7 +201,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: bgcolor[4]? 'aliceblue': 'white',
+        backgroundColor: checkProcess[4]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -221,7 +222,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: bgcolor[5]? 'aliceblue': 'white',
+        backgroundColor: checkProcess[5]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
