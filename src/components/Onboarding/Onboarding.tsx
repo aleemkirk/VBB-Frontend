@@ -1,12 +1,11 @@
 import React from 'react';
-import MentorHeader from '../MentorHeader'; 
-import MentorSideBar from '../MentorSideBar';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid,  Typography, Box, Container, styled, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, FormControlLabel, Checkbox} from '@mui/material';
 import { useState, useEffect } from 'react';
-import { AppState } from '../../../redux/rootReducer';
+import { AppState } from '../../redux/rootReducer';
 import CloseIcon from '@mui/icons-material/Close';
-import * as actions from '../../../redux/actions';
+import * as actions from '../../redux/actions';
 
 //Approval Status Dialog 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -47,6 +46,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 const Onboarding = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const taskState = useSelector((state:AppState) => state.addTaskNo);
   const checkState = useSelector((state:AppState) => state.checkTaskNo);
@@ -65,20 +65,13 @@ const Onboarding = () => {
     if(taskState<6 && !checkState[i]){
      dispatch(actions.addTask());
      dispatch(actions.checkTask(i));
-     console.log(checkState);
+     
     }
   }
   
     return (
         <>
-      {/* <MentorHeader/> */}
-      <MentorSideBar/>
-      <Box sx={{
-        ml: 20,
-        mt: 10,
-        mr: 10
-      }}>
-
+      <Box>
         <Box sx={{
         border: 1,
         p:1,
@@ -97,7 +90,7 @@ const Onboarding = () => {
       sx={{
         border: 1,
         p:1,
-        height: 50,
+        height: 75,
         borderColor:'aliceblue',
         backgroundColor: checkState[0]? 'aliceblue': 'white',
        '&:hover': {
@@ -106,7 +99,6 @@ const Onboarding = () => {
         cursor: 'pointer',
       }, }}
       onClick={()=>incTaskNo(0)}>
-        
       <Typography>
         Click here to view mentor training resources
       </Typography>
@@ -119,7 +111,7 @@ const Onboarding = () => {
       <Box sx={{
         border: 1,
         p:1,
-        height: 50,
+        height: 75,
         borderColor:'aliceblue',
         backgroundColor: checkState[1]? 'aliceblue': 'white',
        '&:hover': {
@@ -128,7 +120,6 @@ const Onboarding = () => {
         cursor: 'pointer',
       }, }}
       onClick={()=>incTaskNo(1)}>
-
       <Typography>
         Click here to view the donations page (donations optional)
       </Typography>
@@ -137,11 +128,11 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='/mentor/profile' sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button onClick={() => navigate('/mentor/onboarding/profile')} sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box sx={{
         border: 1,
         p:1,
-        height: 50,
+        height: 75,
         borderColor:'aliceblue',
         backgroundColor: checkState[2]? 'aliceblue': 'white',
        '&:hover': {
@@ -162,7 +153,7 @@ const Onboarding = () => {
       <Box sx={{
         border: 1,
         p:1,
-        height: 50,
+        height: 75,
         borderColor:'aliceblue',
         backgroundColor: checkState[3]? 'aliceblue': 'white',
        '&:hover': {
@@ -183,7 +174,7 @@ const Onboarding = () => {
       <Box sx={{
         border: 1,
         p:1,
-        height: 50,
+        height: 75,
         borderColor:'aliceblue',
         backgroundColor: checkState[4]? 'aliceblue': 'white',
        '&:hover': {
@@ -204,7 +195,7 @@ const Onboarding = () => {
       <Box sx={{
         border: 1,
         p:1,
-        height: 50,
+        height: 75,
         borderColor:'aliceblue',
         backgroundColor: checkState[5]? 'aliceblue': 'white',
        '&:hover': {
@@ -213,6 +204,9 @@ const Onboarding = () => {
         cursor: 'pointer',
       }, }}
       onClick={()=>incTaskNo(5)}>
+        <Typography>
+        No content and wait for something here...
+      </Typography>
       </Box>
       </Button>
       </Grid>

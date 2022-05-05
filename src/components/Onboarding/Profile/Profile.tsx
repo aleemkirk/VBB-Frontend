@@ -1,15 +1,11 @@
-// import * as React from 'react';
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Checkbox, FormControlLabel, FormControl, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, Radio, RadioGroup, FormLabel } from '@mui/material';
 import OpportunitySelect from './OpportunitySelect';
-import LanguageDropdown from '../../LanguageDropdown';
-import CareerDropdown from '../../CareerDropdown';
-import SubjectDropdown from '../../SubjectDropdown';
-import TimezonesDropdown from '../../TimezoneSelect';
-
-import MentorHeader from '../MentorHeader'; 
-import MentorSideBar from '../MentorSideBar';
+import LanguageDropdown from '../../shared/LanguageDropdown';
+import CareerDropdown from '../../shared/CareerDropdown';
+import SubjectDropdown from '../../shared/SubjectDropdown';
+import TimezonesDropdown from '../../shared/TimezoneSelect';
 
 const defaultForm = {
   careers: [] as number[],
@@ -33,16 +29,10 @@ const [formValue, setFormValue] = useState(defaultForm);
 
     return (
       <>
-      <MentorHeader/>
-      <MentorSideBar/>
+      {/* <MentorHeader/> */}
+      {/* <MentorSideBar/> */}
 
-      <Box sx={{
-         ml: 20,
-         mt: 10,
-         mr: 20,
-         mb: 10,
-      }}>
-
+      <Box>
   <Grid container spacing={3}>
     <Grid item xs={12}>
       <Typography variant='h6'>Video Upload</Typography>
