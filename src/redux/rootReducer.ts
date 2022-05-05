@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   subjects,
   timezones,
   user,
+  addTaskNo
 });
 
 export default rootReducer;
