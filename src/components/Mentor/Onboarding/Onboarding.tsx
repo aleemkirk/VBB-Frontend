@@ -6,13 +6,9 @@ import { Button, Grid,  Typography, Box, Container, styled, Dialog, DialogTitle,
 import { useState, useEffect } from 'react';
 import { AppState } from '../../../redux/rootReducer';
 import CloseIcon from '@mui/icons-material/Close';
-// import * as actions from '../../../redux/actions';
 import * as actions from '../../../redux/actions';
-// import {addTask} from '../../../redux/actions';
 
-// import { bindActionCreators } from 'redux';
-// import {actions} from '../../../redux/onboarding/index'
-
+//Approval Status Dialog 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -21,13 +17,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-
 export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
 }
-
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props;
 
@@ -54,9 +48,8 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 
 const Onboarding = () => {
   const dispatch = useDispatch();
-  // const {addTask} = bindActionCreators(actions, dispatch);
   const taskState = useSelector((state:AppState) => state.addTaskNo);
-  
+  const checkState = useSelector((state:AppState) => state.checkTaskNo);
 
   const [open, setOpen] = useState(false);
 
@@ -66,28 +59,19 @@ const Onboarding = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const [taskNumber, setTaskNumber]= useState(0);
-  const [checkProcess, setProcess] = useState([false, false, false, false,false, false]);
-  // const [bgcolor, setBgcolor] =useState([false, false, false, false,false, false]);
  
+  //track onborading process with redux
   const incTaskNo = (i:number) =>{
-    if(taskState<6 && !checkProcess[i]){
-       
-      // setTaskNumber((preNumver) => preNumver +1);
-      // console.log('number'+taskNumber);
+    if(taskState<6 && !checkState[i]){
      dispatch(actions.addTask());
-      // addTask(1);
-      console.log(taskState);
-      setProcess(prevState => prevState.map((temp, idex) => idex ===i? temp = true : temp));
-      // setBgcolor(prevColor => prevColor.map((color, idex) => idex ===i? color = true : color));
+     dispatch(actions.checkTask(i));
+     console.log(checkState);
     }
   }
   
-
     return (
         <>
-      <MentorHeader/>
+      {/* <MentorHeader/> */}
       <MentorSideBar/>
       <Box sx={{
         ml: 20,
@@ -108,14 +92,14 @@ const Onboarding = () => {
 
       <Grid container spacing={3} sx={{mt:5}}>
       <Grid item xs={4}>
-      <Button href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box
       sx={{
         border: 1,
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: checkProcess[0]? 'aliceblue': 'white',
+        backgroundColor: checkState[0]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -131,13 +115,13 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-      <Button sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box sx={{
         border: 1,
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: checkProcess[1]? 'aliceblue': 'white',
+        backgroundColor: checkState[1]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -153,13 +137,13 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-      <Button href='/mentor/profile' sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='/mentor/profile' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box sx={{
         border: 1,
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: checkProcess[2]? 'aliceblue': 'white',
+        backgroundColor: checkState[2]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -180,7 +164,7 @@ const Onboarding = () => {
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: checkProcess[3]? 'aliceblue': 'white',
+        backgroundColor: checkState[3]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -195,13 +179,13 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-      <Button sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box sx={{
         border: 1,
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: checkProcess[4]? 'aliceblue': 'white',
+        backgroundColor: checkState[4]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -216,13 +200,13 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-       <Button sx={{textTransform: 'none', textAlign: 'left'}}>
+       <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box sx={{
         border: 1,
         p:1,
         height: 50,
         borderColor:'aliceblue',
-        backgroundColor: checkProcess[5]? 'aliceblue': 'white',
+        backgroundColor: checkState[5]? 'aliceblue': 'white',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -232,7 +216,6 @@ const Onboarding = () => {
       </Box>
       </Button>
       </Grid>
-
       </Grid>
     </Box>
   

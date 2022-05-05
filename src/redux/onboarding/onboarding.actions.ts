@@ -1,12 +1,4 @@
-
-// export const setTaskNo = (payload: number): SetTaskNo => ({
-//   type: SET_TASKNO,
-//   payload,
-// });
-
-// export const getTaskNo = (): GetTaskNo  => ({ type: GET_TASKNO});
 import { ActionType, Action} from './onboarding.types';
-import { Dispatch } from 'redux';
 import { takeLatest, put } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 import { vbbAPIV1 } from '../../services/api';
@@ -17,12 +9,26 @@ export const addTask = () =>{
   }
 }
 
-// function* taskUpAsync() {
-//   yield put({ type: ActionType.ADD, value: 1 });
+export const checkTask = (payload: number) =>{
+  return {
+      type: ActionType.CHECK,
+      payload,
+  }
+}
+
+// export const taskUpAsync(){
+//   return{
+//     type: "ASYNC_TASK"
+//   };
+// }
+// function* runTaskUpAsync() {
+//   // yield put({ type: ActionType.ADD, value: 1 });
+
 // }
 
 // export function* watchTaskUp() {
-//   yield takeLatest(ActionType.ADD, taskUpAsync);
+//   // yield takeLatest(ActionType.ADD, taskUpAsync);
+//   yield takeLatest("ASYNC_TASK");
 // }
 
 
