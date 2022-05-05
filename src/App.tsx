@@ -21,8 +21,6 @@ const App = () => (
         
         <Route path = "/mentor/onboarding" element={<Onboarding/>}/>
         <Route path="/mentor/profile" element={<Profile/>}/>
-        {/* <Route path="/mentee/home" element={<MenteeHome/>}/>
-        <Route path="/mentee/booking" element={<MenteeBooking/>}/> */}
 
         <Route path="/advisor/*" element={<AdvisorIndex />} />
       </Routes>

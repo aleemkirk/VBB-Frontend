@@ -1,9 +1,15 @@
+import React from 'react';
 import MentorHeader from '../MentorHeader'; 
 import MentorSideBar from '../MentorSideBar';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Grid,  Typography, Box, Container, styled, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, FormControlLabel, Checkbox} from '@mui/material';
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { AppState } from '../../../redux/rootReducer';
 import CloseIcon from '@mui/icons-material/Close';
+// import * as actions from '../../../redux/actions';
+import {addTask} from '../../../redux/actions';
+// import { bindActionCreators } from 'redux';
+// import {actions} from '../../../redux/onboarding/index'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -45,6 +51,11 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 const Onboarding = () => {
+  const dispatch = useDispatch();
+  // const {addTask} = bindActionCreators(actions, dispatch);
+  const taskState = useSelector((state:AppState) => state.addTaskNo);
+  
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -54,26 +65,20 @@ const Onboarding = () => {
     setOpen(false);
   };
 
-  const [taskNo, setTaskNo]= useState(0);
+  const [taskNumber, setTaskNumber]= useState(0);
   const [checkArray, setCheckArray] = useState([false, false, false, false,false, false]);
   const [bgcolor, setBgcolor] =useState([false, false, false, false,false, false]);
  
-//   const getTaskNo = JSON.parse(localStorage.getItem('taskNoStored') || '{}');
-//   useEffect(() => {
-//     if (getTaskNo == null) {
-//         setTaskNo(0)
-//     } else {
-//         setTaskNo(getTaskNo);
-//     }
-// }, [])
   const incTaskNo = (i:number) =>{
-    if(taskNo<6 && !checkArray[i]){
-      setTaskNo(taskNo+1);
+    if(taskState<6 && !checkArray[i]){
+       
+      // setTaskNumber((preNumver) => preNumver +1);
+      // console.log('number'+taskNumber);
+     dispatch(addTask(1));
+      // addTask(1);
+      console.log(taskState);
       setCheckArray(prevState => prevState.map((temp, idex) => idex ===i? temp = true : temp));
       setBgcolor(prevColor => prevColor.map((color, idex) => idex ===i? color = true : color));
-      // localStorage.setItem('taskNoStored', JSON.stringify(taskNo));
-      // localStorage.setItem('checkStored', JSON.stringify([checkArray]));
-      // localStorage.setItem('colorStored', JSON.stringify([bgcolor]));
     }
   }
   
@@ -93,8 +98,10 @@ const Onboarding = () => {
         p:1,
         borderColor:'aliceblue',
        }}>
-      <Typography>It looks like you have a couple more things to fill out before you can book your first
-        mentoring session! Click each of the boxes below to complete your tasks ({taskNo}/6)
+      <Typography>
+       It looks like you have a couple more things to fill out before you can book your first
+        mentoring session! Click each of the boxes below to complete your tasks ({taskState}/6)
+        {taskNumber}
       </Typography>
       </Box>
 
@@ -136,6 +143,7 @@ const Onboarding = () => {
         cursor: 'pointer',
       }, }}
       onClick={()=>incTaskNo(1)}>
+
       <Typography>
         Click here to view the donations page (donations optional)
       </Typography>

@@ -6,3 +6,4 @@ export * from '../careers/careers.actions';
 export * from '../subjects/subjects.actions';
 export * from '../registration/registration.actions';
 export * from '../timezones/timezones.actions';
+export * from '../onboarding/onboarding.actions';

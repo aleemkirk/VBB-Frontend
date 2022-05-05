@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import EventModal from '../shared/EventModal';
-import BookingEvent from './BookingEvent';
+// import BookingEvent from './BookingEvent';
 import MenteeSideBar from './MenteeSideBar';
 import {
   Autocomplete,
@@ -60,7 +60,7 @@ const MenteeBooking = () => {
         endAccessor="end"
         style={{ height: 700 }}
       />
-      <BookingEvent eventOrSlot={event} onClose={() => setEvent(null)} />
+      {/* <BookingEvent eventOrSlot={event} onClose={() => setEvent(null)} /> */}
       </Box>
 
     </>
