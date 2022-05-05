@@ -7,7 +7,7 @@ import {
   SetCareersAction,
 } from './careers.types';
 import { AxiosResponse } from 'axios';
-import * as api from '../../services/api';
+import { vbbAPIV1 } from '../../services/api';
 
 export const setCareers = (payload: Career[]): SetCareersAction => ({
   type: SET_CAREERS,
@@ -20,10 +20,9 @@ export function* watchGetCareers() {
 }
 function* handleGetCareers() {
   try {
-    const url = '/api/v1/careers/';
-    const res: AxiosResponse<Career[]> = yield api.get<Career[]>(url);
+    const url = 'careers/';
+    const res: AxiosResponse<Career[]> = yield vbbAPIV1.get<Career[]>(url);
     if (res.status === 200) {
-      console.log(res.data);
       yield put(setCareers(res.data));
     } else {
       console.error('Error getting Careers');

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   Checkbox,
@@ -9,22 +9,19 @@ import {
   Typography,
 } from '@mui/material';
 
-import formToJson from '../utils/formToJson';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../redux/rootReducer';
 import { useNavigate } from 'react-router-dom';
-import { autoLogin, submitMentorRegistration } from '../redux/actions';
-import LanguageDropdown from './LanguageDropdown';
-import CareerDropdown from './CareerDropdown';
-import SubjectDropdown from './SubjectDropdown';
-import TimezonesDropdown from './TimezoneSelect';
-
-interface RegisterMentorFormProps {}
+import { submitMentorRegistration } from '../redux/actions';
+import LanguageDropdown from './shared/LanguageDropdown';
+import CareerDropdown from './shared/CareerDropdown';
+import SubjectDropdown from './shared/SubjectDropdown';
+import TimezonesDropdown from './shared/TimezoneSelect';
+import DateOfBirthSelector from './DateOfBirthSelect';
 
 const defaultForm = {
   careers: [] as number[],
   mentoringLanguages: [] as number[],
-  // should be a list from all subjects in the backend
   subjects: [] as number[],
   applicationVideoUrl: '',
   interests: '',
@@ -33,36 +30,33 @@ const defaultForm = {
   corporateCode: '',
   isOfAge: false,
   timezone: '',
+  dateOfBirth: '', // dd/MM/yyyy
 };
 
-const RegisterMentorForm = (props: RegisterMentorFormProps) => {
+const RegisterMentorForm = () => {
   const navigateFunction = useNavigate();
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState(defaultForm);
   const [hasCorporateCode, setHasCorporateCode] = useState(true);
 
   const user = useSelector((store: AppState) => store.user);
-  // if the user isn't logged in try to log them in
-  // useEffect(() => {
-  //   if (!user.email) {
-  //     // TODO gets in endless loop
-  //     // dispatch(autoLogin({ navigateFunction }));
-  //   }
-  // }, [user.email]);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log({ formValue });
-        dispatch(submitMentorRegistration(formValue));
+        dispatch(
+          submitMentorRegistration({
+            mentorRegistrationForm: formValue,
+            navigateFunction,
+          })
+        );
       }}
     >
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h4">Register</Typography>
-          <Typography variant="h3">Welcome {user.name}!</Typography>
-          <Typography variant="h3">Primary Email: {user.email}</Typography>
+          <Typography variant="h3">Welcome {user.email}!</Typography>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -75,6 +69,14 @@ const RegisterMentorForm = (props: RegisterMentorFormProps) => {
               setFormValue({ ...formValue, phoneNumber: e.target.value });
             }}
             name="phoneNumber"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <DateOfBirthSelector
+            dateOfBirth={formValue.dateOfBirth}
+            handleDateOfBirthChange={(dateOfBirth) =>
+              setFormValue({ ...formValue, dateOfBirth })
+            }
           />
         </Grid>
         <Grid item xs={12}>

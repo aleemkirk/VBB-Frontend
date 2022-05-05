@@ -1,6 +1,6 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
-import * as api from '../../services/api';
+import { vbbAPIV1 } from '../../services/api';
 import {
   GET_SUBJECTS,
   SET_SUBJECTS,
@@ -20,8 +20,8 @@ export function* watchGetSubjects() {
 }
 function* handleGetSubjects() {
   try {
-    const url = '/api/v1/subjects/';
-    const res: AxiosResponse<Subject[]> = yield api.get<Subject[]>(url);
+    const url = 'subjects/';
+    const res: AxiosResponse<Subject[]> = yield vbbAPIV1.get<Subject[]>(url);
     if (res.status === 200) {
       yield put(setSubjects(res.data));
     } else {

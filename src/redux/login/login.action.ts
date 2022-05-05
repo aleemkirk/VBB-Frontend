@@ -1,6 +1,7 @@
-import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
-import { put, call, takeLatest } from 'redux-saga/effects';
-import { setUser } from '../user/user.actions';
+import { AxiosResponse } from 'axios';
+import { put, takeLatest } from 'redux-saga/effects';
+
+import { vbbAPIV1 } from '../../services/api';
 import {
   AUTO_LOGIN,
   AUTO_LOGIN_ACTION,
@@ -9,41 +10,34 @@ import {
   LOGIN_ACTION,
   LOGIN_PAYLOAD,
 } from './login.types';
-import * as api from '../../services/api';
-interface BackendUser {
-  username: string;
-  email: string;
-  timeZone: string;
-  name: string;
-  isStudent: boolean;
-  isLibrarian: boolean;
-  isMentor: boolean;
-}
-interface UserLoginResponse {
-  user: BackendUser;
-}
+import { setUser } from '../user/user.actions';
+import { User } from '../user/user.types';
 
+// Login Action and Sagas
 export const login = (payload: LOGIN_PAYLOAD): LOGIN_ACTION => ({
   type: LOGIN,
   payload,
 });
-
 export function* watchLogin() {
   yield takeLatest(LOGIN, handleLogin);
 }
 function* handleLogin(action: LOGIN_ACTION) {
   try {
     const { username, password, navigateFunction } = action.payload;
-    const url = '/api/v1/login/';
+    const url = 'login/';
     const data = { username, password };
 
-    const res: AxiosResponse<UserLoginResponse> =
-      yield api.post<UserLoginResponse>(url, { data });
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, {
+      data,
+    });
+    const user = res.data;
 
-    const { user } = res.data;
-    yield put(setUser({ ...user }));
-    if (res.status === 200) {
-      navigateFunction('/complete-registration');
+    if (res.status === 200 && user) {
+      yield put(setUser(user));
+      if (user.isMentor && !user.mentorProfile) {
+        navigateFunction('/complete-registration');
+      }
+      navigateFunction('/dashboard');
     } else {
       navigateFunction('/');
     }
@@ -52,6 +46,7 @@ function* handleLogin(action: LOGIN_ACTION) {
   }
 }
 
+// Auto-Login Action and Sagas
 export const autoLogin = (payload: AUTO_LOGIN_PAYLOAD): AUTO_LOGIN_ACTION => ({
   type: AUTO_LOGIN,
   payload,
@@ -62,13 +57,12 @@ export function* watchAutoLogin() {
 function* handleAutoLogin(action: AUTO_LOGIN_ACTION) {
   const navigateFunction = action.payload.navigateFunction;
   try {
-    const url = '/api/v1/users/me';
-    const res: AxiosResponse<UserLoginResponse> =
-      yield api.get<UserLoginResponse>(url);
-    const { user } = res.data;
-    yield put(setUser({ ...user }));
-    if (res.status === 200) {
-      navigateFunction('/complete-registration');
+    const url = 'users/me';
+    const res: AxiosResponse<User> = yield vbbAPIV1.get<User>(url);
+    const user = res.data;
+    if (res.status === 200 && user) {
+      yield put(setUser(user));
+      navigateFunction('/dashboard');
     } else {
       navigateFunction('/');
     }

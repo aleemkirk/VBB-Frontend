@@ -1,6 +1,6 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
-import * as api from '../../services/api';
+import { vbbAPIV1 } from '../../services/api';
 import {
   GetTimezonesAction,
   GET_TIMEZONES,
@@ -19,8 +19,8 @@ export function* watchGetTimezones() {
 }
 function* handleGetTimezones() {
   try {
-    const url = '/api/v1/timezones/';
-    const res: AxiosResponse<string[]> = yield api.get<string[]>(url);
+    const url = 'timezones/';
+    const res: AxiosResponse<string[]> = yield vbbAPIV1.get<string[]>(url);
     if (res.status === 200) {
       yield put(setTimezones(res.data));
     } else {

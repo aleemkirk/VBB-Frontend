@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
+import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
 
 import Onboarding from './components/Mentor/Onboarding/Onboarding';
 import Profile from './components/Mentor/Profile/Profile';
