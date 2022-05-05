@@ -15,6 +15,8 @@ interface SessionProps {
   onCheckIn?: () => void;
 }
 
+//TODO:Change moment to luxon
+
 const MentorSessionCard = ({ session, onCheckIn }: SessionProps) => (
   <Card>
     <CardHeader
