@@ -1,4 +1,5 @@
 import {
+  FormControl,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -28,7 +29,7 @@ const SubjectDropdown = ({ selectedSubjects, handleSelectSubjects }: Props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getSubjects());
-  }, []);
+  }, [dispatch]);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
@@ -38,9 +39,10 @@ const SubjectDropdown = ({ selectedSubjects, handleSelectSubjects }: Props) => {
   };
 
   return (
-    <div>
-      <InputLabel id="multi-language-select">Select Your subjects</InputLabel>
+    <FormControl fullWidth>
+      <InputLabel id="multi-language-select">Select Your Subjects</InputLabel>
       <Select
+        label="Select Your Subjects"
         labelId="multi-subject-select"
         id="select-subjects-dropdown"
         multiple
@@ -49,7 +51,7 @@ const SubjectDropdown = ({ selectedSubjects, handleSelectSubjects }: Props) => {
       >
         {subjectOptions(subjects)}
       </Select>
-    </div>
+    </FormControl>
   );
 };
 
