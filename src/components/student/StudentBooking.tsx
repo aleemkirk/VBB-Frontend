@@ -1,7 +1,6 @@
 import { useState, ReactNode } from 'react';
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
-import EventModal from '../shared/EventModal';
 import { Box } from '@mui/material';
 import { Computer as ComputerIcon } from '@mui/icons-material';
 import { Card, Grid, Typography } from '@mui/material';
