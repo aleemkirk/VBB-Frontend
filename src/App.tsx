@@ -5,7 +5,6 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
-import StudentIndex from './components/student/StudentIndex';
 import MentorIndex from './components/mentor/MentorIndex';
 
 const App = () => (
@@ -18,7 +17,6 @@ const App = () => (
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
-        <Route path="/student/*" element={<StudentIndex />} />
         <Route path='/mentor/*' element={<MentorIndex/>} />
       </Routes>
     </Box>
