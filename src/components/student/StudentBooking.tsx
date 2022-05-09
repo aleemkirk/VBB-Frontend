@@ -6,26 +6,10 @@ import { Box } from '@mui/material';
 import { Computer as ComputerIcon } from '@mui/icons-material';
 import { Card, Grid, Typography } from '@mui/material';
 import StudentBookingModal from './StudentBookingModal';
+import {CalendarEvent} from '../../utils/CalendarEvent';
+import {SlotSessions} from '../../utils/Session';
 
 //TODO: 1. MOVE ALL SHARED INTERFACES, 2. Create Session Interface
-
-export interface CalendarEvent {
-  id: string;
-  color: string;
-  title: ReactNode;
-  start: Date;
-  end: Date;
-  computerID: string;
-  mentor?: string;
-  student?: string;
-}
-
-export interface SlotSessions {
-  id: string;
-  start: Date;
-  end: Date;
-  availableSessions: CalendarEvent[];
-}
 
 interface EventComponenetProps {
   event: SlotSessions; 
@@ -98,11 +82,6 @@ const formats = {
 };
 
 
-export const isCalendarEvent = (
-  event: CalendarEvent | SlotInfo | null | SlotSessions
-): event is CalendarEvent => {
-  return event ? 'id' in event : false;
-};
 
 const localizer = luxonLocalizer(DateTime);
 

@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { CalendarEvent } from './CalendarEvent';
 
   export interface Session {
     id:string;
@@ -8,6 +9,13 @@ import { DateTime } from 'luxon';
     mentorID?:string;
     studentID?:string;
     meetingLink?: string;
+  }
+
+  export interface SlotSessions {
+    id: string;
+    start: Date;
+    end: Date;
+    availableSessions: CalendarEvent[];
   }
 
   export const Sessions: Session[] =[
