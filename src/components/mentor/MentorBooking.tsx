@@ -23,7 +23,7 @@ const customComponents = {
     event: ({event}:EventComponenetProps) => {
       return (
         <Box display="flex" alignItems="center">
-          <PersonIcon sx={{m:'1px'}}/> <Typography variant="button" marginLeft='10px'>{}</Typography>
+          <PersonIcon sx={{m:'1px'}}/> <Typography variant="button" marginLeft='10px'>{event.id}</Typography>
         </Box>
       )
     }, 
@@ -93,7 +93,7 @@ const MentorBooking = () => {
             components={customComponents}
             formats={formats}
         />
-        <MentorBookingModal open={true} onClose={()=>{}}/>
+        <MentorBookingModal eventOrSlot={event} onClose={() => setEvent(null)}/>
         </Box>
     )
 
