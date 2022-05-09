@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Checkbox, FormControlLabel, FormControl, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, Radio, RadioGroup, FormLabel } from '@mui/material';
-import OpportunitySelect from './OpportunitySelect';
+import OpptyDropdown from './OpptyDropdown';
 import LanguageDropdown from '../../shared/LanguageDropdown';
 import CareerDropdown from '../../shared/CareerDropdown';
 import SubjectDropdown from '../../shared/SubjectDropdown';
@@ -19,6 +19,7 @@ const defaultForm = {
   corporateCode: '',
   isOfAge: false,
   timezone: '',
+  oppties: [] as number[],
 };
 
 
@@ -35,9 +36,9 @@ const [formValue, setFormValue] = useState(defaultForm);
       <Typography variant='h6'>Video Upload</Typography>
       <Typography variant='body1'>Please Upload a 2-3 mins video:</Typography>
       <Grid container spacing={3} sx={{mt:2}}>
-        <Grid item xs={3}><Button variant="outlined" href='https://studio.youtube.com/channel'>YouTube</Button></Grid>
-        <Grid item xs={3}><Button variant="outlined" href='https://drive.google.com/drive/my-drive'>Google Drive</Button></Grid>
-        <Grid item xs={3}><Button variant="outlined" href='https://www.dropbox.com/home'>Drop Box</Button></Grid>
+        <Grid item xs={3}><Button variant="outlined" target="_blank" component="a" href='https://studio.youtube.com/channel'>YouTube</Button></Grid>
+        <Grid item xs={3}><Button variant="outlined" target="_blank" component="a" href='https://drive.google.com/drive/my-drive'>Google Drive</Button></Grid>
+        <Grid item xs={3}><Button variant="outlined" target="_blank" component="a" href='https://www.dropbox.com/home'>Drop Box</Button></Grid>
         </Grid>
       </Grid>
 
@@ -68,7 +69,12 @@ const [formValue, setFormValue] = useState(defaultForm);
 
     <Grid item xs={12}  sx={{mt:5}}>
       <Typography variant='h6'>How do you find out this opportunity?</Typography>
-     <OpportunitySelect/>
+     <OpptyDropdown
+      selectedOppties={formValue.oppties}
+      handleSelectOppties={(opptyIds) =>
+        setFormValue({ ...formValue, oppties: opptyIds })
+      }
+     />
 </Grid>
 
 <Grid item xs={12} sx={{mt:5}}>

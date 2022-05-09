@@ -65,7 +65,6 @@ const Onboarding = () => {
     if(taskState<6 && !checkState[i]){
      dispatch(actions.addTask());
      dispatch(actions.checkTask(i));
-     
     }
   }
   
