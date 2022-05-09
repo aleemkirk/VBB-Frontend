@@ -112,7 +112,7 @@ const Onboarding = () => {
       p:1,
       height: 75,
       borderColor:'aliceblue',
-      backgroundColor: checkState[1]? 'aliceblue': 'white',
+      backgroundColor: checkState[1]? 'aliceblue': 'transparent',
      '&:hover': {
       backgroundColor: 'aliceblue',
       opacity: [0.9, 0.8, 0.7],
@@ -132,7 +132,7 @@ const Onboarding = () => {
         p:1,
         height: 75,
         borderColor:'aliceblue',
-        backgroundColor: checkState[2]? 'aliceblue': 'white',
+        backgroundColor: checkState[2]? 'aliceblue': 'transparent',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -151,7 +151,7 @@ const Onboarding = () => {
         p:1,
         height: 75,
         borderColor:'aliceblue',
-        backgroundColor: checkState[3]? 'aliceblue': 'white',
+        backgroundColor: checkState[3]? 'aliceblue': 'transparent',
        '&:hover': {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
@@ -172,7 +172,7 @@ const Onboarding = () => {
       p:1,
       height: 75,
       borderColor:'aliceblue',
-      backgroundColor: checkState[4]? 'aliceblue': 'white',
+      backgroundColor: checkState[4]? 'aliceblue': 'transparent',
      '&:hover': {
       backgroundColor: 'aliceblue',
       opacity: [0.9, 0.8, 0.7],
@@ -194,7 +194,7 @@ const Onboarding = () => {
        p:1,
        height: 75,
        borderColor:'aliceblue',
-       backgroundColor: checkState[5]? 'aliceblue': 'white',
+       backgroundColor: checkState[5]? 'aliceblue': 'transparent',
       '&:hover': {
        backgroundColor: 'aliceblue',
        opacity: [0.9, 0.8, 0.7],
