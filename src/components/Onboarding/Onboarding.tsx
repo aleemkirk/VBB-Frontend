@@ -169,7 +169,8 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}} 
+      disabled={!checkState[0]||!checkState[1]||!checkState[2]||!checkState[3]}>
       <Box sx={{
         border: 1,
         p:1,

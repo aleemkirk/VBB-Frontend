@@ -34,10 +34,9 @@ oppties.map((oppty) => (
       <ListItemText primary={`${oppty.name}`} />
     </MenuItem>
   ));
-
 interface Props {
   selectedOppties: number[];
-  handleSelectOppties: (careerIds: number[]) => void;
+  handleSelectOppties: (opptyIds: number[]) => void;
 }
 const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
   const oppties = useSelector((state: AppState) => state.oppty);
