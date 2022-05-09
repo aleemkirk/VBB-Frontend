@@ -15,8 +15,6 @@ import {
   import { CalendarEvent, isCalendarEvent } from '../../utils/CalendarEvent';
   import {
     AccessTime,
-    Computer,
-    Email,
     Notes,
     Person,
     PersonAdd,
@@ -34,7 +32,7 @@ import { useState } from 'react';
   const fakeMentors = ['Mentor 1', 'Mentor 2', 'Mentor 3'];
   
   const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
-
+  
 
     const isEvent = isCalendarEvent(eventOrSlot);
     const [disable, setDisable] = useState<boolean>(true);
