@@ -85,7 +85,7 @@ const Onboarding = () => {
 
       <Grid container spacing={3} sx={{mt:5}}>
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='https://portal.villagebookbuilders.org/training' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box
       sx={{
         border: 1,
@@ -107,7 +107,7 @@ const Onboarding = () => {
       </Grid>
 
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
+      <Button target="_blank" component="a" href='https://villagebookbuilders.org/donate' sx={{textTransform: 'none', textAlign: 'left'}}>
       <Box sx={{
         border: 1,
         p:1,

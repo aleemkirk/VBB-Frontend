@@ -18,7 +18,6 @@ export const checkTask = (payload: number) =>{
 
 function* taskAync(){
   yield put({type: ActionType.ADD});
-  yield delay(5000);
   yield put({type: ActionType.CHECK});
 }
 
@@ -31,10 +30,11 @@ export function* watchTaskAsync(){
 //     type: "ASYNC_TASK"
 //   };
 // }
+
 // function* runTaskUpAsync() {
 //   // yield put({ type: ActionType.ADD, value: 1 });
-
 // }
+
 // export function* watchTaskUp() {
 //   // yield takeLatest(ActionType.ADD, taskUpAsync);
 //   yield takeLatest("ASYNC_TASK");
