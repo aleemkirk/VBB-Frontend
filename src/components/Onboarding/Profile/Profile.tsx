@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Checkbox, FormControlLabel, FormControl, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, Radio, RadioGroup, FormLabel } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Checkbox, FormControlLabel, FormControl, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, Radio, RadioGroup, FormLabel, Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import OpptyDropdown from './OpptyDropdown';
 import LanguageDropdown from '../../shared/LanguageDropdown';
 import CareerDropdown from '../../shared/CareerDropdown';
 import SubjectDropdown from '../../shared/SubjectDropdown';
 import TimezonesDropdown from '../../shared/TimezoneSelect';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppState } from '../../../redux/rootReducer';
+import * as actions from '../../../redux/actions';
+
 
 const defaultForm = {
   careers: [] as number[],
@@ -22,11 +28,66 @@ const defaultForm = {
   oppties: [] as number[],
 };
 
+//Dialog after submit
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+export interface DialogTitleProps {
+  id: string;
+  children?: React.ReactNode;
+  onClose: () => void;
+}
+const BootstrapDialogTitle = (props: DialogTitleProps) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+}
 
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const taskState = useSelector((state:AppState) => state.addTaskNo);
+  const checkState = useSelector((state:AppState) => state.checkTaskNo);
+  const incTaskNo = (i:number) =>{
+    if(taskState<6 && !checkState[i]){
+     dispatch(actions.addTask());
+     dispatch(actions.checkTask(i));
+    }
+  }
 
-const [formValue, setFormValue] = useState(defaultForm);
+  const [formValue, setFormValue] = useState(defaultForm);
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/mentor/onboarding');
+  };
 
     return (
       <>
@@ -159,9 +220,36 @@ or knowledge about? </Typography>
 <Grid item xs={3} sx={{mt:5}}>
   <Button variant="contained">Save</Button></Grid>
   <Grid item xs={3} sx={{mt:5}}>
-  <Button variant="contained">Submit</Button></Grid>
+  <Button variant="contained" 
+  onClick={()=>{incTaskNo(2); handleClickOpen()}}
+  >
+  Submit</Button></Grid>
   </Grid>
       </Box>
+    
+
+    {/* Submit Dialog */}
+    <div>
+      <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        Congratulations!
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+          Thanks for Sumbitting your Profile! Your data is recorded. Please go ahead with next steps of Onboarding! 
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose}>
+            OK
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
+    </div>
       </>
       );      
   };

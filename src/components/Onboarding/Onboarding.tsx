@@ -7,7 +7,7 @@ import { AppState } from '../../redux/rootReducer';
 import CloseIcon from '@mui/icons-material/Close';
 import * as actions from '../../redux/actions';
 
-//Approval Status Dialog 
+//Approval Status Dialog of task4
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -52,7 +52,6 @@ const Onboarding = () => {
   const checkState = useSelector((state:AppState) => state.checkTaskNo);
 
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -139,7 +138,7 @@ const Onboarding = () => {
         opacity: [0.9, 0.8, 0.7],
         cursor: 'pointer',
       }, }}
-      onClick={()=>incTaskNo(2)}>
+     >
       <Typography>
         Click here to complete your mentor profile
       </Typography>
