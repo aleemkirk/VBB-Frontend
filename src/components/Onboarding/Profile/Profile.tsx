@@ -226,7 +226,6 @@ or knowledge about? </Typography>
   Submit</Button></Grid>
   </Grid>
       </Box>
-    
 
     {/* Submit Dialog */}
     <div>

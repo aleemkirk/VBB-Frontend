@@ -83,52 +83,52 @@ const Onboarding = () => {
 
       <Grid container spacing={3} sx={{mt:5}}>
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='https://portal.villagebookbuilders.org/training' sx={{textTransform: 'none', textAlign: 'left'}}>
-      <Box
-      sx={{
-        border: 1,
-        p:1,
-        height: 75,
-        borderColor:'aliceblue',
-        backgroundColor: checkState[0]? 'aliceblue': 'white',
-       '&:hover': {
-        backgroundColor: 'aliceblue',
-        opacity: [0.9, 0.8, 0.7],
-        cursor: 'pointer',
-      }, }}
-      onClick={()=>incTaskNo(0)}>
+      <Button target="_blank" component="a" href='https://portal.villagebookbuilders.org/training' 
+      sx={{textTransform: 'none', 
+      textAlign: 'left',
+      border: 1,
+      p:1,
+      height: 75,
+      borderColor:'aliceblue',
+      backgroundColor: checkState[0]? 'aliceblue': 'transparent',
+      '&:hover': {
+      backgroundColor: 'aliceblue',
+      opacity: [0.9, 0.8, 0.7],
+      cursor: 'pointer',
+      },
+      }}
+      onClick={()=>incTaskNo(0)}
+      >
       <Typography>
         Click here to view mentor training resources
       </Typography>
-      </Box>
       </Button>
       </Grid>
 
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='https://villagebookbuilders.org/donate' sx={{textTransform: 'none', textAlign: 'left'}}>
-      <Box sx={{
-        border: 1,
-        p:1,
-        height: 75,
-        borderColor:'aliceblue',
-        backgroundColor: checkState[1]? 'aliceblue': 'white',
-       '&:hover': {
-        backgroundColor: 'aliceblue',
-        opacity: [0.9, 0.8, 0.7],
-        cursor: 'pointer',
-      }, }}
+      <Button target="_blank" component="a" href='https://villagebookbuilders.org/donate' 
+      sx={{textTransform: 'none', textAlign: 'left',
+      border: 1,
+      p:1,
+      height: 75,
+      borderColor:'aliceblue',
+      backgroundColor: checkState[1]? 'aliceblue': 'white',
+     '&:hover': {
+      backgroundColor: 'aliceblue',
+      opacity: [0.9, 0.8, 0.7],
+      cursor: 'pointer',
+    }, }}
       onClick={()=>incTaskNo(1)}>
       <Typography>
         Click here to view the donations page (donations optional)
       </Typography>
-      </Box>
       </Button>
       </Grid>
 
       <Grid item xs={4}>
-      <Button onClick={() => navigate('/mentor/onboarding/profile')} sx={{textTransform: 'none', textAlign: 'left'}}>
-      <Box sx={{
-        border: 1,
+      <Button onClick={() => navigate('/mentor/onboarding/profile')} 
+      sx={{textTransform: 'none', textAlign: 'left',
+      border: 1,
         p:1,
         height: 75,
         borderColor:'aliceblue',
@@ -137,19 +137,17 @@ const Onboarding = () => {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
         cursor: 'pointer',
-      }, }}
-     >
+      },}}>
       <Typography>
         Click here to complete your mentor profile
       </Typography>
-      </Box>
       </Button> 
       </Grid>
 
       <Grid item xs={4}>
-      <Button sx={{textTransform: 'none', textAlign: 'left'}} onClick={handleClickOpen}>
-      <Box sx={{
-        border: 1,
+      <Button sx={{textTransform: 'none', 
+      textAlign: 'left',
+      border: 1,
         p:1,
         height: 75,
         borderColor:'aliceblue',
@@ -158,55 +156,54 @@ const Onboarding = () => {
         backgroundColor: 'aliceblue',
         opacity: [0.9, 0.8, 0.7],
         cursor: 'pointer',
-      }, }}
-      onClick={()=>incTaskNo(3)}>
+      },}} 
+      onClick={()=>{handleClickOpen();incTaskNo(3)}}>
       <Typography>
         Await mentor advisor approval / Click here to view your approval status
       </Typography>
-      </Box>
       </Button>
       </Grid>
 
       <Grid item xs={4}>
-      <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}} 
-      disabled={!checkState[0]||!checkState[1]||!checkState[2]||!checkState[3]}>
-      <Box sx={{
-        border: 1,
-        p:1,
-        height: 75,
-        borderColor:'aliceblue',
-        backgroundColor: checkState[4]? 'aliceblue': 'white',
-       '&:hover': {
-        backgroundColor: 'aliceblue',
-        opacity: [0.9, 0.8, 0.7],
-        cursor: 'pointer',
-      }, }}
+      <Button target="_blank" component="a" href='/' 
+      sx={{textTransform: 'none', 
+      textAlign: 'left',
+      border: 1,
+      p:1,
+      height: 75,
+      borderColor:'aliceblue',
+      backgroundColor: checkState[4]? 'aliceblue': 'white',
+     '&:hover': {
+      backgroundColor: 'aliceblue',
+      opacity: [0.9, 0.8, 0.7],
+      cursor: 'pointer',
+    }, }} 
+      disabled={!checkState[0]||!checkState[1]||!checkState[2]||!checkState[3]}
       onClick={()=>incTaskNo(4)}>
       <Typography>
         Click here to sign up for [meta workplace]
       </Typography>
-      </Box>
       </Button>
       </Grid>
 
       <Grid item xs={4}>
-       <Button target="_blank" component="a" href='/' sx={{textTransform: 'none', textAlign: 'left'}}>
-      <Box sx={{
-        border: 1,
-        p:1,
-        height: 75,
-        borderColor:'aliceblue',
-        backgroundColor: checkState[5]? 'aliceblue': 'white',
-       '&:hover': {
-        backgroundColor: 'aliceblue',
-        opacity: [0.9, 0.8, 0.7],
-        cursor: 'pointer',
-      }, }}
-      onClick={()=>incTaskNo(5)}>
+       <Button target="_blank" component="a" href='/' 
+       sx={{textTransform: 'none', 
+       textAlign: 'left',
+       border: 1,
+       p:1,
+       height: 75,
+       borderColor:'aliceblue',
+       backgroundColor: checkState[5]? 'aliceblue': 'white',
+      '&:hover': {
+       backgroundColor: 'aliceblue',
+       opacity: [0.9, 0.8, 0.7],
+       cursor: 'pointer',
+     }, }}
+     onClick={()=>incTaskNo(5)}>
         <Typography>
-        No content and wait for something here...
+        No content and need something here...
       </Typography>
-      </Box>
       </Button>
       </Grid>
       </Grid>
@@ -217,8 +214,7 @@ const Onboarding = () => {
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
-      >
+        open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           Mentor Advisor Approval
         </BootstrapDialogTitle>

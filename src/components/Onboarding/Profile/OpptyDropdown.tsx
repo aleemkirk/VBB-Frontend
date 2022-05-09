@@ -10,7 +10,6 @@ import {
   Box,
   Chip 
 } from '@mui/material';
-import { Theme, useTheme } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../../redux/rootReducer';
@@ -51,39 +50,6 @@ const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
       handleSelectOppties(value);
     }
   };
-// const names = [
-//   'Option1',
-//   'Option2',
-//   'Option3',
-//   'Option4',
-//   'Option5',
-//   'Option6',
-//   'Option7',
-//   'Option8',
-// ];
-
-// function getStyles(name: string, personName: readonly string[], theme: Theme) {
-//   return {
-//     fontWeight:
-//       personName.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium,
-//   };
-// }
-
-// export default function OpportunitySelect() {
-//   const theme = useTheme();
-//   const [personName, setPersonName] = React.useState<string[]>([]);
-
-//   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-//     const {
-//       target: { value },
-//     } = event;
-//     setPersonName(
-//       // On autofill we get a stringified value.
-//       typeof value === 'string' ? value.split(',') : value,
-//     );
-//   };
 
   return (
     <div>
@@ -94,7 +60,6 @@ const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
           id="demo-multiple-chip"
           multiple
           value={selectedOppties}
-          // value={personName}
           onChange={handleSelect}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
@@ -107,15 +72,6 @@ const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
           MenuProps={MenuProps}
         >
         {opptyOptions(oppties)}
-          {/* {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name}
-            </MenuItem>
-          ))} */}
         </Select>
       </FormControl>
     </div>
