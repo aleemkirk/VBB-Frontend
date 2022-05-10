@@ -1,4 +1,5 @@
 import {
+  FormControl,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -34,7 +35,7 @@ const LanguageDropdown = ({
 
   useEffect(() => {
     dispatch(getLanguages());
-  }, []);
+  }, [dispatch]);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
@@ -44,9 +45,10 @@ const LanguageDropdown = ({
   };
 
   return (
-    <div>
+    <FormControl fullWidth>
       <InputLabel id="multi-language-select">Select Your Languages</InputLabel>
       <Select
+        label="Select Your Languages"
         labelId="multi-language-select"
         id="select-language-dropdown"
         multiple
@@ -55,7 +57,7 @@ const LanguageDropdown = ({
       >
         {languageOptions(languages)}
       </Select>
-    </div>
+    </FormControl>
   );
 };
 
