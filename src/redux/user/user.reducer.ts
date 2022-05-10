@@ -7,9 +7,10 @@ const initUser = {
   username: '',
   timeZone: '',
   dateOfBirth: '',
-  isStudent: false,
+  isEmailVerified: false,
   isLibrarian: false,
   isMentor: false,
+  isStudent: false,
 } as User;
 
 export const user = (
