@@ -51,3 +51,23 @@ export interface SubmitStudentRegistrationAction {
   type: typeof SUBMIT_STUDENT_REGISTRATION;
   payload: SubmitStudentRegistrationPayload;
 }
+
+export const SUBMIT_MENTOR_SIGN_UP = 'SUBMIT_MENTOR_SIGN_UP';
+export interface MentorSignUpForm {
+  email: string;
+  name: string;
+  password: string;
+}
+
+export interface SubmitMentorSignUpPayload {
+  mentorSignUpForm: MentorSignUpForm;
+  navigateFunction: NavigateFunction;
+}
+export interface SubmitMentorSignUpAction {
+  type: typeof SUBMIT_MENTOR_SIGN_UP;
+  payload: SubmitMentorSignUpPayload;
+}
+
+export interface SubmitMentorSignUpErrorResponse {
+  message: string;
+}
