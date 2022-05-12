@@ -1,4 +1,5 @@
 import {
+  FormControl,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -27,7 +28,7 @@ const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getCareers());
-  }, []);
+  }, [dispatch]);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
@@ -37,9 +38,10 @@ const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
   };
 
   return (
-    <div>
+    <FormControl fullWidth>
       <InputLabel id="multi-career-select">Select Your Careers</InputLabel>
       <Select
+        label="Select Your Careers"
         labelId="multi-career-select"
         id="select-careers-dropdown"
         multiple
@@ -48,7 +50,7 @@ const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
       >
         {careerOptions(careers)}
       </Select>
-    </div>
+    </FormControl>
   );
 };
 

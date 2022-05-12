@@ -1,4 +1,5 @@
 import {
+  FormControl,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -29,16 +30,17 @@ const TimezonesDropdown = ({
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTimezones());
-  }, []);
+  }, [dispatch]);
 
   const handleSelect = (e: SelectChangeEvent<string>) => {
     handleSelectTimezone(e.target.value);
   };
 
   return (
-    <div>
-      <InputLabel id="timezone-select">Select Your timezone</InputLabel>
+    <FormControl fullWidth>
+      <InputLabel id="timezone-select">Select Your Timezone</InputLabel>
       <Select
+        label="Select Your timezone"
         labelId="timezone-select"
         id="select-timezones-dropdown"
         value={selectedTimezone}
@@ -46,7 +48,7 @@ const TimezonesDropdown = ({
       >
         {timezonesOptions(timezones)}
       </Select>
-    </div>
+    </FormControl>
   );
 };
 
