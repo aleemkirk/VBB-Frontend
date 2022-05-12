@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../../redux/rootReducer';
 import * as actions from '../../../redux/actions';
 
-
 const defaultForm = {
   careers: [] as number[],
   mentoringLanguages: [] as number[],
