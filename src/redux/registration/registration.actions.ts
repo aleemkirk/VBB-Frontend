@@ -15,10 +15,10 @@ import {
   SUBMIT_MENTOR_SIGN_UP,
   SUBMIT_STUDENT_REGISTRATION,
 } from './registration.types';
-import { User } from '../user/user.types';
 import { setErrors } from '../actions';
 import { AppState } from '../rootReducer';
 import { Errors } from '../errors/errors.types';
+import { User } from '../user/user.types';
 
 export const submitMentorRegistration = (
   payload: SubmitMentorRegistrationPayload
