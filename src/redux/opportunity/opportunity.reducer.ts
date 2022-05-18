@@ -1,8 +1,8 @@
-import { Oppty, OpptyActions, SET_OPPTY } from './opportunity.types';
+import { Opportunity, OpportunityActions, SET_OPPORTUNITY } from './opportunity.types';
 
-export const oppty = (state = [] as Oppty[], action: OpptyActions) => {
+export const opportunity = (state = [] as Opportunity[], action: OpportunityActions) => {
   switch (action.type) {
-    case SET_OPPTY:
+    case SET_OPPORTUNITY:
       return action.payload;
     default:
       return state;

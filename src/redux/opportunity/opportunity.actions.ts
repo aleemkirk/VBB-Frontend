@@ -1,29 +1,29 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import {
-  Oppty,
-  GetOpptyAction,
-  GET_OPPTY,
-  SET_OPPTY,
-  SetOpptyAction,
+  Opportunity,
+  GetOpportunityAction,
+  GET_OPPORTUNITY,
+  SET_OPPORTUNITY,
+  SetOpportunityAction,
 } from './opportunity.types';
 import { AxiosResponse } from 'axios';
 import { vbbAPIV1 } from '../../services/api';
 
-export const setOppty = (payload: Oppty[]): SetOpptyAction => ({
-  type: SET_OPPTY,
+export const setOpportunity = (payload: Opportunity[]): SetOpportunityAction => ({
+  type: SET_OPPORTUNITY,
   payload,
 });
 
-export const getOppty = (): GetOpptyAction => ({ type: GET_OPPTY });
-export function* watchGetOppty() {
-  yield takeLatest(GET_OPPTY, handleGetOppty);
+export const getOpportunity = (): GetOpportunityAction => ({ type: GET_OPPORTUNITY });
+export function* watchGetOpportunity() {
+  yield takeLatest(GET_OPPORTUNITY, handleGetOpportunity);
 }
-function* handleGetOppty() {
+function* handleGetOpportunity() {
   try {
-    const url = 'oppty/';
-    const res: AxiosResponse<Oppty[]> = yield vbbAPIV1.get<Oppty[]>(url);
+    const url = 'opportunity/';
+    const res: AxiosResponse<Opportunity[]> = yield vbbAPIV1.get<Opportunity[]>(url);
     if (res.status === 200) {
-      yield put(setOppty(res.data));
+      yield put(setOpportunity(res.data));
     } else {
       console.error('Error getting Opptunities');
     }

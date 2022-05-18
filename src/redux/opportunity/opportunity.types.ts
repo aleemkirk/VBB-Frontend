@@ -1,18 +1,18 @@
-export const SET_OPPTY = 'SET_OPPTY';
-export const GET_OPPTY = 'GET_OPPTY';
-export interface Oppty {
+export const SET_OPPORTUNITY = 'SET_OPPORTUNITY';
+export const GET_OPPORTUNITY = 'GET_OPPORTUNITY';
+export interface Opportunity {
   id: number;
   name: string;
   description: string;
 }
 
-export interface SetOpptyAction {
-  type: typeof SET_OPPTY;
-  payload: Oppty[];
+export interface SetOpportunityAction {
+  type: typeof SET_OPPORTUNITY;
+  payload: Opportunity[];
 }
 
-export interface GetOpptyAction {
-  type: typeof GET_OPPTY;
+export interface GetOpportunityAction {
+  type: typeof GET_OPPORTUNITY;
 }
 
-export type OpptyActions = SetOpptyAction | GetOpptyAction;
+export type OpportunityActions = SetOpportunityAction | GetOpportunityAction;

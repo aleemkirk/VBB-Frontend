@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
 import { useNavigate } from 'react-router-dom';
 import { Checkbox, FormControlLabel, FormControl, FormGroup, Button, Grid, Paper, TextField, Typography, Box, Container, styled, Radio, RadioGroup, FormLabel, Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import OpptyDropdown from './OpptyDropdown';
+import OpportunityDropdown from './OpportunityDropdown';
 import LanguageDropdown from '../../shared/LanguageDropdown';
 import CareerDropdown from '../../shared/CareerDropdown';
 import SubjectDropdown from '../../shared/SubjectDropdown';
@@ -24,7 +23,7 @@ const defaultForm = {
   corporateCode: '',
   isOfAge: false,
   timezone: '',
-  oppties: [] as number[],
+  opportunities: [] as number[],
 };
 
 //Dialog after submit
@@ -129,10 +128,10 @@ const Profile = () => {
 
     <Grid item xs={12}  sx={{mt:5}}>
       <Typography variant='h6'>How do you find out this opportunity?</Typography>
-     <OpptyDropdown
-      selectedOppties={formValue.oppties}
-      handleSelectOppties={(opptyIds) =>
-        setFormValue({ ...formValue, oppties: opptyIds })
+     <OpportunityDropdown
+      selectedOpportunities={formValue.opportunities}
+      handleSelectOpportunities={(opportunityIds) =>
+        setFormValue({ ...formValue, opportunities: opportunityIds })
       }
      />
 </Grid>

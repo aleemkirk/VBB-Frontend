@@ -1,14 +1,16 @@
-import React from 'react';
+// import React from 'react';
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Grid,  Typography, Box, Container, styled, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, FormControlLabel, Checkbox} from '@mui/material';
+import { Button, Grid,  Typography, Box, styled, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, FormControlLabel, Checkbox} from '@mui/material';
 import { useState, useEffect } from 'react';
 import { AppState } from '../../redux/rootReducer';
 import CloseIcon from '@mui/icons-material/Close';
-import * as actions from '../../redux/actions';
+import {addTask, checkTask } from '../../redux/actions';
 
 //Approval Status Dialog of task4
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+
+const BootstrapDialog  = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
   },
@@ -62,8 +64,8 @@ const Onboarding = () => {
   //track onborading process with redux
   const incTaskNo = (i:number) =>{
     if(taskState<6 && !checkState[i]){
-     dispatch(actions.addTask());
-     dispatch(actions.checkTask(i));
+     dispatch(addTask());
+     dispatch(checkTask(i));
     }
   }
   
@@ -211,7 +213,7 @@ const Onboarding = () => {
   
   {/* Approval Status Dialog */}
      <div>
-      <BootstrapDialog
+      <BootstrapDialog 
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}>

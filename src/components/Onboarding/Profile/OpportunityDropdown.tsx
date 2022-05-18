@@ -13,8 +13,8 @@ import {
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../../redux/rootReducer';
-import * as actions from '../../../redux/actions';
-import { Oppty } from '../../../redux/opportunity/opportunity.types';
+import {getOpportunity} from '../../../redux/actions';
+import { Opportunity } from '../../../redux/opportunity/opportunity.types';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,27 +27,27 @@ const MenuProps = {
   },
 };
 
-const opptyOptions = (oppties: Oppty[]) =>
-oppties.map((oppty) => (
-    <MenuItem key={oppty.id} value={oppty.id}>
-      <ListItemText primary={`${oppty.name}`} />
+const opportunityOptions = (opportunities: Opportunity[]) =>
+opportunities.map((opportunity) => (
+    <MenuItem key={opportunity.id} value={opportunity.id}>
+      <ListItemText primary={`${opportunity.name}`} />
     </MenuItem>
   ));
 interface Props {
-  selectedOppties: number[];
-  handleSelectOppties: (opptyIds: number[]) => void;
+  selectedOpportunities: number[];
+  handleSelectOpportunities: (opportunityIds: number[]) => void;
 }
-const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
-  const oppties = useSelector((state: AppState) => state.oppty);
+const OpportunityDropdown = ({ selectedOpportunities, handleSelectOpportunities }: Props) => {
+  const opportunities = useSelector((state: AppState) => state.opportunity);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.getOppty());
+    dispatch(getOpportunity());
   }, []);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
     if (Array.isArray(value)) {
-      handleSelectOppties(value);
+      handleSelectOpportunities(value);
     }
   };
 
@@ -59,7 +59,7 @@ const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={selectedOppties}
+          value={selectedOpportunities}
           onChange={handleSelect}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
@@ -71,11 +71,11 @@ const OpptyDropdown = ({ selectedOppties, handleSelectOppties }: Props) => {
           )}
           MenuProps={MenuProps}
         >
-        {opptyOptions(oppties)}
+        {opportunityOptions(opportunities)}
         </Select>
       </FormControl>
     </div>
   );
 }
 
-export default OpptyDropdown;
+export default OpportunityDropdown;

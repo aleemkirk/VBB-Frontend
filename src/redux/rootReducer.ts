@@ -5,7 +5,7 @@ import { subjects } from './subjects/subjects.reducer';
 import { timezones } from './timezones/timezones.reducer';
 import { user } from './user/user.reducer';
 import {addTaskNo, checkTaskNo} from './onboarding/onboarding.reducer';
-import { oppty } from './opportunity/opportunity.reducer';
+import { opportunity } from './opportunity/opportunity.reducer';
 
 const rootReducer = combineReducers({
   careers,
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   user,
   addTaskNo,
   checkTaskNo,
-  oppty,
+  opportunity,
 });
 
 export default rootReducer;
