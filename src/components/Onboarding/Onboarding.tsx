@@ -1,57 +1,25 @@
-// import React from 'react';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Grid,  Typography, Box, styled, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, FormControlLabel, Checkbox} from '@mui/material';
-import { useState, useEffect } from 'react';
+import {
+  Button,
+  Grid,
+  Typography,
+  Box,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material';
+import { useState } from 'react';
 import { AppState } from '../../redux/rootReducer';
-import CloseIcon from '@mui/icons-material/Close';
-import {addTask, checkTask } from '../../redux/actions';
-
-//Approval Status Dialog of task4
-
-const BootstrapDialog  = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}
-const BootstrapDialogTitle = (props: DialogTitleProps) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-}
+import { addTask, checkTask } from '../../redux/actions';
+import Modal from '../shared/Modal';
+import OnboardingButton from '../shared/OnboardingButton';
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const taskState = useSelector((state:AppState) => state.addTaskNo);
-  const checkState = useSelector((state:AppState) => state.checkTaskNo);
+  const taskState = useSelector((state: AppState) => state.addTaskNo);
+  const checkState = useSelector((state: AppState) => state.checkTaskNo);
 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -60,186 +28,145 @@ const Onboarding = () => {
   const handleClose = () => {
     setOpen(false);
   };
- 
+
   //track onborading process with redux
-  const incTaskNo = (i:number) =>{
-    if(taskState<6 && !checkState[i]){
-     dispatch(addTask());
-     dispatch(checkTask(i));
+  const incTaskNo = (i: number) => {
+    if (taskState < 6 && !checkState[i]) {
+      dispatch(addTask());
+      dispatch(checkTask(i));
     }
-  }
-  
-    return (
-        <>
+  };
+
+  return (
+    <>
       <Box>
-        <Box sx={{
-        border: 1,
-        p:1,
-        borderColor:'aliceblue',
-       }}>
-      <Typography>
-       It looks like you have a couple more things to fill out before you can book your first
-        mentoring session! Click each of the boxes below to complete your tasks ({taskState}/6)
-      </Typography>
+        <Box
+          sx={{
+            border: 1,
+            p: 1,
+            borderColor: 'aliceblue',
+          }}
+        >
+          <Typography>
+            It looks like you have a couple more things to fill out before you
+            can book your first mentoring session! Click each of the boxes below
+            to complete your tasks ({taskState}/6)
+          </Typography>
+        </Box>
+
+        <Grid container spacing={3} sx={{ mt: 5 }}>
+          <Grid item xs={4}>
+            <OnboardingButton
+              renderAs="a"
+              href="https://portal.villagebookbuilders.org/training"
+              target="_blank"
+              disabled={false}
+              complete={checkState[0]}
+              onClick={() => incTaskNo(0)}
+            >
+              Click here to view mentor training resources
+            </OnboardingButton>
+          </Grid>
+
+          <Grid item xs={4}>
+            <OnboardingButton
+              renderAs="a"
+              href="https://villagebookbuilders.org/donate"
+              target="_blank"
+              disabled={false}
+              complete={checkState[1]}
+              onClick={() => incTaskNo(1)}
+            >
+              Click here to view the donations page (donations optional)
+            </OnboardingButton>
+          </Grid>
+
+          <Grid item xs={4}>
+            <OnboardingButton
+              disabled={false}
+              complete={checkState[2]}
+              onClick={() => navigate('/mentor/onboarding/profile')}
+            >
+              Click here to complete your mentor profile
+            </OnboardingButton>
+          </Grid>
+
+          <Grid item xs={4}>
+            <OnboardingButton
+              disabled={false}
+              complete={checkState[3]}
+              onClick={() => {
+                handleClickOpen();
+                incTaskNo(3);
+              }}
+            >
+              Await mentor advisor approval / Click here to view your approval
+              status
+            </OnboardingButton>
+          </Grid>
+
+          <Grid item xs={4}>
+            <OnboardingButton
+              renderAs="a"
+              href="/"
+              target="_blank"
+              disabled={
+                !checkState[0] ||
+                !checkState[1] ||
+                !checkState[2] ||
+                !checkState[3]
+              }
+              complete={checkState[4]}
+              onClick={() => incTaskNo(4)}
+            >
+              Click here to sign up for [meta workplace]
+            </OnboardingButton>
+          </Grid>
+
+          <Grid item xs={4}>
+            <OnboardingButton
+              renderAs="a"
+              href="/"
+              target="_blank"
+              disabled={false}
+              complete={checkState[5]}
+              onClick={() => incTaskNo(5)}
+            >
+              No content and need something here...
+            </OnboardingButton>
+          </Grid>
+        </Grid>
       </Box>
 
-      <Grid container spacing={3} sx={{mt:5}}>
-      <Grid item xs={4}>
-      <Button target="_blank" component="a" href='https://portal.villagebookbuilders.org/training' 
-      sx={{textTransform: 'none', 
-      textAlign: 'left',
-      border: 1,
-      p:1,
-      height: 75,
-      borderColor:'aliceblue',
-      backgroundColor: checkState[0]? 'aliceblue': 'transparent',
-      '&:hover': {
-      backgroundColor: 'aliceblue',
-      opacity: [0.9, 0.8, 0.7],
-      cursor: 'pointer',
-      },
-      }}
-      onClick={()=>incTaskNo(0)}
-      >
-      <Typography>
-        Click here to view mentor training resources
-      </Typography>
-      </Button>
-      </Grid>
-
-      <Grid item xs={4}>
-      <Button target="_blank" component="a" href='https://villagebookbuilders.org/donate' 
-      sx={{textTransform: 'none', textAlign: 'left',
-      border: 1,
-      p:1,
-      height: 75,
-      borderColor:'aliceblue',
-      backgroundColor: checkState[1]? 'aliceblue': 'transparent',
-     '&:hover': {
-      backgroundColor: 'aliceblue',
-      opacity: [0.9, 0.8, 0.7],
-      cursor: 'pointer',
-    }, }}
-      onClick={()=>incTaskNo(1)}>
-      <Typography>
-        Click here to view the donations page (donations optional)
-      </Typography>
-      </Button>
-      </Grid>
-
-      <Grid item xs={4}>
-      <Button onClick={() => navigate('/mentor/onboarding/profile')} 
-      sx={{textTransform: 'none', textAlign: 'left',
-      border: 1,
-        p:1,
-        height: 75,
-        borderColor:'aliceblue',
-        backgroundColor: checkState[2]? 'aliceblue': 'transparent',
-       '&:hover': {
-        backgroundColor: 'aliceblue',
-        opacity: [0.9, 0.8, 0.7],
-        cursor: 'pointer',
-      },}}>
-      <Typography>
-        Click here to complete your mentor profile
-      </Typography>
-      </Button> 
-      </Grid>
-
-      <Grid item xs={4}>
-      <Button sx={{textTransform: 'none', 
-      textAlign: 'left',
-      border: 1,
-        p:1,
-        height: 75,
-        borderColor:'aliceblue',
-        backgroundColor: checkState[3]? 'aliceblue': 'transparent',
-       '&:hover': {
-        backgroundColor: 'aliceblue',
-        opacity: [0.9, 0.8, 0.7],
-        cursor: 'pointer',
-      },}} 
-      onClick={()=>{handleClickOpen();incTaskNo(3)}}>
-      <Typography>
-        Await mentor advisor approval / Click here to view your approval status
-      </Typography>
-      </Button>
-      </Grid>
-
-      <Grid item xs={4}>
-      <Button target="_blank" component="a" href='/' 
-      sx={{textTransform: 'none', 
-      textAlign: 'left',
-      border: 1,
-      p:1,
-      height: 75,
-      borderColor:'aliceblue',
-      backgroundColor: checkState[4]? 'aliceblue': 'transparent',
-     '&:hover': {
-      backgroundColor: 'aliceblue',
-      opacity: [0.9, 0.8, 0.7],
-      cursor: 'pointer',
-    }, }} 
-      disabled={!checkState[0]||!checkState[1]||!checkState[2]||!checkState[3]}
-      onClick={()=>incTaskNo(4)}>
-      <Typography>
-        Click here to sign up for [meta workplace]
-      </Typography>
-      </Button>
-      </Grid>
-
-      <Grid item xs={4}>
-       <Button target="_blank" component="a" href='/' 
-       sx={{textTransform: 'none', 
-       textAlign: 'left',
-       border: 1,
-       p:1,
-       height: 75,
-       borderColor:'aliceblue',
-       backgroundColor: checkState[5]? 'aliceblue': 'transparent',
-      '&:hover': {
-       backgroundColor: 'aliceblue',
-       opacity: [0.9, 0.8, 0.7],
-       cursor: 'pointer',
-     }, }}
-     onClick={()=>incTaskNo(5)}>
-        <Typography>
-        No content and need something here...
-      </Typography>
-      </Button>
-      </Grid>
-      </Grid>
-    </Box>
-  
-  {/* Approval Status Dialog */}
-     <div>
-      <BootstrapDialog 
+      {/* Approval Status Dialog */}
+      <Modal
+        open={open}
         onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}>
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Mentor Advisor Approval
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-          <FormControlLabel disabled control={<Checkbox />} label="Your Status:" />
-          </Typography>
-          <Typography gutterBottom>
-          If this box isn't checked yet, it's because we've still viewing your application to become a VBB mentor. 
-          We'll email you as soon as we've reached a decision!
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            OK
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
-    </div>
-    
+        title="Mentor Advisor Approval"
+        actions={
+          <>
+            <Button autoFocus onClick={handleClose}>
+              {' '}
+              OK
+            </Button>
+          </>
+        }
+      >
+        <Typography gutterBottom>
+          <FormControlLabel
+            disabled
+            control={<Checkbox />}
+            label="Your Status:"
+          />
+        </Typography>
+        <Typography gutterBottom>
+          If this box isn't checked yet, it's because we've still viewing your
+          application to become a VBB mentor. We'll email you as soon as we've
+          reached a decision!
+        </Typography>
+      </Modal>
     </>
-      );
-  };
-  
-  export default Onboarding;
-  
+  );
+};
+
+export default Onboarding;

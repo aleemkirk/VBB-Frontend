@@ -5,19 +5,18 @@
 //   taskCheck: Array<boolean>;
 // }
 
-export enum ActionType{
-    ADD = 'addnumber',
-    CHECK = 'finishtask',
-    ASYNC = 'task_async',
-  }
+export enum ActionType {
+  ADD = 'addTaskNumber',
+  CHECK = 'checkTaskStatus',
+  ASYNC = 'taskAsync',
+}
 
 export interface addAction {
-    type: ActionType.ADD
-  }
-  export interface checkAction {
-    type: ActionType.CHECK;
-    payload: number
-  }
+  type: ActionType.ADD;
+}
+export interface checkAction {
+  type: ActionType.CHECK;
+  payload: number;
+}
 
-export type Action = addAction | checkAction
-
+export type Action = addAction | checkAction;

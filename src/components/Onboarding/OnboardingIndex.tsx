@@ -2,13 +2,14 @@ import { Box } from '@mui/material';
 import SideNav from '../shared/SideNav';
 import { Route, Routes } from 'react-router-dom';
 import Onboarding from './Onboarding';
-import Profile from './Profile/Profile';
+import Profile from './Profile';
 
+const onboardingPath = '/mentor/onboarding';
 const menuItems = [
-  { label: 'Profile', url: '/mentor/onboarding/profile' },
-  { label: 'Session', url: '/mentor/onboarding/session' },
-  { label: 'Training', url: '/mentor/onboarding/training' },
-  { label: 'Help?', url: '/mentor/onboarding/help' },
+  { label: 'Profile', url: onboardingPath + '/profile' },
+  { label: 'Session', url: onboardingPath + '/session' },
+  { label: 'Training', url: onboardingPath + 'training' },
+  { label: 'Help?', url: onboardingPath + '/help' },
 ];
 
 const OnboardingIndex = () => {

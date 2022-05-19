@@ -6,7 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
-import OnboardingIndex from './components/Onboarding/OnboadingIndex';
+import OnboardingIndex from './components/Onboarding/OnboardingIndex';
 
 const App = () => (
   <>

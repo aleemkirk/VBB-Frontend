@@ -8,7 +8,7 @@ import {
   watchLogin,
   watchSubmitMentorRegistration,
   watchSubmitStudentRegistration,
-  watchTaskAsync,
+  watchTask,
   watchGetOpportunity,
 } from './actions';
 
@@ -23,7 +23,7 @@ export default function* rootSaga() {
     watchLogin(),
     watchSubmitMentorRegistration(),
     watchSubmitStudentRegistration(),
-    watchTaskAsync(),
+    watchTask(),
     watchGetOpportunity(),
   ]);
 }
