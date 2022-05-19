@@ -1,10 +1,3 @@
-// export interface onboarding {
-//   id: number;
-//   name: string;
-//   taskNo:number;
-//   taskCheck: Array<boolean>;
-// }
-
 export enum ActionType {
   ADD = 'addTaskNumber',
   CHECK = 'checkTaskStatus',
