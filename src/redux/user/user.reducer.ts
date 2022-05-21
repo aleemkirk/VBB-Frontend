@@ -1,12 +1,21 @@
-import { LOGOUT } from '../logout/logout.types';
-import { USER_ACTIONS, SET_USER, USER } from './user.types';
+import { LOGOUT, LogoutAction } from '../logout/logout.types';
+import { UserActions, SET_USER, User } from './user.types';
 
-export const initUser = {
-  firstName: '',
-  lastName: '',
-};
+const initUser = {
+  email: '',
+  name: '',
+  username: '',
+  timeZone: '',
+  dateOfBirth: '',
+  isStudent: false,
+  isLibrarian: false,
+  isMentor: false,
+} as User;
 
-export const user = (state = initUser, action: USER_ACTIONS): USER => {
+export const user = (
+  state = initUser,
+  action: UserActions | LogoutAction
+): User => {
   switch (action.type) {
     case LOGOUT:
       return initUser;

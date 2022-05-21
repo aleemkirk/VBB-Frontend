@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import MentorIndex from './components/mentor/MentorIndex';
+import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
 
 const App = () => (
   <>
@@ -16,6 +17,7 @@ const App = () => (
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/complete-registration" element={<RegisterMentorForm />} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
         <Route path='/mentor/*' element={<MentorIndex/>} />
       </Routes>
