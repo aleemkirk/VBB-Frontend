@@ -1,16 +1,15 @@
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import { Box } from '@mui/material';
-import { Session, Sessions } from '../../utils/Session';
 import { getSessions, getMentorProfile } from '../../utils/api';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import MentorBookingModal from './MentorBookingModal';
 import { CalendarEvent } from '../../utils/CalendarEvent';
 import {
   Person as PersonIcon,
   Computer as ComputerIcon,
 } from '@mui/icons-material';
-import { Card, Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 interface EventComponenetProps {
   event: CalendarEvent;
@@ -19,8 +18,7 @@ interface EventComponenetProps {
 
 const localizer = luxonLocalizer(DateTime);
 
-////Custom Components
-const customComponents = {
+const calendarComponents = {
   event: ({ event }: EventComponenetProps) => {
     return (
       <Box display="flex" alignItems="center">
@@ -33,8 +31,7 @@ const customComponents = {
   },
 };
 
-////formats
-const formats = {
+const calendarFormats = {
   eventTimeRangeFormat: () => {
     return '';
   },
@@ -74,8 +71,8 @@ const dummyCalendarEvent: CalendarEvent[] = [
 ];
 
 const MentorBooking = () => {
-  const user = useMemo(() => getMentorProfile('1'), []);
-  const fakeSessions = useMemo(() => getSessions(user), []);
+  const user = getMentorProfile('1');
+  const fakeSessions = getSessions(user);
   const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
 
   return (
@@ -94,8 +91,8 @@ const MentorBooking = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 700 }}
-        components={customComponents}
-        formats={formats}
+        components={calendarComponents}
+        formats={calendarFormats}
       />
       <MentorBookingModal eventOrSlot={event} onClose={() => setEvent(null)} />
     </Box>

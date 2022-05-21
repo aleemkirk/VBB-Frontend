@@ -17,7 +17,6 @@ import {
   AccessTime,
   Notes,
   Person,
-  PersonAdd,
   PhotoCameraFront,
 } from '@mui/icons-material';
 import { SlotSessions } from '../../utils/Session';
@@ -39,16 +38,10 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
     <Modal
       open={Boolean(eventOrSlot)}
       onClose={onClose}
-      // @ts-ignore
-      title={
-        <Box display="flex" alignItems="center">
-          Confirm Your Appointment
-        </Box>
-      }
+      title="Confirm Your Appointment"
       actions={
         <Box display="flex" justifyContent="flex-end" width="100%">
           <Button onSubmit={() => onClose()} disabled={disable}>
-            {' '}
             {isEvent ? 'Book' : 'Create'}
           </Button>
         </Box>
@@ -56,7 +49,7 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
     >
       <Grid container spacing={2} py={2}>
         <Grid item xs={12}>
-          <Autocomplete<string, false, false, false>
+          <Autocomplete<string>
             options={fakeStudents}
             getOptionLabel={(option) => option}
             renderOption={(props, option) => <li {...props}>{option}</li>}
