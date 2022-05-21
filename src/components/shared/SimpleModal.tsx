@@ -17,11 +17,15 @@ const SimpleModal = ({ open, title, onClose, onSubmit }: SimpleModalProps) => (
         <Button sx={{ mr: 2 }} onClick={onSubmit}>
           Yes
         </Button>
-        <Button color="secondary" onClick={onClose}>No</Button>
+        <Button color="secondary" onClick={onClose}>
+          No
+        </Button>
       </>
     }
   >
-    <Typography variant="h5" mt={2}>{title}</Typography>
+    <Typography variant="h5" mt={2}>
+      {title}
+    </Typography>
   </Modal>
 );
 

@@ -1,13 +1,5 @@
-
-
 const MentorMessage = () => {
-
-    return(
-        <>Mentor Messages Page</>
-    );
-
-
+  return <>Mentor Messages Page</>;
 };
-
 
 export default MentorMessage;
