@@ -25,8 +25,8 @@ export const getMentorProfiles = async (
 };
 
 export const getMentorProfile = (id?: string): Profile | undefined => {
-  if (id == undefined) return;
-  return MentorProfiles.filter((profile) => profile.id == id)[0];
+  if (id === undefined) return;
+  return MentorProfiles.filter((profile) => profile.id === id)[0];
 };
 
 //--------------------------------------------------------------------------
@@ -37,8 +37,8 @@ export const getStudentProfles = (program?: string): Profile[] => {
 };
 
 export const getStudentProfile = (id?: string): Profile | undefined => {
-  if (id == undefined) return;
-  return studentProfiles.filter((profile) => profile.id == id)[0];
+  if (id === undefined) return;
+  return studentProfiles.filter((profile) => profile.id === id)[0];
 };
 
 //--------------------------------------------------------------------------
@@ -52,22 +52,22 @@ export const getAnnounements = (program?: string): Announcement[] => {
 
 //Sessions
 export const getMentorSessions = (id?: string): Session[] => {
-  if (id == undefined) return Sessions;
+  if (id === undefined) return Sessions;
 
-  return Sessions.filter((session) => session.mentorID == id);
+  return Sessions.filter((session) => session.mentorID === id);
 };
 
 export const getStudentSessions = (id?: string): Session[] => {
-  if (id == undefined) return Sessions;
+  if (id === undefined) return Sessions;
 
-  return Sessions.filter((session) => session.studentID == id);
+  return Sessions.filter((session) => session.studentID === id);
 };
 
 export const getSessions = (userProfile?: Profile) => {
-  if (userProfile == undefined) return Sessions;
-  if (userProfile.type == ProfileTypes.MENTOR)
+  if (userProfile === undefined) return Sessions;
+  if (userProfile.type === ProfileTypes.MENTOR)
     return getMentorSessions(userProfile.id);
-  else if (userProfile.type == ProfileTypes.STUDENT)
+  else if (userProfile.type === ProfileTypes.STUDENT)
     return getStudentSessions(userProfile.id);
   return [];
 };

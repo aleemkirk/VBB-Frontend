@@ -1,7 +1,7 @@
-import { Card, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { getSessions } from '../../utils/api';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import MentorSessionCard from './MentorSessionCard';
 import { getMentorProfile } from '../../utils/api';
 
@@ -17,9 +17,9 @@ const EmptySessionMsg = () => {
 };
 
 const MentorHome = () => {
-  const [checkIn, setCheckIn] = useState<boolean | null>(null);
-  const user = useMemo(() => getMentorProfile('1'), []);
-  const fakeSessions = useMemo(() => getSessions(user), []);
+  const [, setCheckIn] = useState<boolean | null>(null);
+  const user = getMentorProfile('1');
+  const fakeSessions = getSessions(user);
 
   return (
     <Grid container padding={2} spacing={1}>
@@ -31,11 +31,11 @@ const MentorHome = () => {
       <Grid item xs={12}>
         <Typography variant="h4">Upcomming Sessions</Typography>
       </Grid>
-      {fakeSessions.length == 0 ? (
+      {fakeSessions.length === 0 ? (
         <EmptySessionMsg />
       ) : (
         fakeSessions.map((session) => (
-          <Grid item xs={12}>
+          <Grid item xs={12} key={session.id}>
             <MentorSessionCard
               session={session}
               onCheckIn={() => setCheckIn(true)}

@@ -28,7 +28,6 @@ interface EventModalProps {
 }
 
 const fakeStudents = ['Student 1', 'Student 2', 'Student 3'];
-const fakeMentors = ['Mentor 1', 'Mentor 2', 'Mentor 3'];
 
 const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
   const isEvent = isCalendarEvent(eventOrSlot);

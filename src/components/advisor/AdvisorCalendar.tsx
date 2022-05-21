@@ -1,21 +1,14 @@
-import { useState, ReactNode } from 'react';
+import { useState } from 'react';
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import EventModal from '../shared/EventModal';
 import { Box } from '@mui/material';
 import { Computer as ComputerIcon } from '@mui/icons-material';
-import { SlotSessions } from '../student/StudentBooking';
-
-export interface CalendarEvent {
-  id: string;
-  color: string;
-  title: ReactNode;
-  start: Date;
-  end: Date;
-}
+import { CalendarEvent } from '../../utils/CalendarEvent';
+import { SlotSessions } from '../../utils/Session';
 
 export const isCalendarEvent = (
-  event: CalendarEvent | SlotInfo | null | SlotSessions
+  event: CalendarEvent | SlotInfo | SlotSessions | null
 ): event is CalendarEvent => {
   return event ? 'id' in event : false;
 };
@@ -23,7 +16,9 @@ export const isCalendarEvent = (
 const localizer = luxonLocalizer(DateTime);
 
 const AdvisorCalendar = () => {
-  const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
+  const [event, setEvent] = useState<
+    CalendarEvent | SlotInfo | SlotSessions | null
+  >(null);
 
   return (
     <Box p={2}>
@@ -34,6 +29,7 @@ const AdvisorCalendar = () => {
         events={[
           {
             id: '0',
+            computerID: '3',
             color: '#9eded0',
             title: (
               <Box display="flex" alignItems="center">
@@ -48,6 +44,7 @@ const AdvisorCalendar = () => {
           },
           {
             id: '1',
+            computerID: '2',
             color: '#d6e2f0',
             title: (
               <Box display="flex" alignItems="center">

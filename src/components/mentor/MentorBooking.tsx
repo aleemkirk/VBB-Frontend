@@ -1,7 +1,6 @@
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import { Box } from '@mui/material';
-import { getSessions, getMentorProfile } from '../../utils/api';
 import { useState } from 'react';
 import MentorBookingModal from './MentorBookingModal';
 import { CalendarEvent } from '../../utils/CalendarEvent';
@@ -71,8 +70,6 @@ const dummyCalendarEvent: CalendarEvent[] = [
 ];
 
 const MentorBooking = () => {
-  const user = getMentorProfile('1');
-  const fakeSessions = getSessions(user);
   const [event, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
 
   return (
