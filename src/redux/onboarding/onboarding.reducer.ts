@@ -1,9 +1,9 @@
 import { Action, ActionType } from './onboarding.types';
 
 const initialNoState = 0;
-const initialCheckState = [false, false, false, false, false, false];
+const initialStepState = [false, false, false, false, false, false];
 
-export const onboardingSteps = (state = initialCheckState, action: Action) => {
+export const onboardingSteps = (state = initialStepState, action: Action) => {
   switch (action.type) {
     case ActionType.COMPLETE_ONBOARDING_STEP:
       const completedIndex = action.payload - 1;
