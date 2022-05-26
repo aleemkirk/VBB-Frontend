@@ -146,7 +146,6 @@ const Onboarding = () => {
         actions={
           <>
             <Button autoFocus onClick={handleClose}>
-              {' '}
               OK
             </Button>
           </>

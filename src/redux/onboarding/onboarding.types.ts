@@ -1,15 +1,15 @@
 export enum ActionType {
-  ADD = 'addTaskNumber',
-  CHECK = 'checkTaskStatus',
-  ASYNC = 'taskAsync',
+  ADD = 'AddTaskNumber',
+  CHECK = 'CheckTaskStatus',
+  ASYNC = 'TaskAsync',
 }
 
-export interface addAction {
+export interface AddAction {
   type: ActionType.ADD;
 }
-export interface checkAction {
+export interface CheckAction {
   type: ActionType.CHECK;
   payload: number;
 }
 
-export type Action = addAction | checkAction;
+export type Action = AddAction | CheckAction;

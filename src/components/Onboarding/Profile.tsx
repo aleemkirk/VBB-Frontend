@@ -246,7 +246,6 @@ const Profile = () => {
           <Grid item xs={12} sx={{ mt: 5 }}>
             <FormControl>
               <Typography variant="h6">
-                {' '}
                 Once you book a mentoring session, will you be able to meet with
                 your student consistently every week for at least 3 months?
               </Typography>
@@ -285,7 +284,6 @@ const Profile = () => {
         actions={
           <>
             <Button autoFocus onClick={handleClose}>
-              {' '}
               OK
             </Button>
           </>
