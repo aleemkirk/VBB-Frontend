@@ -18,7 +18,7 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const taskState = useSelector((state: AppState) => state.addTaskNo);
-  const stepState = useSelector((state: AppState) => state.onbaordingSteps);
+  const stepState = useSelector((state: AppState) => state.onboardingSteps);
 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -110,10 +110,7 @@ const Onboarding = () => {
               href="/"
               target="_blank"
               disabled={
-                !stepState[0] ||
-                !stepState[1] ||
-                !stepState[2] ||
-                !stepState[3]
+                !stepState[0] || !stepState[1] || !stepState[2] || !stepState[3]
               }
               complete={stepState[4]}
               onClick={() => incTaskNo(4)}

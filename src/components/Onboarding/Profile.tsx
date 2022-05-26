@@ -41,7 +41,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const taskState = useSelector((state: AppState) => state.addTaskNo);
-  const checkState = useSelector((state: AppState) => state.onbaordingSteps);
+  const checkState = useSelector((state: AppState) => state.onboardingSteps);
   const incTaskNo = (i: number) => {
     if (taskState < 6 && !checkState[i]) {
       dispatch(actions.addTask());

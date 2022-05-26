@@ -7,17 +7,13 @@ export enum ActionType {
 export interface AddAction {
   type: ActionType.ADD;
 }
-// export interface CheckAction {
-//   type: ActionType.CHECK;
-//   payload: number;
-// }
 
-export interface CompleteStepAction{
+export interface CompleteStepAction {
   type: ActionType.COMPLETE_ONBOARDING_STEP;
   payload: number;
 }
 
-export interface UpdateStepAction{
+export interface UpdateStepAction {
   type: ActionType.UPDATE_ONBOARDING_STEP;
   payload: number;
 }

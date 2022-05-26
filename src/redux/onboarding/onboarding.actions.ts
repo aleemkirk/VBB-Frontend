@@ -1,4 +1,4 @@
-import { ActionType, Action } from './onboarding.types';
+import { ActionType } from './onboarding.types';
 import { put, takeEvery } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 import { vbbAPIV1 } from '../../services/api';
@@ -8,13 +8,6 @@ export const addTask = () => {
     type: ActionType.ADD,
   };
 };
-
-// export const checkTask = (payload: number) => {
-//   return {
-//     type: ActionType.CHECK,
-//     payload,
-//   };
-// };
 
 export const updateOnboardingStep = (payload: Number) => ({
   type: ActionType.COMPLETE_ONBOARDING_STEP,
@@ -30,7 +23,7 @@ function* handleTaskStep() {
     const url = 'onboarding/';
     const res: AxiosResponse<Number> = yield vbbAPIV1.get<Number>(url);
     if (res.status === 200) {
-      yield put( updateOnboardingStep(res.data));
+      yield put(updateOnboardingStep(res.data));
     } else {
       console.error('Error getting Onboarding Steps');
     }
