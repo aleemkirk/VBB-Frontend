@@ -1,11 +1,12 @@
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ReactNode, useLayoutEffect, useState } from 'react';
+
 /**
  * Custom history object and browser router so that we
  * can use the history.push() directly from sagas
  */
-export const history = createBrowserHistory();
+const history = createBrowserHistory();
 
 export const BrowserRouter = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState({
