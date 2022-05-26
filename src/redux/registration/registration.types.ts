@@ -1,5 +1,3 @@
-import { NavigateFunction } from 'react-router-dom';
-
 export const SUBMIT_MENTOR_REGISTRATION = 'SUBMIT_MENTOR_REGISTRATION';
 export interface MentorRegistrationForm {
   careers: number[];
@@ -15,17 +13,9 @@ export interface MentorRegistrationForm {
   dateOfBirth: string;
 }
 
-export interface SubmitMentorRegistrationPayload {
-  mentorRegistrationForm: MentorRegistrationForm;
-  navigateFunction: NavigateFunction;
-}
-
 export interface SubmitMentorRegistrationAction {
   type: typeof SUBMIT_MENTOR_REGISTRATION;
-  payload: {
-    mentorRegistrationForm: MentorRegistrationForm;
-    navigateFunction: NavigateFunction;
-  };
+  payload: MentorRegistrationForm;
 }
 
 export const SUBMIT_STUDENT_REGISTRATION = 'SUBMIT_STUDENT_REGISTRATION';
@@ -41,15 +31,10 @@ export interface StudentRegistrationForm {
   timezone: string;
   username: string;
 }
-export interface SubmitStudentRegistrationPayload {
-  studentRegistrationForm: StudentRegistrationForm;
-
-  navigateFunction: NavigateFunction;
-}
 
 export interface SubmitStudentRegistrationAction {
   type: typeof SUBMIT_STUDENT_REGISTRATION;
-  payload: SubmitStudentRegistrationPayload;
+  payload: StudentRegistrationForm;
 }
 
 export const SUBMIT_MENTOR_SIGN_UP = 'SUBMIT_MENTOR_SIGN_UP';
@@ -59,13 +44,9 @@ export interface MentorSignUpForm {
   password: string;
 }
 
-export interface SubmitMentorSignUpPayload {
-  mentorSignUpForm: MentorSignUpForm;
-  navigateFunction: NavigateFunction;
-}
 export interface SubmitMentorSignUpAction {
   type: typeof SUBMIT_MENTOR_SIGN_UP;
-  payload: SubmitMentorSignUpPayload;
+  payload: MentorSignUpForm;
 }
 
 export interface SubmitMentorSignUpErrorResponse {

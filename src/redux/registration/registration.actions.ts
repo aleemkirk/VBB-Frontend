@@ -4,13 +4,13 @@ import { setUser } from '../user/user.actions';
 import { vbbAPIV1 } from '../../services/api';
 
 import {
+  MentorRegistrationForm,
+  MentorSignUpForm,
+  StudentRegistrationForm,
   SubmitMentorRegistrationAction,
-  SubmitMentorRegistrationPayload,
   SubmitMentorSignUpAction,
-  SubmitMentorSignUpPayload,
   SubmitMentorSignUpErrorResponse,
   SubmitStudentRegistrationAction,
-  SubmitStudentRegistrationPayload,
   SUBMIT_MENTOR_REGISTRATION,
   SUBMIT_MENTOR_SIGN_UP,
   SUBMIT_STUDENT_REGISTRATION,
@@ -19,10 +19,9 @@ import { setErrors } from '../actions';
 import { AppState } from '../rootReducer';
 import { Errors } from '../errors/errors.types';
 import { User } from '../user/user.types';
+import { pushHistory } from '../../utils/customHistory';
 
-export const submitMentorRegistration = (
-  payload: SubmitMentorRegistrationPayload
-) => ({
+export const submitMentorRegistration = (payload: MentorRegistrationForm) => ({
   type: SUBMIT_MENTOR_REGISTRATION,
   payload,
 });
@@ -35,18 +34,15 @@ function* handleSubmitMentorRegistration(
   action: SubmitMentorRegistrationAction
 ) {
   try {
-    const {
-      payload: { mentorRegistrationForm, navigateFunction },
-    } = action;
     const url = 'mentor-registration/';
-    const data = { ...mentorRegistrationForm };
+    const data = { ...action.payload };
     const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
     const user = res.data;
     if (res.status === 201 && user) {
       yield put(setUser(user));
-      navigateFunction('/dashboard');
+      pushHistory('/dashboard');
     } else {
-      navigateFunction('/');
+      pushHistory('/');
     }
   } catch (e) {
     console.error('Could not register mentor', e);
@@ -57,7 +53,7 @@ function* handleSubmitMentorRegistration(
  * Student registration actions
  */
 export const submitStudentRegistration = (
-  payload: SubmitStudentRegistrationPayload
+  payload: StudentRegistrationForm
 ): SubmitStudentRegistrationAction => ({
   type: SUBMIT_STUDENT_REGISTRATION,
   payload,
@@ -74,19 +70,16 @@ function* handleSubmitStudentRegistration(
   action: SubmitStudentRegistrationAction
 ) {
   try {
-    const {
-      payload: { studentRegistrationForm, navigateFunction },
-    } = action;
     const url = 'student-registration/';
-    const data = { ...studentRegistrationForm };
+    const data = { ...action.payload };
     const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
 
     const user = res.data;
     if (res.status === 201 && user) {
       yield put(setUser(user));
-      navigateFunction('/dashboard');
+      pushHistory('/dashboard');
     } else {
-      navigateFunction('/');
+      pushHistory('/');
     }
   } catch (e) {
     console.error('Could not register mentor', e);
@@ -94,7 +87,7 @@ function* handleSubmitStudentRegistration(
 }
 
 export const submitMentorSignUp = (
-  payload: SubmitMentorSignUpPayload
+  payload: MentorSignUpForm
 ): SubmitMentorSignUpAction => ({
   type: SUBMIT_MENTOR_SIGN_UP,
   payload,
@@ -108,14 +101,13 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
     (state: AppState) => state.errors
   );
   try {
-    const { mentorSignUpForm, navigateFunction } = action.payload;
     const url = 'mentor-sign-up/';
     const res: AxiosResponse<undefined | SubmitMentorSignUpErrorResponse> =
       yield vbbAPIV1.post<undefined | SubmitMentorSignUpErrorResponse>(url, {
-        ...mentorSignUpForm,
+        ...action.payload,
       });
     if (res.status === 201) {
-      navigateFunction('/email-sent');
+      pushHistory('/email-sent');
     } else {
       const errors = {
         ...current_errors,

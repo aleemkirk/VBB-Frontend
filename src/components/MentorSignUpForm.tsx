@@ -1,7 +1,6 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { clearErrors, submitMentorSignUp } from '../redux/actions';
 import { mentorSignUpErrors } from '../redux/selectors';
 
@@ -14,7 +13,6 @@ const defaultForm = {
 const MentorSignUpForm = () => {
   const errorMessages = useSelector(mentorSignUpErrors);
   const dispatch = useDispatch();
-  const navigation = useNavigate();
 
   const [formValue, setFormValue] = useState(defaultForm);
   const clearErrorOnChange = () => {
@@ -28,12 +26,7 @@ const MentorSignUpForm = () => {
         e.preventDefault();
         const { email, name, password } = formValue;
         if (email && name && password) {
-          dispatch(
-            submitMentorSignUp({
-              mentorSignUpForm: formValue,
-              navigateFunction: navigation,
-            })
-          );
+          dispatch(submitMentorSignUp(formValue));
         }
       }}
     >
