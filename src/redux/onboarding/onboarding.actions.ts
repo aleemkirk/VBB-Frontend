@@ -1,5 +1,5 @@
 import { ActionType, Action } from './onboarding.types';
-import { takeLatest, put, takeEvery, delay } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 import { vbbAPIV1 } from '../../services/api';
 
@@ -9,19 +9,32 @@ export const addTask = () => {
   };
 };
 
-export const checkTask = (payload: number) => {
-  return {
-    type: ActionType.CHECK,
-    payload,
-  };
-};
+// export const checkTask = (payload: number) => {
+//   return {
+//     type: ActionType.CHECK,
+//     payload,
+//   };
+// };
 
-function* taskAync() {
-  yield put({ type: ActionType.ADD });
-  yield put({ type: ActionType.CHECK });
+export const updateOnboardingStep = (payload: Number) => ({
+  type: ActionType.COMPLETE_ONBOARDING_STEP,
+  payload,
+});
+
+export function* watchTaskStep() {
+  yield takeEvery(ActionType.COMPLETE_ONBOARDING_STEP, handleTaskStep);
 }
 
-export function* watchTask() {
-  yield takeEvery(ActionType.ASYNC, taskAync);
+function* handleTaskStep() {
+  try {
+    const url = 'onboarding/';
+    const res: AxiosResponse<Number> = yield vbbAPIV1.get<Number>(url);
+    if (res.status === 200) {
+      yield put( updateOnboardingStep(res.data));
+    } else {
+      console.error('Error getting Onboarding Steps');
+    }
+  } catch (e) {
+    console.error('Failed to get Onboarding Steps', { e });
+  }
 }
-

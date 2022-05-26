@@ -1,15 +1,25 @@
 export enum ActionType {
   ADD = 'AddTaskNumber',
-  CHECK = 'CheckTaskStatus',
-  ASYNC = 'TaskAsync',
+  COMPLETE_ONBOARDING_STEP = 'CompleteStep',
+  UPDATE_ONBOARDING_STEP = 'UpdateStep',
 }
 
 export interface AddAction {
   type: ActionType.ADD;
 }
-export interface CheckAction {
-  type: ActionType.CHECK;
+// export interface CheckAction {
+//   type: ActionType.CHECK;
+//   payload: number;
+// }
+
+export interface CompleteStepAction{
+  type: ActionType.COMPLETE_ONBOARDING_STEP;
   payload: number;
 }
 
-export type Action = AddAction | CheckAction;
+export interface UpdateStepAction{
+  type: ActionType.UPDATE_ONBOARDING_STEP;
+  payload: number;
+}
+
+export type Action = AddAction | CompleteStepAction | UpdateStepAction;

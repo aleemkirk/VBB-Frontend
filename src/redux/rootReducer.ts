@@ -4,7 +4,7 @@ import { languages } from './language/language.reducer';
 import { subjects } from './subjects/subjects.reducer';
 import { timezones } from './timezones/timezones.reducer';
 import { user } from './user/user.reducer';
-import { addTaskNo, checkTaskNo } from './onboarding/onboarding.reducer';
+import { addTaskNo, onbaordingSteps } from './onboarding/onboarding.reducer';
 import { opportunity } from './opportunity/opportunity.reducer';
 
 const rootReducer = combineReducers({
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   timezones,
   user,
   addTaskNo,
-  checkTaskNo,
+  onbaordingSteps,
   opportunity,
 });
 

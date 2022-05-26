@@ -6,20 +6,11 @@ import {
   FormGroup,
   Button,
   Grid,
-  Paper,
   TextField,
   Typography,
   Box,
-  Container,
-  styled,
   Radio,
   RadioGroup,
-  FormLabel,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
 } from '@mui/material';
 import OpportunityDropdown from '../shared/OpportunityDropdown';
 import LanguageDropdown from '../shared/LanguageDropdown';
@@ -50,11 +41,11 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const taskState = useSelector((state: AppState) => state.addTaskNo);
-  const checkState = useSelector((state: AppState) => state.checkTaskNo);
+  const checkState = useSelector((state: AppState) => state.onbaordingSteps);
   const incTaskNo = (i: number) => {
     if (taskState < 6 && !checkState[i]) {
       dispatch(actions.addTask());
-      dispatch(actions.checkTask(i));
+      dispatch(actions.updateOnboardingStep(i));
     }
   };
 

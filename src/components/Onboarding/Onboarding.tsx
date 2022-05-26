@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -11,7 +10,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { AppState } from '../../redux/rootReducer';
-import { addTask, checkTask } from '../../redux/actions';
+import { addTask, updateOnboardingStep } from '../../redux/actions';
 import Modal from '../shared/Modal';
 import OnboardingButton from '../shared/OnboardingButton';
 
@@ -19,7 +18,7 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const taskState = useSelector((state: AppState) => state.addTaskNo);
-  const checkState = useSelector((state: AppState) => state.checkTaskNo);
+  const stepState = useSelector((state: AppState) => state.onbaordingSteps);
 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -31,9 +30,9 @@ const Onboarding = () => {
 
   //track onborading process with redux
   const incTaskNo = (i: number) => {
-    if (taskState < 6 && !checkState[i]) {
+    if (taskState < 6 && !stepState[i]) {
       dispatch(addTask());
-      dispatch(checkTask(i));
+      dispatch(updateOnboardingStep(i));
     }
   };
 
@@ -61,7 +60,7 @@ const Onboarding = () => {
               href="https://portal.villagebookbuilders.org/training"
               target="_blank"
               disabled={false}
-              complete={checkState[0]}
+              complete={stepState[0]}
               onClick={() => incTaskNo(0)}
             >
               Click here to view mentor training resources
@@ -74,7 +73,7 @@ const Onboarding = () => {
               href="https://villagebookbuilders.org/donate"
               target="_blank"
               disabled={false}
-              complete={checkState[1]}
+              complete={stepState[1]}
               onClick={() => incTaskNo(1)}
             >
               Click here to view the donations page (donations optional)
@@ -84,7 +83,7 @@ const Onboarding = () => {
           <Grid item xs={4}>
             <OnboardingButton
               disabled={false}
-              complete={checkState[2]}
+              complete={stepState[2]}
               onClick={() => navigate('/mentor/onboarding/profile')}
             >
               Click here to complete your mentor profile
@@ -94,7 +93,7 @@ const Onboarding = () => {
           <Grid item xs={4}>
             <OnboardingButton
               disabled={false}
-              complete={checkState[3]}
+              complete={stepState[3]}
               onClick={() => {
                 handleClickOpen();
                 incTaskNo(3);
@@ -111,12 +110,12 @@ const Onboarding = () => {
               href="/"
               target="_blank"
               disabled={
-                !checkState[0] ||
-                !checkState[1] ||
-                !checkState[2] ||
-                !checkState[3]
+                !stepState[0] ||
+                !stepState[1] ||
+                !stepState[2] ||
+                !stepState[3]
               }
-              complete={checkState[4]}
+              complete={stepState[4]}
               onClick={() => incTaskNo(4)}
             >
               Click here to sign up for [meta workplace]
@@ -129,7 +128,7 @@ const Onboarding = () => {
               href="/"
               target="_blank"
               disabled={false}
-              complete={checkState[5]}
+              complete={stepState[5]}
               onClick={() => incTaskNo(5)}
             >
               No content and need something here...
