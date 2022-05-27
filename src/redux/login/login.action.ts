@@ -5,13 +5,13 @@ import { vbbAPIV1 } from '../../services/api';
 import {
   AUTO_LOGIN,
   AUTO_LOGIN_ACTION,
-  AUTO_LOGIN_PAYLOAD,
   LOGIN,
   LOGIN_ACTION,
   LOGIN_PAYLOAD,
 } from './login.types';
 import { setUser } from '../user/user.actions';
 import { User } from '../user/user.types';
+import { pushHistory } from '../../utils/customHistory';
 
 // Login Action and Sagas
 export const login = (payload: LOGIN_PAYLOAD): LOGIN_ACTION => ({
@@ -23,7 +23,7 @@ export function* watchLogin() {
 }
 function* handleLogin(action: LOGIN_ACTION) {
   try {
-    const { username, password, navigateFunction } = action.payload;
+    const { username, password } = action.payload;
     const url = 'login/';
     const data = { username, password };
 
@@ -35,11 +35,11 @@ function* handleLogin(action: LOGIN_ACTION) {
     if (res.status === 200 && user) {
       yield put(setUser(user));
       if (user.isMentor && !user.mentorProfile) {
-        navigateFunction('/complete-registration');
+        pushHistory('/complete-registration');
       }
-      navigateFunction('/dashboard');
+      pushHistory('/dashboard');
     } else {
-      navigateFunction('/');
+      pushHistory('/');
     }
   } catch (e) {
     console.error('Could not login user', e);
@@ -47,24 +47,22 @@ function* handleLogin(action: LOGIN_ACTION) {
 }
 
 // Auto-Login Action and Sagas
-export const autoLogin = (payload: AUTO_LOGIN_PAYLOAD): AUTO_LOGIN_ACTION => ({
+export const autoLogin = (): AUTO_LOGIN_ACTION => ({
   type: AUTO_LOGIN,
-  payload,
 });
 export function* watchAutoLogin() {
   yield takeLatest(AUTO_LOGIN, handleAutoLogin);
 }
-function* handleAutoLogin(action: AUTO_LOGIN_ACTION) {
-  const navigateFunction = action.payload.navigateFunction;
+function* handleAutoLogin() {
   try {
     const url = 'users/me';
     const res: AxiosResponse<User> = yield vbbAPIV1.get<User>(url);
     const user = res.data;
     if (res.status === 200 && user) {
       yield put(setUser(user));
-      navigateFunction('/dashboard');
+      pushHistory('/dashboard');
     } else {
-      navigateFunction('/');
+      pushHistory('/');
     }
   } catch (e) {
     console.error('Could not auto login user', e);

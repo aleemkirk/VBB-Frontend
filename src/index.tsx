@@ -2,12 +2,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ThemeProvider } from '@mui/material';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import defaultTheme from './theme';
 import store from './redux/store';
+
+import { BrowserRouter } from './utils/customHistory';
 
 const root = createRoot(document.getElementById('root')!);
 

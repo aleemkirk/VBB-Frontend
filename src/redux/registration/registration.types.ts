@@ -1,7 +1,5 @@
-import { NavigateFunction } from 'react-router-dom';
-
 export const SUBMIT_MENTOR_REGISTRATION = 'SUBMIT_MENTOR_REGISTRATION';
-export interface MentorRegistraionForm {
+export interface MentorRegistrationForm {
   careers: number[];
   mentoringLanguages: number[];
   subjects: number[];
@@ -15,22 +13,14 @@ export interface MentorRegistraionForm {
   dateOfBirth: string;
 }
 
-export interface SubmitMentorRegistrationPayload {
-  mentorRegistrationForm: MentorRegistraionForm;
-  navigateFunction: NavigateFunction;
-}
-
 export interface SubmitMentorRegistrationAction {
   type: typeof SUBMIT_MENTOR_REGISTRATION;
-  payload: {
-    mentorRegistraionForm: MentorRegistraionForm;
-    navigateFunction: NavigateFunction;
-  };
+  payload: MentorRegistrationForm;
 }
 
 export const SUBMIT_STUDENT_REGISTRATION = 'SUBMIT_STUDENT_REGISTRATION';
 
-export interface StudentRegistraionForm {
+export interface StudentRegistrationForm {
   careersOfInterest: number[];
   interests: string;
   libraryCode: string;
@@ -41,13 +31,24 @@ export interface StudentRegistraionForm {
   timezone: string;
   username: string;
 }
-export interface SubmitStudentRegistrationPayload {
-  studentRegistrationForm: StudentRegistraionForm;
-
-  navigateFunction: NavigateFunction;
-}
 
 export interface SubmitStudentRegistrationAction {
   type: typeof SUBMIT_STUDENT_REGISTRATION;
-  payload: SubmitStudentRegistrationPayload;
+  payload: StudentRegistrationForm;
+}
+
+export const SUBMIT_MENTOR_SIGN_UP = 'SUBMIT_MENTOR_SIGN_UP';
+export interface MentorSignUpForm {
+  email: string;
+  name: string;
+  password: string;
+}
+
+export interface SubmitMentorSignUpAction {
+  type: typeof SUBMIT_MENTOR_SIGN_UP;
+  payload: MentorSignUpForm;
+}
+
+export interface SubmitMentorSignUpErrorResponse {
+  message: string;
 }
