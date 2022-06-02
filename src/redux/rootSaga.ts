@@ -7,6 +7,7 @@ import {
   watchGetTimezones,
   watchLogin,
   watchSubmitMentorRegistration,
+  watchSubmitMentorSignUpForm,
   watchSubmitStudentRegistration,
   watchTaskStep,
   watchGetOpportunity,
@@ -14,7 +15,6 @@ import {
 
 export default function* rootSaga() {
   yield all([
-    // add watch functions here
     watchAutoLogin(),
     watchGetCareers(),
     watchGetLanguages(),
@@ -22,6 +22,7 @@ export default function* rootSaga() {
     watchGetTimezones(),
     watchLogin(),
     watchSubmitMentorRegistration(),
+    watchSubmitMentorSignUpForm(),
     watchSubmitStudentRegistration(),
     watchTaskStep(),
     watchGetOpportunity(),

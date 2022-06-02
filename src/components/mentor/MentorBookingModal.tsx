@@ -8,20 +8,19 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@mui/material';
 import { SlotInfo } from 'react-big-calendar';
-import Modal from './Modal';
+import Modal from '../shared/Modal';
 import { CalendarEvent, isCalendarEvent } from '../../utils/CalendarEvent';
 import {
   AccessTime,
-  Computer,
-  Email,
   Notes,
   Person,
-  PersonAdd,
   PhotoCameraFront,
 } from '@mui/icons-material';
 import { SlotSessions } from '../../utils/Session';
+import { useState } from 'react';
 
 interface EventModalProps {
   eventOrSlot: CalendarEvent | SlotInfo | null | SlotSessions;
@@ -29,29 +28,27 @@ interface EventModalProps {
 }
 
 const fakeStudents = ['Student 1', 'Student 2', 'Student 3'];
-const fakeMentors = ['Mentor 1', 'Mentor 2', 'Mentor 3'];
 
-const EventModal = ({ eventOrSlot, onClose }: EventModalProps) => {
+const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
   const isEvent = isCalendarEvent(eventOrSlot);
+  const [disable, setDisable] = useState<boolean>(true);
+
   return (
     <Modal
       open={Boolean(eventOrSlot)}
       onClose={onClose}
-      // @ts-ignore
-      title={
-        <Box display="flex" alignItems="center">
-          <Computer sx={{ mr: 2 }} /> 1
-        </Box>
-      }
+      title="Confirm Your Appointment"
       actions={
         <Box display="flex" justifyContent="flex-end" width="100%">
-          <Button>{isEvent ? 'Save' : 'Create'}</Button>
+          <Button onSubmit={() => onClose()} disabled={disable}>
+            {isEvent ? 'Book' : 'Create'}
+          </Button>
         </Box>
       }
     >
       <Grid container spacing={2} py={2}>
-        <Grid item xs={6}>
-          <Autocomplete<string, false, false, false>
+        <Grid item xs={12}>
+          <Autocomplete<string>
             options={fakeStudents}
             getOptionLabel={(option) => option}
             renderOption={(props, option) => <li {...props}>{option}</li>}
@@ -68,46 +65,41 @@ const EventModal = ({ eventOrSlot, onClose }: EventModalProps) => {
             )}
           />
         </Grid>
-        <Grid item xs={6}>
-          <Autocomplete<string, false, false, false>
-            options={fakeMentors}
-            getOptionLabel={(option) => option}
-            renderOption={(props, option) => <li {...props}>{option}</li>}
-            renderInput={(props) => (
-              <TextField
-                {...props}
-                label="Mentor"
-                placeholder="Mentor"
-                InputProps={{
-                  ...props.InputProps,
-                  startAdornment: <PersonAdd />,
-                }}
-              />
-            )}
-          />
-        </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
             label="Date"
-            placeholder="Date"
+            placeholder={isEvent ? eventOrSlot.start.toString() : ''}
+            value={isEvent ? eventOrSlot.start.toString() : ''}
             InputProps={{ startAdornment: <AccessTime /> }}
           />
         </Grid>
-        <Grid item xs={12} display="flex">
-          <TextField
-            fullWidth
-            label="Mentor Email"
-            placeholder="Mentor Email"
-            defaultValue="mentor@email.com"
-            InputProps={{ startAdornment: <Email /> }}
-            sx={{ mr: 2 }}
-          />
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Notify"
-          />
+
+        <Grid item xs={12}>
+          <Typography variant="h6">Declaration</Typography>
         </Grid>
+
+        <Grid item xs={12}>
+          <Typography variant="body1" gutterBottom>
+            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
+            consectetur, neque doloribus, cupiditate numquam dignissimos laborum
+            fugiat deleniti? Eum quasi quidem quibusdam.
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} display="flex">
+          <Box display="flex" justifyContent="flex-end" width="100%">
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Agree"
+              sx={{ align: 'center' }}
+              value={disable}
+              onChange={() => setDisable(!disable)}
+            />
+          </Box>
+        </Grid>
+
         <Grid item xs={12} display="flex" alignItems="center">
           <PhotoCameraFront sx={{ mr: 2 }} />
           <RadioGroup
@@ -142,4 +134,4 @@ const EventModal = ({ eventOrSlot, onClose }: EventModalProps) => {
   );
 };
 
-export default EventModal;
+export default MentorBookingModal;

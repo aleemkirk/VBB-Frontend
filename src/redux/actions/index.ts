@@ -8,3 +8,4 @@ export * from '../registration/registration.actions';
 export * from '../timezones/timezones.actions';
 export * from '../onboarding/onboarding.actions';
 export * from '../opportunity/opportunity.actions';
+export * from '../errors/errors.actions';

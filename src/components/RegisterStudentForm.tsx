@@ -1,11 +1,8 @@
-import { Button, Grid, MenuItem, TextField, Typography } from '@mui/material';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { submitStudentRegistration } from '../redux/actions';
-import formToJson from '../utils/formToJson';
 import CareerDropdown from './shared/CareerDropdown';
-import MultipleSelect from './MultipleSelect';
 import SubjectDropdown from './shared/SubjectDropdown';
 import TimezonesDropdown from './shared/TimezoneSelect';
 
@@ -23,19 +20,13 @@ const defaultForm = {
 
 const RegisterMenteeForm = () => {
   const [formValue, setFormValue] = useState(defaultForm);
-  const navigateFunction = useNavigate();
   const dispatch = useDispatch();
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch(
-          submitStudentRegistration({
-            studentRegistrationForm: formValue,
-            navigateFunction,
-          })
-        );
+        dispatch(submitStudentRegistration(formValue));
       }}
     >
       <Grid container spacing={3}>

@@ -11,7 +11,6 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../redux/rootReducer';
-import { useNavigate } from 'react-router-dom';
 import { submitMentorRegistration } from '../redux/actions';
 import LanguageDropdown from './shared/LanguageDropdown';
 import CareerDropdown from './shared/CareerDropdown';
@@ -34,7 +33,6 @@ const defaultForm = {
 };
 
 const RegisterMentorForm = () => {
-  const navigateFunction = useNavigate();
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState(defaultForm);
   const [hasCorporateCode, setHasCorporateCode] = useState(true);
@@ -45,12 +43,7 @@ const RegisterMentorForm = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch(
-          submitMentorRegistration({
-            mentorRegistrationForm: formValue,
-            navigateFunction,
-          })
-        );
+        dispatch(submitMentorRegistration(formValue));
       }}
     >
       <Grid container spacing={3}>
