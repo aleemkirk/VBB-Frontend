@@ -15,8 +15,8 @@ const OnboardingButton = <T extends ElementType = 'button'>({
   disabled,
   complete,
   onClick,
-  ...rest
-}: ButtonBaseProps<T>): JSX.Element => {
+  ...buttonBaseProps
+}: ButtonBaseProps<T>) => {
   return (
     <ButtonBase
       as={renderAs}
@@ -37,7 +37,7 @@ const OnboardingButton = <T extends ElementType = 'button'>({
       }}
       disabled={disabled}
       onClick={onClick}
-      {...rest}
+      {...buttonBaseProps}
     >
       <Typography>{children}</Typography>
     </ButtonBase>

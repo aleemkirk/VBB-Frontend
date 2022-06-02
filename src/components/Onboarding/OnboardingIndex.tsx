@@ -8,7 +8,7 @@ const onboardingPath = '/mentor/onboarding';
 const menuItems = [
   { label: 'Profile', url: onboardingPath + '/profile' },
   { label: 'Session', url: onboardingPath + '/session' },
-  { label: 'Training', url: onboardingPath + 'training' },
+  { label: 'Training', url: onboardingPath + '/training' },
   { label: 'Help?', url: onboardingPath + '/help' },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FormControlLabel,
@@ -42,10 +42,10 @@ const Profile = () => {
   const dispatch = useDispatch();
   const taskState = useSelector((state: AppState) => state.addTaskNo);
   const checkState = useSelector((state: AppState) => state.onboardingSteps);
-  const incTaskNo = (i: number) => {
-    if (taskState < 6 && !checkState[i]) {
+  const incTaskNo = (indexOfOnboardingStep: number) => {
+    if (taskState < 6 && !checkState[indexOfOnboardingStep]) {
       dispatch(actions.addTask());
-      dispatch(actions.updateOnboardingStep(i));
+      dispatch(actions.updateOnboardingStep(indexOfOnboardingStep));
     }
   };
 

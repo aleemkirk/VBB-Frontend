@@ -29,10 +29,10 @@ const Onboarding = () => {
   };
 
   //track onborading process with redux
-  const incTaskNo = (i: number) => {
-    if (taskState < 6 && !stepState[i]) {
+  const incTaskNo = (indexOfOnboardingStep: number) => {
+    if (taskState < 6 && !stepState[indexOfOnboardingStep]) {
       dispatch(addTask());
-      dispatch(updateOnboardingStep(i));
+      dispatch(updateOnboardingStep(indexOfOnboardingStep));
     }
   };
 
