@@ -15,9 +15,10 @@ export interface User {
   name: string;
   username?: string;
   timeZone: string;
-  isStudent: boolean;
+  isEmailVerified: boolean;
   isLibrarian: boolean;
   isMentor: boolean;
+  isStudent: boolean;
   dateOfBirth: string | null;
   mentorProfile?: MentorProfile;
   studentProfile?: StudentProfile;
