@@ -30,7 +30,7 @@ const AdvisorComputers = () => {
         </IconButton>
       </Grid>
       {fakeComputers.map((computer) => (
-        <Grid item xs={12}>
+        <Grid item xs={12} key={computer}>
           <Computer
             computer={computer}
             onDelete={() => setDeleteId(computer)}

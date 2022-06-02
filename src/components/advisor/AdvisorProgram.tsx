@@ -36,7 +36,7 @@ const AdvisorProgram = () => {
         <Grid item xs={12}>
           <Select size="small" defaultValue={fakePrograms[0]}>
             {fakePrograms.map((program) => (
-              <MenuItem value={program}>{program}</MenuItem>
+              <MenuItem key={program} value={program}>{program}</MenuItem>
             ))}
           </Select>
         </Grid>
