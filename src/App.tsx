@@ -21,8 +21,8 @@ const App = () => (
         <Route path="/register" element={<Register />} />
         <Route path="/complete-registration" element={<RegisterMentorForm />} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
-        <Route path = "/mentor/onboarding/*" element={<OnboardingIndex />}/>
-        <Route path='/mentor/*' element={<MentorIndex/>} />
+        <Route path="/mentor/onboarding/*" element={<OnboardingIndex />}/>
+        <Route path="/mentor/*" element={<MentorIndex/>} />
         <Route path="/email-sent" element={<EmailSent />} />
       </Routes>
     </Box>

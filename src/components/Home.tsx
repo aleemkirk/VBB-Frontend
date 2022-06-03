@@ -16,7 +16,7 @@ const Home = () => (
       <Link to="/mentor">Mentor Index</Link>
     </Grid>
     <Grid item xs={12}>
-    <Link to="/mentor/onboarding">Mentor Onboarding</Link>
+      <Link to="/mentor/onboarding">Mentor Onboarding</Link>
     </Grid>
     
   </Grid>
