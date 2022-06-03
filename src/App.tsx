@@ -7,6 +7,7 @@ import Register from './components/Register';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import MentorIndex from './components/mentor/MentorIndex';
 import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
+import OnboardingIndex from './components/Onboarding/OnboardingIndex';
 import EmailSent from './components/EmailSent';
 
 const App = () => (
@@ -20,7 +21,8 @@ const App = () => (
         <Route path="/register" element={<Register />} />
         <Route path="/complete-registration" element={<RegisterMentorForm />} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
-        <Route path='/mentor/*' element={<MentorIndex/>} />
+        <Route path="/mentor/onboarding/*" element={<OnboardingIndex />}/>
+        <Route path="/mentor/*" element={<MentorIndex/>} />
         <Route path="/email-sent" element={<EmailSent />} />
       </Routes>
     </Box>
