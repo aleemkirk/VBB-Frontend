@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { setUser } from '../user/user.actions';
 import { vbbAPIV1 } from '../../services/api';
@@ -118,7 +118,8 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
   } catch (err) {
     console.error('Error signing up mentor', { err });
     if (axios.isAxiosError(err)) {
-      const errorMessage = err.response?.data?.message ?? defaultErrorMessage;
+      const error = err as AxiosError<any>;
+      const errorMessage = error.response?.data?.message ?? defaultErrorMessage;
       const errors = {
         ...current_errors,
         mentorSignUpErrors: { message: errorMessage },

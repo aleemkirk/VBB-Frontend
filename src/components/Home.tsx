@@ -10,6 +10,9 @@ const Home = () => (
       <Link to="/register?type=mentee">Register Mentee</Link>
     </Grid>
     <Grid item xs={12}>
+      <Link to="/complete-registration">Complete Mentor Registration</Link>
+    </Grid>
+    <Grid item xs={12}>
       <Link to="/advisor">Advisor Index</Link>
     </Grid>
     <Grid item xs={12}>
@@ -18,7 +21,9 @@ const Home = () => (
     <Grid item xs={12}>
       <Link to="/mentor/onboarding">Mentor Onboarding</Link>
     </Grid>
-    
+    <Grid item xs={12}>
+      <Link to="/email-sent">Email Sent</Link>
+    </Grid>
   </Grid>
 );
 
