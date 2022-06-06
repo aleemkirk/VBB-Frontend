@@ -5,7 +5,7 @@ import { SlotInfo } from 'react-big-calendar';
 export interface CalendarEvent {
   id: string;
   color: string;
-  title: ReactNode;
+  title: ReactNode | string;
   start: Date;
   end: Date;
   computerID: string;
