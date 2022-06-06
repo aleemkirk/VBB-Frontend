@@ -3,32 +3,17 @@ import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import { Box } from '@mui/material';
 import { Computer as ComputerIcon } from '@mui/icons-material';
-import { Card, Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { CalendarEvent, isCalendarEvent } from '../../utils/CalendarEvent';
 import StudentBookingModal from './StudentBookingModal';
 
 //TODO: 1. MOVE ALL SHARED INTERFACES, 2. Create Session Interface
-
-export interface CalendarEvent {
-  id: string;
-  color: string;
-  title: ReactNode;
-  start: Date;
-  end: Date;
-  computerID: string;
-  mentor?: string;
-  student?: string;
-}
 
 export interface SlotSessions {
   id: string;
   start: Date;
   end: Date;
   availableSessions: CalendarEvent[];
-}
-
-interface EventComponenetProps {
-  event: SlotSessions; 
-  title?:string;
 }
 
 ////Dummy Data
@@ -65,25 +50,18 @@ const events: CalendarEvent[] = [
   },
 ]
 
-const slotSessions: SlotSessions[] = [
-  {
-    id:'0',
-    start: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
-    end: DateTime.now()
-      .set({ hour: 12, minute: 0 })
-      .plus({ hour: 1 })
-      .toJSDate(),
-    availableSessions: events,
-  }
-]
+interface EventComponenetProps {
+  event: CalendarEvent[]; 
+  title?:string;
+}
 
 
 ////Custom Components 
 const customComponents = {
-  event: ({event}:EventComponenetProps) => {
+  event: (event:CalendarEvent) => {
     return (
       <Box display="flex" alignItems="center">
-        <ComputerIcon sx={{m:'1px'}}/> <Typography variant="button" marginLeft='10px'>{event.availableSessions.length}</Typography>
+        <ComputerIcon sx={{m:'1px'}}/> <Typography variant="button" marginLeft='10px'>{event.id}</Typography>
       </Box>
     )
   }, 
@@ -96,26 +74,19 @@ const formats = {
   },
 };
 
-
-export const isCalendarEvent = (
-  event: CalendarEvent | SlotInfo | null | SlotSessions
-): event is CalendarEvent => {
-  return event ? 'id' in event : false;
-};
-
 const localizer = luxonLocalizer(DateTime);
 
 
 const StudentBooking = () => {
-  const [selSessions, setEvent] = useState<SlotSessions | SlotInfo | null>(null);
+  const [selSessions, setEvent] = useState<CalendarEvent | SlotInfo | null>(null);
 
   return (
     <Box p={2}>
-      <Calendar<SlotSessions>
+      <Calendar<CalendarEvent>
         localizer={localizer}
         defaultView={Views.WEEK}
         views={[Views.WEEK, Views.DAY, Views.AGENDA]}
-        events={slotSessions}
+        events={events}
         eventPropGetter={(sessions, start, end, isSelected) => ({
           style: { backgroundColor: '#9eded0', color: 'black' },
         })}
@@ -125,7 +96,7 @@ const StudentBooking = () => {
         startAccessor='start'
         endAccessor='end'
         style={{ height: 700 }}
-        components={customComponents}
+        //components={customComponents}
         formats={formats}
       />
       <StudentBookingModal sessions={selSessions} onClose={() => setEvent(null)}/>
