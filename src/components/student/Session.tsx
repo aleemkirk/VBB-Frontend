@@ -4,17 +4,19 @@ import {
     AccessTime as AccessTimeIcon 
 } from '@mui/icons-material';
 import { Box, Button, Card, CardHeader } from '@mui/material';
+import { Session } from '../../utils/Session';
+import { getMentorProfile } from '../../utils/api';
 
-//TODO: Move shared interfaces
-export interface Session {
-    title:string;
-    dayOfWeek:string;
-    timeOfDay:string;
-    start?: Date;
-    end?: Date;
-    meetingLink?: string;
-    mentor?: string;
-}
+// //TODO: Move shared interfaces
+// export interface Session {
+//     title:string;
+//     dayOfWeek:string;
+//     timeOfDay:string;
+//     start?: Date;
+//     end?: Date;
+//     meetingLink?: string;
+//     mentor?: string;
+// }
 
 interface SessionProps {
   session: Session;
@@ -31,15 +33,15 @@ const SessionCard = ({ session, onCheckIn }: SessionProps) => (
         flexWrap: 'wrap',
     }}>
         <div style={{ flex: '0 0 100px'}}> 
-            {session.dayOfWeek}
+            {session.start.getDay()}
         </div>
          <AccessTimeIcon /> 
          <div style={{ flex: '0 0 100px', marginLeft: '10px',}}> 
-            {session.timeOfDay}
+            {session.start.getUTCDate()}
         </div>
         <PersonIcon/> 
         <div style={{ flex: '1 1 auto', marginLeft: '10px',}}> 
-            {session.mentor ? session.mentor : <div style={{color:'grey'}}>Not paired with a mentor</div >}
+            { session.mentorID ? getMentorProfile(session.mentorID)?.firstName : <div style={{color:'grey'}}>Not paired with a mentor</div >}
         </div>
       </div>
     }
