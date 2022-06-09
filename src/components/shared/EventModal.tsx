@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { SlotInfo } from 'react-big-calendar';
 import Modal from './Modal';
-import { CalendarEvent, isCalendarEvent } from '../student/StudentBooking';
+import { CalendarEvent, isCalendarEvent } from '../../utils/CalendarEvent';
 import {
   AccessTime,
   Computer,
@@ -21,7 +21,7 @@ import {
   PersonAdd,
   PhotoCameraFront,
 } from '@mui/icons-material';
-import { SlotSessions } from '../student/StudentBooking';
+import { SlotSessions } from '../../utils/Session';
 
 interface EventModalProps {
   eventOrSlot: CalendarEvent | SlotInfo | null | SlotSessions;

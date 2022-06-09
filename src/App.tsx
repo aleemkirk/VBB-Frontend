@@ -4,8 +4,12 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import Librarian from './components/librarian/Librarian';
+import AdvisorIndex from './components/advisor/AdvisorIndex';
+import MentorIndex from './components/mentor/MentorIndex';
+import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
+import EmailSent from './components/EmailSent';
 import StudentIndex from './components/student/StudentIndex';
+import Librarian from './components/librarian/Librarian';
 
 const App = () => (
   <>
@@ -18,6 +22,10 @@ const App = () => (
         <Route path="/register" element={<Register />} />
         <Route path="/librarian/*" element={<Librarian />} />
         <Route path="/student/*" element={<StudentIndex />} />
+        <Route path="/complete-registration" element={<RegisterMentorForm />} />
+        <Route path="/advisor/*" element={<AdvisorIndex />} />
+        <Route path='/mentor/*' element={<MentorIndex/>} />
+        <Route path="/email-sent" element={<EmailSent />} />
       </Routes>
     </Box>
   </>

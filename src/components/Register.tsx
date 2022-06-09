@@ -1,7 +1,7 @@
 import { Button, Paper, Typography } from '@mui/material';
 import { Link, useSearchParams } from 'react-router-dom';
-import RegisterMenteeForm from './RegisterMenteeForm';
-import RegisterMentorForm from './RegisterMentorForm';
+import RegisterMenteeForm from './RegisterStudentForm';
+import MentorSignUpForm from './MentorSignUpForm';
 
 const Register = () => {
   const [searchParams] = useSearchParams();
@@ -46,11 +46,7 @@ const Register = () => {
         variant="outlined"
         square
       >
-        {isMentee ? (
-          <RegisterMenteeForm onSubmit={(formData) => console.log(formData)} />
-        ) : (
-          <RegisterMentorForm onSubmit={(formData) => console.log(formData)} />
-        )}
+        {isMentee ? <RegisterMenteeForm /> : <MentorSignUpForm />}
       </Paper>
     </Paper>
   );

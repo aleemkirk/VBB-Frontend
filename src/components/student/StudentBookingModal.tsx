@@ -1,6 +1,6 @@
 import Modal from '../shared/Modal';
-import {SlotSessions, CalendarEvent} from './StudentBooking';
-import { isCalendarEvent } from './StudentBooking';
+import {SlotSessions} from './StudentBooking';
+import { CalendarEvent, isCalendarEvent } from '../../utils/CalendarEvent';
 import { Calendar, Views, luxonLocalizer, SlotInfo } from 'react-big-calendar';
 import {
     Autocomplete,
@@ -26,15 +26,15 @@ import {
 import { useState } from 'react';
 
 interface StudentBookingModalProps {
-    sessions: SlotSessions | SlotInfo | null;
+    sessions: CalendarEvent | SlotInfo | null;
     onClose: () => void;
 
 }
 
 export const isSlotSessions = (
-    sessions: SlotSessions | SlotInfo | null | SlotSessions
-  ): sessions is SlotSessions => {
-    return sessions ? 'availableSessions' in sessions : false;
+    sessions: CalendarEvent | SlotInfo | null
+  ): sessions is CalendarEvent => {
+    return sessions ? 'id' in sessions : false;
   };
 
 const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
@@ -42,19 +42,8 @@ const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
     const [disable, setDisable] = useState<boolean>(true);
 
     const modaltitle = 'Book your sessions now';
-    const hasAvailableSessions = isSlotSessions(sessions)
-    const computerOptions = () => {
-        var availableComps = []
-        if (hasAvailableSessions){
-            for(var i=0; i < sessions.availableSessions.length; i++){
-                availableComps.push(sessions.availableSessions[i].computerID)
-            }
-            if (availableComps.length == 0) return  [];
-            else return availableComps;
-        }
-        else return [];        
-    }
-
+    const isCalEvent = isSlotSessions(sessions);
+    const computerOptions: string[] = ['1', '2', '3', '4'];
     return (
         <Modal open={Boolean(sessions)} 
         onClose={onClose} 
@@ -68,7 +57,7 @@ const StudentBookingModal = ({sessions, onClose}:StudentBookingModalProps) => {
         <Grid container spacing={2} py={2}>
         <Grid item xs={12}>
           <Autocomplete<string, false, false, false>
-            options={computerOptions()}
+            options={computerOptions}
             getOptionLabel={(option) => option}
             renderOption={(props, option) => <li {...props}>{option}</li>}
             renderInput={(props) => (

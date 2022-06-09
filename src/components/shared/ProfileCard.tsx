@@ -6,7 +6,6 @@ import { Box, Button, Card, CardHeader } from '@mui/material';
 import {Profile, ProfileTypes} from '../../utils/Profile';
 import {Session, Sessions} from '../../utils/Sessions';
 import { getSessions } from '../../utils/api';
-import moment from 'moment';
 import { 
   CalendarMonth as CalendarMonthIcon, 
   Person as PersonIcon, 
@@ -47,7 +46,7 @@ const Sessions = React.useMemo(() => {
         <CalendarMonthIcon />
 
         <div style={{ flex: '1 1 auto', alignSelf: 'left'}}> 
-          {(Sessions.length > 0) ? moment(Sessions[0].start).format('dddd, h:mm a').toString() : 'No Booked Sessions'}
+          {/* {(Sessions.length > 0) ? moment(Sessions[0].start).format('dddd, h:mm a').toString() : 'No Booked Sessions'} */}
         </div>
 
       </div>

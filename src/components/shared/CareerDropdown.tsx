@@ -1,0 +1,57 @@
+import {
+  FormControl,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../../redux/rootReducer';
+import * as actions from '../../redux/actions';
+import { Career } from '../../redux/careers/careers.types';
+
+const careerOptions = (careers: Career[]) =>
+  careers.map((career) => (
+    <MenuItem key={career.id} value={career.id}>
+      <ListItemText primary={`${career.name}`} />
+    </MenuItem>
+  ));
+
+interface Props {
+  selectedCareers: number[];
+  handleSelectCareers: (careerIds: number[]) => void;
+}
+const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
+  const careers = useSelector((state: AppState) => state.careers);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actions.getCareers());
+  }, [dispatch]);
+
+  const handleSelect = (e: SelectChangeEvent<number[]>) => {
+    const value = e.target.value;
+    if (Array.isArray(value)) {
+      handleSelectCareers(value);
+    }
+  };
+
+  return (
+    <FormControl fullWidth>
+      <InputLabel id="multi-career-select">Select Your Careers</InputLabel>
+      <Select
+        label="Select Your Careers"
+        labelId="multi-career-select"
+        id="select-careers-dropdown"
+        multiple
+        value={selectedCareers}
+        onChange={handleSelect}
+      >
+        {careerOptions(careers)}
+      </Select>
+    </FormControl>
+  );
+};
+
+export default CareerDropdown;

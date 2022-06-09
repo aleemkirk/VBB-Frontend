@@ -1,11 +1,28 @@
 import { all } from 'redux-saga/effects';
-import { watchGetMentorList, watchLogin } from './actions';
-
+import {
+  watchAutoLogin,
+  watchGetCareers,
+  watchGetLanguages,
+  watchGetSubjects,
+  watchGetTimezones,
+  watchLogin,
+  watchSubmitMentorRegistration,
+  watchSubmitMentorSignUpForm,
+  watchSubmitStudentRegistration,
+  watchGetMentorList,
+} from './actions';
 
 export default function* rootSaga() {
   yield all([
-    // add watch functions here
+    watchAutoLogin(),
+    watchGetCareers(),
+    watchGetLanguages(),
+    watchGetSubjects(),
+    watchGetTimezones(),
     watchLogin(),
     watchGetMentorList(),
+    watchSubmitMentorRegistration(),
+    watchSubmitMentorSignUpForm(),
+    watchSubmitStudentRegistration(),
   ]);
 }
