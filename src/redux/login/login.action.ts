@@ -9,8 +9,9 @@ import {
   LOGIN_ACTION,
   LOGIN_PAYLOAD,
 } from './login.types';
-import { setUser } from '../user/user.actions';
-import { User } from '../user/user.types';
+import { setUser, getUserDetail} from '../user/user.actions';
+import { setAppToken, setAppAlert} from '../app/app.actions';
+import { User, AuthToken} from '../user/user.types';
 import { pushHistory } from '../../utils/customHistory';
 
 // Login Action and Sagas
@@ -24,24 +25,31 @@ export function* watchLogin() {
 function* handleLogin(action: LOGIN_ACTION) {
   try {
     const { username, password } = action.payload;
-    const url = 'login/';
+    const url = 'auth/jwt/create/';
     const data = { username, password };
 
-    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, {
-      data,
-    });
+    const res: AxiosResponse<AuthToken> = yield vbbAPIV1.post<User>(url, data);
     const user = res.data;
 
     if (res.status === 200 && user) {
-      yield put(setUser(user));
-      if (user.isMentor && !user.mentorProfile) {
-        pushHistory('/complete-registration');
-      }
-      pushHistory('/dashboard');
-    } else {
+      //yield put(setUser(user));
+      yield localStorage.setItem('token', user.access)
+      yield localStorage.setItem('refresh_token', user.refresh)
+      yield put(setAppToken({refresh_token:user.refresh, access_token:user.access}));
+      yield put(getUserDetail());
+      yield put(setAppAlert({alertMsg:'Successful login! Redirecting to dashboard...', alertSeverity:'success'}));
+
+      // if (user.isMentor && !user.mentorProfile) {
+      //   pushHistory('/complete-registration');
+      // }
       pushHistory('/');
+    } else {
+      pushHistory('/login');
     }
-  } catch (e) {
+  } catch (e:any) {
+    console.log(e)
+    let message:any = e.response?.data?.detail
+    yield put(setAppAlert({alertMsg:message, alertSeverity:'error'}));
     console.error('Could not login user', e);
   }
 }

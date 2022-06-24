@@ -4,9 +4,12 @@ import { UserActions, SET_USER, User } from './user.types';
 const initUser = {
   email: '',
   name: '',
+  firstName: '',
+  lastName: '',
   username: '',
   timeZone: '',
   dateOfBirth: '',
+  profileImage: '',
   isEmailVerified: false,
   isLibrarian: false,
   isMentor: false,

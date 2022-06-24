@@ -43,7 +43,7 @@ const RegisterMentorForm = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch(submitMentorRegistration(formValue));
+        //dispatch(submitMentorRegistration(formValue));
       }}
     >
       <Grid container spacing={3}>

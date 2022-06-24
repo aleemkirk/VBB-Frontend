@@ -7,10 +7,14 @@ import {
   MentorRegistrationForm,
   MentorSignUpForm,
   StudentRegistrationForm,
+  VerifyTokenForm,
   SubmitMentorRegistrationAction,
   SubmitMentorSignUpAction,
   SubmitMentorSignUpErrorResponse,
   SubmitStudentRegistrationAction,
+  VerifyTokenAction,
+  SUBMIT_EMAIL_VERIFY,
+  VERIFY_RESPONSE,
   SUBMIT_MENTOR_REGISTRATION,
   SUBMIT_MENTOR_SIGN_UP,
   SUBMIT_STUDENT_REGISTRATION,
@@ -48,6 +52,46 @@ function* handleSubmitMentorRegistration(
     console.error('Could not register mentor', e);
   }
 }
+
+export const verifyMentorEmail = (payload: VerifyTokenForm) => ({
+  type: SUBMIT_EMAIL_VERIFY,
+  payload
+});
+
+export function* watchVerifyMentorEmail() {
+  yield takeLatest(SUBMIT_EMAIL_VERIFY, handleWatchVerifyMentorEmail);
+}
+
+function* handleWatchVerifyMentorEmail(
+  action: VerifyTokenAction
+) {
+  try {
+    const url = 'mentor-email-confirmation/';
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, action.payload);
+    const response = res.data;
+    if (res.status === 200 && response) {
+      console.log(response)
+      yield put(verifyEmailResponse());
+      //yield pushHistory('/dashboard');
+    } else {
+      yield put(verifyEmailResponseFailed(response));
+    }
+  } catch (e:any) {
+    yield put(verifyEmailResponseFailed(e.response.data));
+    console.error('Could not verify mentor email address', e);
+  }
+}
+
+
+export const verifyEmailResponse = () => ({
+  type: VERIFY_RESPONSE
+});
+
+export const verifyEmailResponseFailed = (payload:any) => ({
+  type: VERIFY_RESPONSE,
+  payload:payload
+});
+
 
 /*
  * Student registration actions

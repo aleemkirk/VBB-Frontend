@@ -1,32 +1,70 @@
-import { Box, GlobalStyles } from '@mui/material';
+import * as React from 'react';
+import { Box, GlobalStyles, Snackbar, Alert } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import Home from './components/Home';
-import Login from './components/Login';
-import Register from './components/Register';
+import Home from './pages/Home';
+import Login from './pages/Login/';
+import Register from './pages/Registration/Register';
+import ConfirmEmail from './pages/Registration/ConfirmEmail';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import MentorIndex from './components/mentor/MentorIndex';
 import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
 import OnboardingIndex from './components/Onboarding/OnboardingIndex';
 import EmailSent from './components/EmailSent';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAppAlertIsOpen, getAppAlert, getAppAlertSeverity} from './redux/app/app.selectors';
+import { closeAppAlert } from './redux/app/app.actions';
 
-const App = () => (
-  <>
-    <GlobalStyles styles={{ body: { margin: 0 } }} />
-    <Header />
-    <Box pt="64px">
+export type AlertColor = 'success' | 'error' | 'warning' | 'info';
+
+function App(){
+  const dispatch = useDispatch();
+  const isAlertOpen = useSelector(getAppAlertIsOpen)
+  const alertMsg = useSelector(getAppAlert)
+  const alertSeverity = useSelector(getAppAlertSeverity)
+
+  React.useEffect(() => {
+    console.log(isAlertOpen)
+  }, [isAlertOpen]);
+
+  function handleCloseAlert(e: any) {
+    setTimeout(() => dispatch(closeAppAlert()), 0);
+  }
+
+  return(
+    <>
+      <GlobalStyles styles={{ body: { margin: 0 } }} />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={isAlertOpen}
+        autoHideDuration={10000}
+        onClose={handleCloseAlert}
+        >
+        <Alert
+          onClose={handleCloseAlert}
+          severity={alertSeverity}
+          sx={{
+            width: '100%',
+            fontSize: 18,
+            alignItems: 'center',
+            borderRadius: '25px',
+          }}
+        >
+          {alertMsg}
+      </Alert>
+      </Snackbar>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register/confirm" element={<ConfirmEmail />} />
         <Route path="/complete-registration" element={<RegisterMentorForm />} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
         <Route path="/mentor/onboarding/*" element={<OnboardingIndex />} />
         <Route path="/mentor/*" element={<MentorIndex />} />
         <Route path="/email-sent" element={<EmailSent />} />
       </Routes>
-    </Box>
-  </>
-);
-
+    </>
+  )
+}
 export default App;

@@ -21,17 +21,28 @@
     "@types/testing-library__jest-dom": "^5.14.3",
     "axios": "^0.27.2",
     "eslint-config-react-app": "^7.0.1",
+    "grunt": "^1.3.0",
+    "grunt-contrib-sass": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "^3.1.0",
+    "grunt-ts": "^6.0.0-beta.22",
     "jest-watch-typeahead": "^1.1.0",
+    "lottie-react": "^2.2.1",
     "luxon": "^2.4.0",
+    "moment": "^2.29.1",
+    "postcss": "^8.4.14",
     "prettier": "^2.6.2",
     "react": "^18.1.0",
     "react-big-calendar": "^0.40.1",
     "react-dom": "^18.1.0",
+    "react-icons": "^4.2.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "redux-saga": "^1.1.3",
+    "reselect": "^4.1.6",
     "typescript": "^4.7.2",
     "web-vitals": "^2.1.4"
   },
@@ -66,5 +77,17 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.1.1",
+  "devDependencies": {
+    "@types/webpack-env": "^1.17.0",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "node-sass": "^7.0.1",
+    "sass": "^1.52.3",
+    "sass-loader": "^13.0.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.2"
+  }
 }

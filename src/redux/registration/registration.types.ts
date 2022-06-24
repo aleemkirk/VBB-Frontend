@@ -1,5 +1,5 @@
 export const SUBMIT_MENTOR_REGISTRATION = 'SUBMIT_MENTOR_REGISTRATION';
-export interface MentorRegistrationForm {
+export interface MentorOnboardingForm {
   careers: number[];
   mentoringLanguages: number[];
   subjects: number[];
@@ -7,10 +7,19 @@ export interface MentorRegistrationForm {
   interests: string;
   phoneNumber: string;
   secondaryEmail: string;
-  corporateCode: string;
   isOfAge: boolean;
   timezone: string;
   dateOfBirth: string;
+}
+
+
+export interface MentorRegistrationForm {
+  first_name: string;
+  last_name: string;
+  password: string;
+  confirm_password: string;
+  email: string;
+  corporateCode: string;
 }
 
 export interface SubmitMentorRegistrationAction {
@@ -21,14 +30,11 @@ export interface SubmitMentorRegistrationAction {
 export const SUBMIT_STUDENT_REGISTRATION = 'SUBMIT_STUDENT_REGISTRATION';
 
 export interface StudentRegistrationForm {
-  careersOfInterest: number[];
-  interests: string;
   libraryCode: string;
-  mentoringLanguages: number[];
-  name: string;
+  first_name: string;
+  last_name: string;
   password: string;
-  subjects: number[];
-  timezone: string;
+  confirm_password: string;
   username: string;
 }
 
@@ -39,9 +45,12 @@ export interface SubmitStudentRegistrationAction {
 
 export const SUBMIT_MENTOR_SIGN_UP = 'SUBMIT_MENTOR_SIGN_UP';
 export interface MentorSignUpForm {
-  email: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   password: string;
+  confirm_password: string;
+  email: string;
+  corporateCode: string;
 }
 
 export interface SubmitMentorSignUpAction {
@@ -51,4 +60,30 @@ export interface SubmitMentorSignUpAction {
 
 export interface SubmitMentorSignUpErrorResponse {
   message: string;
+}
+
+
+//Verify Email Actions
+export const SUBMIT_EMAIL_VERIFY = 'SUBMIT_EMAIL_VERIFY';
+export interface VerifyTokenForm {
+  token: string;
+}
+
+export interface VerifyTokenAction {
+  type: typeof SUBMIT_EMAIL_VERIFY;
+  payload: VerifyTokenForm;
+}
+
+//
+export const VERIFY_RESPONSE = 'VERIFY_RESPONSE';
+export const VERIFY_RESPONSE_FAILED = 'VERIFY_RESPONSE_FAILED';
+
+export interface VerifyResponseAction {
+  type: typeof VERIFY_RESPONSE;
+  payload: any;
+}
+
+export interface VerifyResponseFailedAction {
+  type: typeof VERIFY_RESPONSE_FAILED;
+  payload: any;
 }

@@ -11,10 +11,16 @@ import {
   watchSubmitStudentRegistration,
   watchTaskStep,
   watchGetOpportunity,
+  watchGetUserDetail,
+  watchVerifyMentorEmail,
+  watchLogout
 } from './actions';
 
 export default function* rootSaga() {
   yield all([
+    watchLogout(),
+    watchVerifyMentorEmail(),
+    watchGetUserDetail(),
     watchAutoLogin(),
     watchGetCareers(),
     watchGetLanguages(),

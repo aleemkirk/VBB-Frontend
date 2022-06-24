@@ -7,8 +7,10 @@ import { timezones } from './timezones/timezones.reducer';
 import { user } from './user/user.reducer';
 import { addTaskNo, onboardingSteps } from './onboarding/onboarding.reducer';
 import { opportunity } from './opportunity/opportunity.reducer';
+import { appState } from './app/app.reducer';
 
 const rootReducer = combineReducers({
+  appState,
   careers,
   languages,
   subjects,

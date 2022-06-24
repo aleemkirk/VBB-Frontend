@@ -1,7 +1,7 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ThemeProvider } from '@mui/material';
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -10,9 +10,10 @@ import store from './redux/store';
 
 import { BrowserRouter } from './utils/customHistory';
 
-const root = createRoot(document.getElementById('root')!);
+//const root = createRoot(document.getElementById('root')!);
 
-root.render(
+
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
@@ -21,7 +22,8 @@ root.render(
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -29,4 +31,8 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 if (process.env.NODE_ENV === 'development') {
   reportWebVitals(console.log);
+}
+
+if (module.hot) {
+  module.hot.accept();
 }

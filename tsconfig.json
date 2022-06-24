@@ -1,8 +1,10 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "watch": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
@@ -14,8 +16,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "noEmit": false,
+    "jsx": "react-jsx",
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "declaration.d.ts"
+  ]
 }

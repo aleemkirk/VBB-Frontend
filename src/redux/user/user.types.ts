@@ -4,14 +4,22 @@ import { Library } from '../library/library.types';
 import { Subject } from '../subjects/subjects.types';
 
 export const SET_USER = 'SET_USER';
+export const GET_USER = 'GET_USER';
 
 export interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
 }
 
+export interface GetUserAction {
+  type: typeof GET_USER;
+}
+
+
 export interface User {
   email?: string;
+  firstName: string;
+  lastName: string;
   name: string;
   username?: string;
   timeZone: string;
@@ -19,6 +27,7 @@ export interface User {
   isLibrarian: boolean;
   isMentor: boolean;
   isStudent: boolean;
+  profileImage?:string;
   dateOfBirth: string | null;
   mentorProfile?: MentorProfile;
   studentProfile?: StudentProfile;
@@ -42,6 +51,11 @@ export interface StudentProfile {
   careersOfInterest: Career[];
   mentoringLanguages: Language[];
   subjects: Subject[];
+}
+
+export interface AuthToken {
+  access: string;
+  refresh: string;
 }
 
 // Values are kept in backend
