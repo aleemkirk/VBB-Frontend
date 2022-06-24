@@ -22,7 +22,7 @@ const Home = () => {
     <PageLayout>
       <MainCardLayoutWithSideMenu>
           <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <div className="card-container">
                 <div className="card-header">
                 <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
@@ -33,7 +33,7 @@ const Home = () => {
                   <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
                     <b>Getting started with Village Book Builders is easy!</b>
                   </Typography>
-                  <Box display="flex" flexDirection="column">
+                  <Box display="flex" flexDirection="column" pb={1}>
                     <Link to="#">Free Books</Link>
                     <Link to="#">Free Onlne Article Sources</Link>
                     <Link to="#">Free Guides / Worksheets</Link>
@@ -43,7 +43,7 @@ const Home = () => {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <div className="card-container">
                 <div className="card-header">
                   <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
@@ -53,14 +53,16 @@ const Home = () => {
                 </div>
                 <div className="card-body">
                   <Box display="flex" flexDirection="column">
-                    <p>No announcements today...</p>
+                    <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+                      No announcements today...
+                    </Typography>
                   </Box>
                 </div>
               </div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={3} mt={2}>
+          <Grid container spacing={3} mt={1}>
             <Grid item xs={12}>
               <div className="card-container">
                 <div className="card-header">
@@ -71,9 +73,12 @@ const Home = () => {
                 </div>
                 <div className="card-body">
                   <Box display="flex" flexDirection="column">
-                    <p>No mentor sessions yet...</p>
+                    <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+                      You have no mentor sessions yet...
+                    </Typography>
                   </Box>
-                  <Button to="/bookings" sx={{color:scss_variables.primary_color, textDecoration:"underline"}}>
+                  <Button component={Link} to='/bookings' variant="contained" color="info" sx={{mt:2}}>
+                    Find New Sessions
                   </Button>
                 </div>
               </div>

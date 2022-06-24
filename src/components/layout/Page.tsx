@@ -34,10 +34,24 @@ export const MainCardLayoutWithSideMenu = ({children, hideNav}: PageProps) => {
   return (<>
         <div>
           <Grid container padding={3} spacing={3} mt={3}>
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={2}>
                 <SideMenu/>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={12} sm={10}>
+              {children}
+            </Grid>
+          </Grid>
+        </div>
+    </>
+  );
+};
+
+
+export const MainCardLayout = ({children, hideNav}: PageProps) => {
+  return (<>
+        <div>
+          <Grid container padding={3} spacing={3} mt={3}>
+            <Grid item xs={12}>
               {children}
             </Grid>
           </Grid>

@@ -83,7 +83,7 @@ const Header = () => {
               >
                 {appState.isAuthenticated ? (
                   <>
-                    <MenuItem onClick={e => navigate('/dashboard')}>
+                    <MenuItem onClick={e => navigate('/')}>
                       <ListItemIcon>
 
                       </ListItemIcon>

@@ -6,7 +6,7 @@ import { PageLayout, MainCardLayoutWithSideMenu} from '../../components/layout/P
 import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
 
-const AccountSettings = () => {
+const Bookings = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const AccountSettings = () => {
               <div className="card-container">
                 <div className="card-header">
                 <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
-                  Account Settings
+                  Bookings
                 </Typography>
                 </div>
                 <div className="card-body">
@@ -39,4 +39,4 @@ const AccountSettings = () => {
     </PageLayout>
   );
 }
-export default AccountSettings;
+export default Bookings;

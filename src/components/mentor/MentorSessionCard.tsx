@@ -3,7 +3,7 @@ import {
   Person as PersonIcon,
   AccessTime as AccessTimeIcon,
 } from '@mui/icons-material';
-import { Box, Button, Card, CardHeader } from '@mui/material';
+import { Box, Button, Card, CardHeader, Link,Typography, Grid} from '@mui/material';
 import { Session } from '../../utils/Session';
 import { DateTime } from 'luxon';
 import { getStudentProfile } from '../../utils/api';
@@ -12,6 +12,17 @@ interface SessionProps {
   session: Session;
   onCheckIn?: () => void;
 }
+
+export const EmptySessionMsg = () => {
+  return (
+    <Grid item xs={12} pb={2}>
+      <Typography variant="body1">
+        You haven't booked any sessions yet.{' '}
+      </Typography>
+    </Grid>
+  );
+};
+
 
 const MentorSessionCard = ({ session, onCheckIn }: SessionProps) => (
   <Card>

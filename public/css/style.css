@@ -24,7 +24,6 @@ html {
 .app-layout {
   height: 100vh;
   width: 100vw;
-  overflow-y: hidden;
 }
 
 .card-container {
@@ -75,6 +74,15 @@ html {
   padding: 8px;
 }
 
+:export {
+  primary_color: #003066;
+  secondary_color: #0078FF;
+  tertiary_color: #E9EEF4;
+  white_color: #fff;
+  black_color: #000;
+  grey_color: #E9EEF4;
+}
+
 .header {
   background-color: #fff;
   min-height: 100px;
@@ -83,6 +91,11 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+@media (max-width: 599px) {
+  .header {
+    position: relative;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
