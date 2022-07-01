@@ -34,43 +34,25 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
   const [disable, setDisable] = useState<boolean>(true);
 
   return (
-    <Modal
-      open={Boolean(eventOrSlot)}
-      onClose={onClose}
-      title="Confirm Your Appointment"
-      actions={
-        <Box display="flex" justifyContent="flex-end" width="100%">
-          <Button onSubmit={() => onClose()} disabled={disable}>
-            {isEvent ? 'Book' : 'Create'}
-          </Button>
-        </Box>
-      }
-    >
+    <>
       <Grid container spacing={2} py={2}>
-        <Grid item xs={12}>
-          <Autocomplete<string>
-            options={fakeStudents}
-            getOptionLabel={(option) => option}
-            renderOption={(props, option) => <li {...props}>{option}</li>}
-            renderInput={(props) => (
-              <TextField
-                {...props}
-                label="Student"
-                placeholder="Student"
-                InputProps={{
-                  ...props.InputProps,
-                  startAdornment: <Person />,
-                }}
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12}>
+
+        <Grid item xs={6}>
           <TextField
             fullWidth
-            label="Date"
+            label="From"
             placeholder={isEvent ? eventOrSlot.start.toString() : ''}
             value={isEvent ? eventOrSlot.start.toString() : ''}
+            InputProps={{ startAdornment: <AccessTime /> }}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            label="To"
+            placeholder={isEvent ? eventOrSlot.end.toString() : ''}
+            value={isEvent ? eventOrSlot.end.toString() : ''}
             InputProps={{ startAdornment: <AccessTime /> }}
           />
         </Grid>
@@ -80,19 +62,16 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom>
-            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
-            consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-            fugiat deleniti? Eum quasi quidem quibusdam.
+          <Typography variant="body1" >
+            I commit to this reservation and mentoring this individual to the best of my ability.
           </Typography>
         </Grid>
 
         <Grid item xs={12} display="flex">
-          <Box display="flex" justifyContent="flex-end" width="100%">
+          <Box display="flex" justifyContent="flex-start" width="100%">
             <FormControlLabel
               control={<Checkbox />}
-              label="Agree"
+              label="I Agree"
               sx={{ align: 'center' }}
               value={disable}
               onChange={() => setDisable(!disable)}
@@ -100,7 +79,13 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
           </Box>
         </Grid>
 
+
+        <Grid item xs={12}>
+          <Typography variant="h6">Select Your Conference Type</Typography>
+        </Grid>
+
         <Grid item xs={12} display="flex" alignItems="center">
+
           <PhotoCameraFront sx={{ mr: 2 }} />
           <RadioGroup
             row
@@ -130,7 +115,7 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
           />
         </Grid>
       </Grid>
-    </Modal>
+    </>
   );
 };
 

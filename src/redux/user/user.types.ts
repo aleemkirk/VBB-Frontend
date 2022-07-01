@@ -17,6 +17,7 @@ export interface GetUserAction {
 
 
 export interface User {
+  pk:number;
   email?: string;
   firstName: string;
   lastName: string;
@@ -51,6 +52,7 @@ export interface StudentProfile {
   careersOfInterest: Career[];
   mentoringLanguages: Language[];
   subjects: Subject[];
+  isOnboarded:boolean;
 }
 
 export interface AuthToken {

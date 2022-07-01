@@ -25,6 +25,7 @@ function* handleGetUserDetail() {
     const user = res.data;
     if (res.status === 200 && user) {
       yield put(setUser(user));
+      yield localStorage.setItem('user', JSON.stringify(user))
       //pushHistory('/dashboard');
     } else {
       //pushHistory('/');

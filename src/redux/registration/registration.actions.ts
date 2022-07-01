@@ -1,21 +1,30 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { put, select, takeLatest } from 'redux-saga/effects';
+import { put, select, takeLatest, delay } from 'redux-saga/effects';
 import { setUser } from '../user/user.actions';
+import { apiRequest, apiSuccessful, apiFailed, setAppAlert} from '../app/app.actions';
+
 import { vbbAPIV1 } from '../../services/api';
 
 import {
-  MentorRegistrationForm,
+  StudentOnboardingForm,
+  MentorOnboardingForm,
   MentorSignUpForm,
   StudentRegistrationForm,
   VerifyTokenForm,
-  SubmitMentorRegistrationAction,
+  CompleteStudentOnboardAction,
+  CompleteMentorOnboardAction,
   SubmitMentorSignUpAction,
   SubmitMentorSignUpErrorResponse,
   SubmitStudentRegistrationAction,
   VerifyTokenAction,
   SUBMIT_EMAIL_VERIFY,
   VERIFY_RESPONSE,
-  SUBMIT_MENTOR_REGISTRATION,
+  COMPLETE_MENTOR_ONBOARD,
+  COMPLETE_MENTOR_ONBOARD_SUCCESS,
+  COMPLETE_MENTOR_ONBOARD_FAILED,
+  COMPLETE_STUDENT_ONBOARD,
+  COMPLETE_STUDENT_ONBOARD_SUCCESS,
+  COMPLETE_STUDENT_ONBOARD_FAILED,
   SUBMIT_MENTOR_SIGN_UP,
   SUBMIT_STUDENT_REGISTRATION,
 } from './registration.types';
@@ -25,31 +34,49 @@ import { Errors } from '../errors/errors.types';
 import { User } from '../user/user.types';
 import { pushHistory } from '../../utils/customHistory';
 
-export const submitMentorRegistration = (payload: MentorRegistrationForm) => ({
-  type: SUBMIT_MENTOR_REGISTRATION,
+export const completeMentorOnboard = (payload: MentorOnboardingForm) => ({
+  type: COMPLETE_MENTOR_ONBOARD,
   payload,
 });
 
-export function* watchSubmitMentorRegistration() {
-  yield takeLatest(SUBMIT_MENTOR_REGISTRATION, handleSubmitMentorRegistration);
+export const completeMentorOnboardSuccess = (payload:any) => ({
+  type: COMPLETE_MENTOR_ONBOARD_SUCCESS,
+  payload:payload
+});
+
+export const completeMentorOnboardFailed = (payload:any) => ({
+  type: COMPLETE_MENTOR_ONBOARD_FAILED,
+  payload:payload
+});
+
+
+export function* watchOnboardMentor() {
+  yield takeLatest(COMPLETE_MENTOR_ONBOARD, handleSubmitMentorRegistration);
 }
 
 function* handleSubmitMentorRegistration(
-  action: SubmitMentorRegistrationAction
+  action: CompleteMentorOnboardAction
 ) {
   try {
-    const url = 'mentor-registration/';
+    const url = 'complete-mentor-onboard/';
+
+    yield put(apiRequest(action.payload));
+    yield delay(1000)
+
     const data = { ...action.payload };
-    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, data);
     const user = res.data;
     if (res.status === 201 && user) {
+      yield put(apiSuccessful(user));
       yield put(setUser(user));
-      pushHistory('/dashboard');
+      yield put(setAppAlert({alertMsg:'Mentor Onboarding complete! You will need to wait until the Village Book Builder Team can review your application before mentoring...', alertSeverity:'success'}));
+      pushHistory('/?onboard_complete=true');
     } else {
       pushHistory('/');
     }
-  } catch (e) {
-    console.error('Could not register mentor', e);
+  } catch (e:any) {
+    console.error('Could not complete mentor profile', e);
+    yield put(apiFailed(e.response.data));
   }
 }
 
@@ -114,21 +141,78 @@ function* handleSubmitStudentRegistration(
   action: SubmitStudentRegistrationAction
 ) {
   try {
-    const url = 'student-registration/';
+    const url = 'student-sign-up/';
     const data = { ...action.payload };
-    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, { data });
+    yield put(apiRequest(action.payload));
+
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, data);
 
     const user = res.data;
-    if (res.status === 201 && user) {
+    if (res.status >= 200 && res.status < 300) {
       yield put(setUser(user));
-      pushHistory('/dashboard');
+      yield put(apiSuccessful(res.data));
+      yield put(setAppAlert({alertMsg:'Student signup complete! You may log in now with your new username and password...', alertSeverity:'success'}));
+      pushHistory('/login');
     } else {
-      pushHistory('/');
+      yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
     }
-  } catch (e) {
-    console.error('Could not register mentor', e);
+  } catch (e:any) {
+    console.error('Could not register student', e);
+    yield put(apiFailed(e.response.data));
+    yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
+
   }
 }
+
+
+export const completeStudentOnboard = (payload: StudentOnboardingForm) => ({
+  type: COMPLETE_STUDENT_ONBOARD,
+  payload,
+});
+
+export const completeStudentOnboardSuccess = (payload:any) => ({
+  type: COMPLETE_STUDENT_ONBOARD_SUCCESS,
+  payload:payload
+});
+
+export const completeStudentOnboardFailed = (payload:any) => ({
+  type: COMPLETE_STUDENT_ONBOARD_FAILED,
+  payload:payload
+});
+
+
+export function* watchOnboardStudent() {
+  yield takeLatest(COMPLETE_STUDENT_ONBOARD, handleOnboardStudent);
+}
+
+function* handleOnboardStudent(
+  action: CompleteStudentOnboardAction
+) {
+  try {
+    const url = 'complete-student-onboard/';
+    yield put(apiRequest(action.payload));
+    yield delay(1000)
+
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, action.payload);
+    const user = res.data;
+    if (res.status === 201 && user) {
+      yield put(apiSuccessful(user));
+      yield put(setUser(user));
+      yield put(setAppAlert({alertMsg:'Onboarding complete! You may now start setting your schedule for computer/mentor hours...', alertSeverity:'success'}));
+    } else {
+      pushHistory('/');
+      yield put(apiFailed(user));
+
+    }
+  } catch (e:any) {
+    console.error('Could not complete student profile', e);
+    yield put(apiFailed(e.response.data));
+  }
+}
+
+
+
+
 
 export const submitMentorSignUp = (
   payload: MentorSignUpForm
@@ -151,7 +235,8 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
         ...action.payload,
       });
     if (res.status === 201) {
-      pushHistory('/email-sent');
+      yield put(setAppAlert({alertMsg:'Successful signup! Please log in with your new password...', alertSeverity:'success'}));
+      pushHistory('/login');
     } else {
       const errors = {
         ...current_errors,

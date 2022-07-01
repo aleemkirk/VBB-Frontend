@@ -15,7 +15,6 @@ function* handleLogout(
     yield localStorage.removeItem('token')
     yield localStorage.removeItem('refresh_token')
     yield localStorage.removeItem('user')
-    yield localStorage.removeItem('expires_at')
     pushHistory('/login');
 
   } catch (e:any) {

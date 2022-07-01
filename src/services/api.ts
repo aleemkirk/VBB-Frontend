@@ -7,9 +7,21 @@ export const vbbAPIV1 = axios.create({
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
     Accept: 'application/json',
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
   }
 });
+
+
+
+vbbAPIV1.interceptors.request.use(
+  function(config:any) {
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    return config;
+  },
+  function(error) {
+    return Promise.reject(error);
+  }
+);
+
 
 
 export const vbbAPIV1NoAuth = axios.create({

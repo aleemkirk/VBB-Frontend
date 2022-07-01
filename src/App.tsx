@@ -8,15 +8,19 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Registration/Register';
 import ConfirmEmail from './pages/Registration/ConfirmEmail';
 import Bookings from './pages/Bookings';
+import AccountSettings from './pages/AccountSettings';
+import Onboarding from './pages/Onboarding';
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import MentorIndex from './components/mentor/MentorIndex';
-import RegisterMentorForm from './components/CompleteMentorRegistrationForm';
 import OnboardingIndex from './components/Onboarding/OnboardingIndex';
 import EmailSent from './components/EmailSent';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAppAlertIsOpen, getAppAlert, getAppAlertSeverity} from './redux/app/app.selectors';
-import { closeAppAlert } from './redux/app/app.actions';
+import { getUserDetail } from './redux/user/user.actions';
+import { closeAppAlert, setAppToken } from './redux/app/app.actions';
 import { AppState } from './redux/rootReducer'
+import * as actions from './redux/actions';
+import jwt_decode from "jwt-decode";
 
 export type AlertColor = 'success' | 'error' | 'warning' | 'info';
 
@@ -31,9 +35,25 @@ const PrivateRoute = ({ children }: { children: JSX.Element }) => {
 
   const appState = useSelector((store: AppState) => store.appState);
 
-  if (!appState.isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} />;
+  const tokenCookie = localStorage.getItem('token')
+  const refreshCookie = localStorage.getItem('refresh_token')
+
+  const now = new Date()
+
+  if(tokenCookie !== null && refreshCookie !== null){
+      let now = new Date();
+      var decoded_refresh:any = jwt_decode(tokenCookie);
+      var expires_at:any = decoded_refresh.exp
+      let expiresAt = new Date(parseInt(expires_at)*1000);
+      if(now > expiresAt){
+        return <Navigate to="/login" state={{ from: location }} />;
+      }
+  }else{
+    if (!appState.isAuthenticated) {
+      return <Navigate to="/login" state={{ from: location }} />;
+    }
   }
+
 
   return children;
 };
@@ -49,6 +69,32 @@ function App(){
   React.useEffect(() => {
     console.log(isAlertOpen)
   }, [isAlertOpen]);
+
+  React.useEffect(() => {
+
+    const userCookie = localStorage.getItem('user')
+    const tokenCookie = localStorage.getItem('token')
+    const refreshCookie = localStorage.getItem('refresh_token')
+
+    const now = new Date()
+
+    if(tokenCookie !== null && refreshCookie !== null){
+        let now = new Date();
+
+        var decoded_refresh:any = jwt_decode(tokenCookie);
+        var expires_at:any = decoded_refresh.exp
+        let expiresAt = new Date(parseInt(expires_at)*1000);
+
+        if(now > expiresAt){
+          setTimeout(() => dispatch(actions.logout()), 100);
+        }else{
+          setTimeout(() => dispatch(setAppToken({access_token:tokenCookie, refresh_token:refreshCookie})), 0);
+          dispatch(getUserDetail())
+        }
+    }
+
+  },[])
+
 
   function handleCloseAlert(e: any) {
     setTimeout(() => dispatch(closeAppAlert()), 0);
@@ -83,11 +129,13 @@ function App(){
         <Route path="/register" element={<Register />} />
         <Route path="/register/confirm" element={<ConfirmEmail />} />
         <Route path="/bookings" element={<PrivateRoute><Bookings /></PrivateRoute>} />
-        <Route path="/complete-registration" element={<RegisterMentorForm />} />
+        <Route path="/account" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
+        <Route path="/account" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
-        <Route path="/mentor/onboarding/*" element={<OnboardingIndex />} />
+        <Route path="/onboarding/*" element={<PrivateRoute><Onboarding /></PrivateRoute>} />
         <Route path="/mentor/*" element={<MentorIndex />} />
-        <Route path="/email-sent" element={<EmailSent />} />
+        <Route path="/mentor/onboarding/*" element={<OnboardingIndex />} />
+
         <Route path='*' element={<NotFound/>} />
       </Routes>
     </>

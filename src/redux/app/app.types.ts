@@ -3,6 +3,28 @@ export const UPDATE_APP_TOKEN = 'UPDATE_APP_TOKEN';
 export const APP_ALERT = 'APP_ALERT';
 export const CLOSE_APP_ALERT = 'CLOSE_APP_ALERT';
 
+
+export const API_REQUEST = 'API_REQUEST';
+export const API_REQUEST_SUCCESS = 'API_REQUEST_SUCCESS';
+export const API_REQUEST_FAILED = 'API_REQUEST_FAILED';
+
+
+export interface SetAPIRequest {
+  type: typeof API_REQUEST;
+  payload: any;
+}
+
+export interface SetAPIRequestSuccess {
+  type: typeof API_REQUEST_SUCCESS;
+  payload: any;
+}
+
+export interface SetAPIRequestFailed{
+  type: typeof API_REQUEST_FAILED;
+  payload: any;
+}
+
+
 export interface SetAppAction {
   type: typeof UPDATE_APP_STATE;
   payload: App;
@@ -52,4 +74,4 @@ export interface AlertPayload {
 
 
 
-export type AppActions = SetAppAction | SetAppToken | SetAppAlert | CloseAppAlertAction ;
+export type AppActions = SetAPIRequest | SetAPIRequestSuccess | SetAPIRequestFailed | SetAppAction | SetAppToken | SetAppAlert | CloseAppAlertAction ;

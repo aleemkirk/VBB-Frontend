@@ -30,10 +30,10 @@ const SideMenu = () => {
         {user && user.isStudent &&
           (<>
             <Grid item xs={12}>
-              <Link to="/register?type=mentee">Bookings</Link>
+              <Link to="/bookings">Bookings</Link>
             </Grid>
             <Grid item xs={12}>
-              <Link to="/register?type=mentee">My Sessions</Link>
+              <Link to="/sessions">My Sessions</Link>
             </Grid>
            </>
           )
@@ -42,10 +42,10 @@ const SideMenu = () => {
         {user && user.isMentor &&
           (<>
             <Grid item xs={12}>
-              <Link to="/register?type=mentee">Bookings</Link>
+              <Link to="/bookings">Bookings</Link>
             </Grid>
             <Grid item xs={12}>
-              <Link to="/register?type=mentee">My Sessions</Link>
+              <Link to="/sessions">My Sessions</Link>
             </Grid>
            </>
           )

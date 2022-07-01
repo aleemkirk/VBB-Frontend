@@ -28,7 +28,7 @@ const MenuProps = {
 
 const opportunityOptions = (opportunities: Opportunity[]) =>
   opportunities.map((opportunity) => (
-    <MenuItem key={opportunity.id} value={opportunity.id}>
+    <MenuItem key={opportunity.id} value={opportunity.name}>
       <ListItemText primary={`${opportunity.name}`} />
     </MenuItem>
   ));

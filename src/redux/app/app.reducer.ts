@@ -1,6 +1,6 @@
-import { AppActions, App, CLOSE_APP_ALERT, UPDATE_APP_STATE, UPDATE_APP_TOKEN, APP_ALERT} from './app.types';
-import { LogoutAction } from '../logout/logout.types';
-import { VerifyResponseAction, VerifyTokenAction, VerifyResponseFailedAction, VERIFY_RESPONSE, SUBMIT_EMAIL_VERIFY, VERIFY_RESPONSE_FAILED } from '../registration/registration.types';
+import { AppActions, App, API_REQUEST, API_REQUEST_SUCCESS, API_REQUEST_FAILED, CLOSE_APP_ALERT, UPDATE_APP_STATE, UPDATE_APP_TOKEN, APP_ALERT} from './app.types';
+import { LogoutAction, LOGOUT } from '../logout/logout.types';
+import { RegistrationActions, VERIFY_RESPONSE, SUBMIT_EMAIL_VERIFY, VERIFY_RESPONSE_FAILED, COMPLETE_STUDENT_ONBOARD, COMPLETE_MENTOR_ONBOARD} from '../registration/registration.types';
 
 export const initialState = {
   loading: false,
@@ -20,7 +20,7 @@ export const initialState = {
 
 export const appState = (
   state = initialState,
-  action: AppActions | LogoutAction | VerifyTokenAction | VerifyResponseAction | VerifyResponseFailedAction
+  action: AppActions | LogoutAction | RegistrationActions
 ): App => {
   switch (action.type) {
     case UPDATE_APP_STATE:
@@ -31,6 +31,13 @@ export const appState = (
       state.access_token = token_data.access_token
       state.refresh_token = token_data.refresh_token
       state.isAuthenticated = true;
+      return state;
+
+
+   case LOGOUT:
+      state.access_token = null;
+      state.refresh_token = null;
+      state.isAuthenticated = false;
       return state;
 
     case APP_ALERT:
@@ -65,6 +72,37 @@ export const appState = (
           ...state,
           verify_success:false,
           loading:false
+        };
+    case COMPLETE_STUDENT_ONBOARD:
+      return {
+          ...state,
+          loading:true
+        };
+
+    case API_REQUEST:
+      return {
+          ...state,
+          loading:true,
+          error:null,
+          payload:null
+        };
+
+    case API_REQUEST_SUCCESS:
+      var api_response = action.payload;
+      return {
+          ...state,
+          loading:false,
+          payload:api_response,
+          success:true
+        };
+
+    case API_REQUEST_FAILED:
+      var api_response = action.payload;
+      return {
+          ...state,
+          loading:false,
+          error:api_response,
+          payload:api_response
         };
     default:
       return state;

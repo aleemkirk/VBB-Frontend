@@ -1,10 +1,21 @@
 import * as React from 'react';
-import { Grid, Typography, Box, Button} from '@mui/material';
+import { Grid, Typography, Box, Button, FormControl, FormControlLabel, Checkbox, RadioGroup, CircularProgress} from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppState } from '../../redux/rootReducer'
 import { PageLayout, MainCardLayoutWithSideMenu} from '../../components/layout/Page';
 import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import moment from 'moment';
+import { getLibraryComputerSlots, createUserPreferenceSlot, getUserPreferenceSlots, deleteUserPreferenceSlot, getLibraryStudentPreferenceSlots } from '../../redux/bookings/bookings.actions';
+import { selectLibrarySlots } from '../../redux/bookings/bookings.selectors';
+import { BasicModal } from '../../components/Modals';
+import MentorBookingModal from '../../components/mentor/MentorBookingModal';
+
+const CURRENT_DATE = moment().toDate();
 
 const Bookings = () => {
     const dispatch = useDispatch();
@@ -12,17 +23,507 @@ const Bookings = () => {
 
     const appState = useSelector((store: AppState) => store.appState);
     const user = useSelector((store: AppState) => store.user);
+    const bookings = useSelector((store: AppState) => store.bookings);
+    const lib_slots = useSelector((store: AppState) => store.bookings.library_slots);
+    const student_preference_slots = useSelector((store: AppState) => store.bookings.student_preference_slots);
+
+    const calendarRef = React.createRef<any>()
+
+    const [sessions, setSessions] = React.useState([]);
+    const [rescheduleActive, setRescheduleActive] = React.useState(false);
+    const [isMobile, set_isMobile] = React.useState(false);
+
+    const [rescheduleData, set_rescheduleData] = React.useState({revert:null});
+
+    const [activeReschedule, set_activeReschedule] = React.useState({id:"", start_time:"", end_time:""});
+    const [prevReschedule, set_prevReschedule] = React.useState({id:"", start_time:"", end_time:""});
+    const [activeBooking, set_activeBooking] = React.useState({uniqueID:"", start_time:"", end_time:""});
+    const [newBooking, set_newBooking] = React.useState({uniqueID:"", start:"", end:"", is_recurring:false});
+    const [activeBookingToDelete, set_activeBookingToDelete] = React.useState({uniqueID:"", start:"", end:"", event:null, is_recurring:false});
+
+    const [events, setEvents] = React.useState<any[]>([]);
+    const [scheduleEvents, set_scheduleEvents] = React.useState<any[]>([]);
+    const [activeLibrarySlot, setActiveLibrarySlot] = React.useState<any>(null);
+    const [selectedOpenReservation, setSelectedOpenReservation] = React.useState<any>(null);
+
+
+    const today = moment();
+    const [createUserSlotModalOpen, set_createUserSlotModalOpen] = React.useState(false);
+    const [deleteSlotConfirmModalOpen, set_deleteSlotConfirmModalOpen] = React.useState(false);
+    const [slotReservationModalOpen, setSlotReservationModalOpen] = React.useState(false);
+
+
+    React.useEffect(() => {
+      if (user && user.studentProfile) {
+        var libraryID = user.studentProfile?.assignedLibrary?.uniqueID
+        dispatch(getLibraryComputerSlots(libraryID))
+        dispatch(getUserPreferenceSlots())
+      }else if (user && user.mentorProfile) {
+        var libraryID2 = user.mentorProfile?.assignedLibrary?.uniqueID
+        dispatch(getLibraryComputerSlots(libraryID2))
+        dispatch(getLibraryStudentPreferenceSlots(libraryID2))
+
+      }
+    }, [user]);
+
+
+    // React.useEffect(() => {
+    //   if (user && user.studentProfile) {
+    //     var libraryID = user.studentProfile?.assignedLibrary?.uniqueID
+    //     dispatch(getLibraryComputerSlots(libraryID))
+    //     dispatch(getUserPreferenceSlots())
+    //   }
+    //   if (user && user.mentorProfile) {
+    //     var libraryID = user.mentorProfile?.assignedLibrary?.uniqueID
+    //     dispatch(getLibraryComputerSlots(libraryID))
+    //     dispatch(getUserPreferenceSlots())
+    //   }
+    // }, [user]);
+
+    React.useEffect(() => {
+      console.log(student_preference_slots)
+    }, [student_preference_slots]);
+
 
     React.useEffect(() => {
 
-    }, []);
+      //console.log(student_preference_slots)
+
+      if (lib_slots !==undefined && lib_slots != null && student_preference_slots !==undefined && student_preference_slots != null ) {
+        var slots:any = []
+        lib_slots.forEach(slot => {
+          var newSlot = {
+                title  : 'Open Library Slot',
+                start  : slot.startTime,
+                end  : slot.endTime,
+                display: 'background',
+                groupId:'openSlots',
+                extendedProps:{
+                  uniqueID:slot.uniqueID
+                },
+                allDay : false // will make the time show
+          }
+          slots.push(newSlot)
+        });
+
+        let tempArr = [...slots, ...scheduleEvents]
 
 
-    return(
+        var student_slots:any = []
+        student_preference_slots.forEach(slot => {
+          var newStudentSlot = {
+                title  : 'My Open Slot',
+                start  : slot.startTime,
+                end  : slot.endTime,
+                groupId:'myBooks',
+                extendedProps:{
+                  uniqueID:slot.uniqueID
+                },
+                allDay : false // will make the time show
+          }
+          student_slots.push(newStudentSlot)
+        });
+
+        let tempArrFinal = [...student_slots, ...tempArr]
+
+
+        //console.log(tempArrFinal)
+        set_scheduleEvents(tempArrFinal)
+
+        if (calendarRef.current) {
+          const api = calendarRef.current.getApi();
+          api.refetchEvents()
+        }
+
+
+        //dispatch(getLibraryComputerSlots(libraryID))
+
+      }
+
+
+      // if (student_preference_slots !==undefined && student_preference_slots != null ) {
+      //   var slots:any = []
+      //   student_preference_slots.forEach(slot => {
+      //     var newSlot = {
+      //           title  : 'My Open Slot',
+      //           start  : slot.startTime,
+      //           end  : slot.endTime,
+      //           groupId:'myBooks',
+      //           extendedProps:{
+      //             uniqueID:slot.uniqueID
+      //           },
+      //           allDay : false // will make the time show
+      //     }
+      //     slots.push(newSlot)
+      //   });
+      //
+      //   let tempArr = [...slots, ...scheduleEvents]
+      //   console.log(tempArr)
+      //   set_scheduleEvents(tempArr)
+      //   //dispatch(getLibraryComputerSlots(libraryID))
+      //
+      // }
+      //console.log(lib_slots)
+    }, [lib_slots, student_preference_slots]);
+
+    // React.useEffect(() => {
+    //   if (student_preference_slots !==undefined && student_preference_slots != null ) {
+    //     let slots:any = []
+    //     student_preference_slots.forEach(slot => {
+    //       var newSlot = {
+    //             title  : 'My Open Slot',
+    //             start  : slot.startTime,
+    //             end  : slot.endTime,
+    //             groupId:'myBooks',
+    //             extendedProps:{
+    //               uniqueID:slot.uniqueID
+    //             },
+    //             allDay : false // will make the time show
+    //       }
+    //       slots.push(newSlot)
+    //     });
+    //
+    //     let tempArr = [...scheduleEvents, ...slots]
+    //     console.log(tempArr)
+    //     set_scheduleEvents(tempArr)
+    //     //dispatch(getLibraryComputerSlots(libraryID))
+    //
+    //   }
+    //
+    //   console.log(student_preference_slots)
+    //
+    //
+    // }, [student_preference_slots]);
+
+    function renderInnerContent( innerProps:any ) {
+    let splitTag = innerProps.event.groupId.split(":")
+    let id = splitTag[0]
+    return (
+        <div className='fc-event-main-frame'>
+
+            { innerProps.event.groupId !== "openSlots" && innerProps.event.groupId !== "alreadyBooked" && rescheduleActive === true &&
+            <div style={{position:"absolute",bottom:0,right:0, zIndex:99}} ><button type='button' onClick={(e)=> handleStudentSlotRemove(innerProps.event)} style={{padding:1}} id='btnDeleteEvent'>X</button></div>
+            }
+            { innerProps.timeText &&
+            <div className='fc-event-time'>{ innerProps.timeText }</div>
+            }
+            <div className='fc-event-title-container'>
+              {  innerProps.event.groupId === "" || id === "myBooks" || innerProps.event.groupId === "alreadyBooked" ?
+                (
+                  <div className='fc-event-title fc-sticky'>
+                      { innerProps.event.title || <>&nbsp;</> }
+                      { id === "myBooks" &&
+                        <div className='fc-event-time'>(Drag N' Drop<br/> to Reschedule)</div>
+                      }
+                  </div>
+                )
+              : (
+                <div style={{ background:"#000", fontSize:"14px", color:"#fff", padding:5, borderRadius:7}} className='fc-event-title fc-sticky'>
+                    { innerProps.event.title || <>&nbsp;</> }
+                    { id === "myBooks" &&
+                      <div className='fc-event-time'>(Drag N' Drop<br/> to Reschedule)</div>
+                    }
+                </div>
+              )
+              }
+            </div>
+        </div>
+    );
+}
+
+function renderInnerContent2( innerProps:any ) {
+    let splitTag = innerProps.event.groupId.split(":")
+    let id = splitTag[0]
+    return (
+        <div className='fc-event-main-frame' onClick={()=> toggleShowAvailableSlotReservation(innerProps.event)}>
+
+            {  innerProps.event.groupId !== "alreadyBooked" && id !== "myBooks" && id !== "openSlots" && rescheduleActive === true &&
+            <div style={{position:"absolute",bottom:0,right:0, zIndex:99}} ><button type='button' onClick={(e)=> console.log(innerProps.event)} style={{padding:1}} id='btnDeleteEvent'>X</button></div>
+            }
+            { innerProps.timeText &&
+            <div className='fc-event-time'>{ innerProps.timeText }</div>
+            }
+            <div className='fc-event-title-container'>
+                {  innerProps.event.groupId === "" || id === "myBooks" || innerProps.event.groupId === "alreadyBooked"?
+                  (
+                    <div className='fc-event-title fc-sticky'>
+                        { innerProps.event.title || <>&nbsp;</> }
+                    </div>
+                  )
+                : (
+                  <div style={{ background:"#000", fontSize:"14px", color:"#fff", padding:5, borderRadius:7}} className='fc-event-title fc-sticky'>
+                      { innerProps.event.title || <>&nbsp;</> }
+                  </div>
+                )
+                }
+
+            </div>
+        </div>
+    );
+}
+
+
+
+    function getNextWeekDay (startDate:any, dayOfWeek:any){
+        var dayOffset = dayOfWeek > startDate.getDay()
+            ? dayOfWeek - startDate.getDay()
+            : dayOfWeek - startDate.getDay() + 7;
+        startDate.setDate(startDate.getDate() + dayOffset);
+
+        return startDate;
+    }
+
+    const onEventRemove = (event:any) => {
+      const api = calendarRef.current.getApi();
+      var calevents = api.getEvents();
+      const id = event
+      const { defId } = event;
+      const calEventsToDelete = calevents.filter((eve:any, index:number) => eve._def.defId === event._def.defId);
+      const calendarID = calEventsToDelete[0].id
+      const eventToDelete = api.getEventById(calEventsToDelete[0].id)
+
+      set_newBooking({uniqueID:"", start:"", end:"", is_recurring:false})
+      event.remove()
+    };
+
+    const handleStudentSlotRemove = (event:any) => {
+      console.log(event)
+      const { defId, extendedProps } = event._def;
+      const { start, end } = event;
+      console.log(extendedProps.uniqueID)
+      let eventObj: any = {start:start, end:end, uniqueID:extendedProps.uniqueID, event:event}
+      set_activeBookingToDelete(eventObj)
+      set_deleteSlotConfirmModalOpen(true)
+    };
+
+
+    const handleDeleteUserPreferenceSlot = (bookingToDelete:any) => {
+      dispatch(deleteUserPreferenceSlot(bookingToDelete.uniqueID))
+    };
+
+
+
+
+    const handleCancelDeleteUserPreferenceSlot = () => {
+      set_activeBookingToDelete({start:'', end:'', uniqueID:'', is_recurring:false, event:null})
+      set_deleteSlotConfirmModalOpen(false)
+    };
+
+
+    const handleReserveOpenSlot = () => {
+
+
+
+    };
+
+    const handleCancelReserveOpenSlot = () => {
+      setSelectedOpenReservation({start:'', end:'', uniqueID:'', event:null})
+      setSlotReservationModalOpen(false)
+    };
+
+
+
+
+
+
+    const onEventAdded = (event:any) => {
+      const api = calendarRef.current.getApi();
+      const apiEvent = api.addEvent(event);
+      //setEventsForCheckout(eventsForCheckout => [...eventsForCheckout,event] );
+      var calevents = api.getEvents();
+      var allowed_area:any = [];
+      calevents.forEach(function(evt:any) {
+          if (evt.groupId === 'openSlots') {
+              if (evt.start <= event.start
+                      && evt.end >= event.end) {
+                      // console.log(apiEvent)
+                      // console.log(apiEvent._def.defId)
+                      const { defId } = apiEvent._def;
+                      const { extendedProps } = evt._def;
+
+                      const { start, end } = event;
+                      console.log(extendedProps.uniqueID)
+                      //console.log(event)
+                      let eventObj: any = {start:start, end:end, eventId:evt.id, defId:defId, is_recurring:false, libComputerSlotID:extendedProps.uniqueID}
+                      set_newBooking(eventObj)
+                      set_createUserSlotModalOpen(true)
+                      //setOffersForCheckout(eventsForCheckout => [...eventsForCheckout,eventObj] );
+              }
+          }
+      });
+    };
+
+    const allowedSelection = (event:any) => {
+      const api = calendarRef.current.getApi();
+      var calevents = api.getEvents();
+      var allowed_area:any = [];
+      calevents.forEach(function(evt:any) {
+          if (evt.groupId === 'openSlots') {
+              if (evt.start <= event.start
+                      && evt.end >= event.end) {
+                      allowed_area.push(evt)
+              }
+          }
+      });
+
+      console.log(event)
+      return allowed_area.length > 0;
+    };
+
+    const allowedDrop= (event:any) => {
+      const api = calendarRef.current.getApi();
+      var calevents = api.getEvents();
+      var allowed_area:any = [];
+
+      calevents.forEach(function(evt:any) {
+          if (evt.groupId === 'openSlots') {
+              if (evt.start <= event.start
+                      && evt.end >= event.end) {
+                      allowed_area.push(evt)
+              }
+          }
+      });
+
+      console.log(allowed_area)
+
+      return allowed_area.length > 0;
+    };
+    const selectOverlap = (event:any) => {
+      let splitTag = event.groupId.split(":")
+      let id = splitTag[0]
+      console.log(event)
+      return event.groupId === 'openSlots' &&  id !== 'myBooks';
+    };
+
+    const eventOverlap = (event:any) => {
+      let splitTag = event.groupId.split(":")
+      let id = splitTag[0]
+      console.log(id)
+      return event.groupId === 'openSlots';
+    };
+
+
+    const handleCreateUserPreferenceSlot = (event:any) => {
+      console.log(event)
+      let payloadObj = {startTime:event.start, endTime:event.end, lib_computer_slot:event.libComputerSlotID, student:user.pk}
+      dispatch(createUserPreferenceSlot(payloadObj))
+    };
+
+
+    const toggleShowAvailableSlotReservation = (event:any) => {
+      console.log(event)
+      const { defId, extendedProps } = event._def;
+      const { start, end } = event;
+      let eventObj: any = {start:start, end:end, uniqueID:extendedProps.uniqueID, event:event}
+      setSelectedOpenReservation(eventObj)
+      setSlotReservationModalOpen(true)
+    };
+
+    return(<>
+    <BasicModal open={createUserSlotModalOpen} onClose={()=>set_createUserSlotModalOpen(false)} title={'Create Open Time Slot'}>
+      <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
+      <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+        Are you sure you want to create this open slot? Mentors will be able to schedule 1:1 video calls with you based on your timeslot.
+      </Typography>
+      <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+        Timeslot Details: <b>{newBooking ? `${newBooking.start} - ${newBooking.end}`:`No timeslot details...`}</b>
+      </Typography>
+
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+        >
+          <FormControlLabel value={newBooking.is_recurring} control={<Checkbox onChange={(e)=> set_newBooking({ ...newBooking, is_recurring: !newBooking.is_recurring })}/>} label="Make this timeslot reccurring" />
+        </RadioGroup>
+      </FormControl>
+
+      <Button onClick={()=>handleCreateUserPreferenceSlot(newBooking)} variant="contained" color="info" sx={{mt:2}} >
+        {appState.loading
+        ? (<CircularProgress />)
+        : (`Create Timeslot`)
+        }
+
+      </Button>
+      </Box>
+    </BasicModal>
+
+    <BasicModal open={deleteSlotConfirmModalOpen} onClose={()=>set_deleteSlotConfirmModalOpen(false)} title={'Delete Open Slot'}>
+      <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
+      <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+        Are you sure you want to delete this open slot? No mentors will be able to book a session during this time.
+      </Typography>
+      <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+        Timeslot Details: <b>{activeBookingToDelete ? `${activeBookingToDelete.start} - ${activeBookingToDelete.end}`:`No timeslot details...`}</b>
+      </Typography>
+
+      <Button onClick={()=>handleDeleteUserPreferenceSlot(activeBookingToDelete)} variant="contained" color="info" sx={{mt:2}} >
+        {appState.loading
+        ? (<CircularProgress />)
+        : (`Yes, delete this slot.`)
+        }
+      </Button>
+      <Button onClick={()=>handleCancelDeleteUserPreferenceSlot()} variant="contained" color="error" sx={{mt:2}} >
+        No, cancel.
+      </Button>
+      </Box>
+    </BasicModal>
+
+
+    <BasicModal open={slotReservationModalOpen} onClose={()=>setSlotReservationModalOpen(false)} title={'Reserve Student Slot'}>
+      <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
+      <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+        Are you sure you want to reserve this open slot?
+      </Typography>
+
+      {selectedOpenReservation
+        ? <MentorBookingModal eventOrSlot={selectedOpenReservation.event} onClose={()=>null} />
+        : null
+
+      }
+
+      <Button onClick={()=>handleReserveOpenSlot(selectedOpenReservation)} variant="contained" color="info" sx={{mt:2}} >
+        {appState.loading
+        ? (<CircularProgress />)
+        : (`Yes, reserve this slot.`)
+        }
+      </Button>
+      <Button onClick={()=>handleCancelReserveOpenSlot()} variant="contained" color="error" sx={{mt:2}} >
+        No, cancel.
+      </Button>
+      </Box>
+    </BasicModal>
+
+
     <PageLayout>
       <MainCardLayoutWithSideMenu>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
+              <Grid item xs={12} sm={8} md={8}>
+                <div className="card-container">
+                  <div className="card-header">
+                  <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
+                    Your Library
+                  </Typography>
+                  </div>
+                  <div className="card-body">
+                  <Box display={'flex'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
+                    {user && user.studentProfile
+                      ? (
+                        <>
+                        <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+                          Library: <b>{user.studentProfile.assignedLibrary.name ? user.studentProfile.assignedLibrary.name : 'No library assigned...'}</b><br/>
+                        </Typography>
+                        </>
+                      )
+                      : null
+                    }
+                  </Box>
+
+                  </div>
+                </div>
+              </Grid>
+            <Grid item xs={12} sm={8} md={8}>
               <div className="card-container">
                 <div className="card-header">
                 <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
@@ -30,6 +531,81 @@ const Bookings = () => {
                 </Typography>
                 </div>
                 <div className="card-body">
+                  <Grid container spacing={1} mb={3}>
+                      <Grid item xs={9}>
+                        <Typography variant="body1" alignSelf="center" >
+                          View open library hours, modify your open time slots for mentoring/computer reservation, or remove a slot.
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Button onClick={()=>setRescheduleActive(!rescheduleActive)} variant="contained" color={rescheduleActive ? `error`: `info`} >
+                          {rescheduleActive ? `Cancel`: `Modify My Open Slots`}
+                        </Button>
+                      </Grid>
+                  </Grid>
+                <Box display={'flex'} width={"100%"} justifyContent={'center'}>
+
+                {user && user.mentorProfile
+                  ? (
+                    <FullCalendar
+                      plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                      ref={calendarRef}
+                      initialView= {isMobile ? 'timeGridDay' : 'timeGridWeek'}
+                      selectable={false}
+                      editable={false}
+                      aspectRatio= {isMobile ? 0.5 : 1}
+                      headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                      }}
+                      titleFormat= {isMobile ? {month: 'short', year: '2-digit', day: 'numeric', weekday: 'short'} : {month: 'long', year: 'numeric', day: 'numeric', weekday: 'long'}}
+                      events={scheduleEvents}
+                      select={onEventAdded}
+                      selectOverlap={selectOverlap}
+                      selectAllow={allowedSelection}
+                      eventContent={renderInnerContent2}
+                      eventOverlap={eventOverlap}
+                      eventAllow={allowedDrop}
+                      validRange={{
+                          start: Date.now()
+                       }}
+
+                    />
+                  )
+                  : user && user.studentProfile
+                  ? (
+                    <FullCalendar
+                      plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                      ref={calendarRef}
+                      initialView= {isMobile ? 'timeGridDay' : 'timeGridWeek'}
+                      selectable={rescheduleActive ? true : false}
+                      editable={rescheduleActive ? true : false}
+                      aspectRatio= {isMobile ? 0.5 : 1}
+                      headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                      }}
+                      titleFormat= {isMobile ? {month: 'short', year: '2-digit', day: 'numeric', weekday: 'short'} : {month: 'long', year: 'numeric', day: 'numeric', weekday: 'long'}}
+                      events={scheduleEvents}
+                      select={onEventAdded}
+                      selectOverlap={selectOverlap}
+                      selectAllow={allowedSelection}
+                      eventContent={renderInnerContent}
+                      eventOverlap={eventOverlap}
+                      eventAllow={allowedDrop}
+                      validRange={{
+                          start: Date.now()
+                       }}
+
+                    />
+                  )
+                  : null
+
+                }
+
+                </Box>
 
                 </div>
               </div>
@@ -37,6 +613,7 @@ const Bookings = () => {
           </Grid>
       </MainCardLayoutWithSideMenu>
     </PageLayout>
+    </>
   );
 }
 export default Bookings;

@@ -35,10 +35,10 @@ function* handleLogin(action: LOGIN_ACTION) {
       //yield put(setUser(user));
       yield localStorage.setItem('token', user.access)
       yield localStorage.setItem('refresh_token', user.refresh)
-      yield put(setAppToken({refresh_token:user.refresh, access_token:user.access}));
-      yield put(getUserDetail());
-      yield put(setAppAlert({alertMsg:'Successful login! Redirecting to dashboard...', alertSeverity:'success'}));
 
+      yield put(setAppToken({refresh_token:user.refresh, access_token:user.access}));
+      yield put(setAppAlert({alertMsg:'Successful login! Redirecting to dashboard...', alertSeverity:'success'}));
+      yield put(getUserDetail())
       // if (user.isMentor && !user.mentorProfile) {
       //   pushHistory('/complete-registration');
       // }
@@ -68,6 +68,7 @@ function* handleAutoLogin() {
     const user = res.data;
     if (res.status === 200 && user) {
       yield put(setUser(user));
+      yield localStorage.setItem('user', JSON.stringify(user))
       pushHistory('/dashboard');
     } else {
       pushHistory('/');

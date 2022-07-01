@@ -71,3 +71,17 @@ export const getSessions = (userProfile?: Profile) => {
     return getStudentSessions(userProfile.id);
   return [];
 };
+
+
+export const renderAPIMsg = (apiResponse?: any) => {
+  if (apiResponse === undefined || apiResponse === null ) return '';
+  if (apiResponse.message)
+    return apiResponse.message
+  else if (apiResponse.detail)
+    return apiResponse.detail
+  else if (apiResponse.error)
+    return apiResponse.error
+  else if (apiResponse.success)
+    return apiResponse.success
+  return '';
+};
