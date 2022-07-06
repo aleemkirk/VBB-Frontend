@@ -10,7 +10,6 @@ import { DateTime } from 'luxon';
 import { getStudentProfile } from '../../utils/api';
 import moment from 'moment';
 import {FaDesktop, FaEllipsisV} from 'react-icons/fa'
-
 interface SessionProps {
   session: Session;
   onCheckIn: (link:string) => void;
@@ -28,8 +27,7 @@ export const EmptySessionMsg = () => {
 };
 
 
-const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
-
+const StudentSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,14 +70,14 @@ const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
             </div>
             <PersonIcon />
             <div style={{ flex: '1 1 auto', marginLeft: '10px' }}>
-              {session.student ? (
+              {session.mentor ? (
                 <>
-                  {session.student?.firstName +
+                  {session.mentor?.firstName +
                     ' ' +
-                    session.student?.lastName}
+                    session.mentor?.lastName}
                 </>
               ) : (
-                <div style={{ color: 'grey' }}>Not paired with student</div>
+                <div style={{ color: 'grey' }}>Not paired with a mentor</div>
               )}
             </div>
           </div>
@@ -95,8 +93,18 @@ const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
               )
               : null
             }
-            {manage
-              ? (
+
+            {manage === true
+              ? (<>
+                <Button
+                   id="demo-positioned-button"
+                   aria-controls={open ? 'demo-positioned-menu' : undefined}
+                   aria-haspopup="true"
+                   aria-expanded={open ? 'true' : undefined}
+                   onClick={handleClick}
+                 >
+                   <FaEllipsisV/>
+                 </Button>
                 <Menu
                      id="demo-positioned-menu"
                      aria-labelledby="demo-positioned-button"
@@ -104,7 +112,7 @@ const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
                      open={open}
                      onClose={handleClose}
                      anchorOrigin={{
-                       vertical: 'top',
+                       vertical: 'bottom',
                        horizontal: 'left',
                      }}
                      transformOrigin={{
@@ -112,10 +120,9 @@ const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
                        horizontal: 'left',
                      }}
                    >
-                     <MenuItem onClick={handleClose}>Profile</MenuItem>
-                     <MenuItem onClick={handleClose}>My account</MenuItem>
-                     <MenuItem onClick={handleClose}>Logout</MenuItem>
+                     <MenuItem onClick={handleClose}>Cancel Appointment</MenuItem>
                  </Menu>
+                 </>
               )
               : null
             }
@@ -126,4 +133,4 @@ const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
   )
 }
 
-export default MentorSessionCard;
+export default StudentSessionCard;

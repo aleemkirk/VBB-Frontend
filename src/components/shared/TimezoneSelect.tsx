@@ -21,10 +21,12 @@ const timezonesOptions = (timezones: string[]) =>
 interface Props {
   selectedTimezone: string;
   handleSelectTimezone: (timezone: string) => void;
+  isRequired?:boolean;
 }
 const TimezonesDropdown = ({
   selectedTimezone,
   handleSelectTimezone,
+  isRequired
 }: Props) => {
   const timezones = useSelector((state: AppState) => state.timezones);
   const dispatch = useDispatch();
@@ -42,6 +44,7 @@ const TimezonesDropdown = ({
       <Select
         label="Select Your timezone"
         labelId="timezone-select"
+        required={isRequired ? true : false}
         id="select-timezones-dropdown"
         value={selectedTimezone}
         onChange={handleSelect}

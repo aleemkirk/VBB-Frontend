@@ -45,6 +45,7 @@ export interface MentorProfile {
   completedRegistration: boolean;
   mentoringLanguages: Language[];
   approvalStatus: ApprovalStatus;
+  isOnboarded:boolean;
 }
 
 export interface StudentProfile {

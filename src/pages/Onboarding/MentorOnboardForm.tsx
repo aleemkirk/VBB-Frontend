@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions';
 import { BasicModal } from '../../components/Modals';
 import { OnboardProps } from '.';
+import moment from "moment-timezone";
 
 
 const defaultForm = {
@@ -63,6 +64,11 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
 
     const [formValue, setFormValue] = React.useState(defaultForm);
     const [open, setOpen] = React.useState(false);
+    const userTimzezone = moment.tz.guess();
+
+    const handleSetTimezone = (timezone:string) =>{
+      setFormValue({ ...formValue, timezone: timezone })
+    }
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -78,7 +84,12 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
 
 
     return(
-      <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(e, formValue)
+        }}
+      >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Video Upload</Typography>
@@ -126,30 +137,19 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
           <TextField id="standard-basic"
             label="URL:"
             variant="standard"
+            required
             onChange={(e) =>
               setFormValue({ ...formValue, applicationVideoUrl: e.target.value })
             }
           />
         </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">
-            Enter Your Corporate/Organization Code (if any)
-          </Typography>
-          <TextField id="standard-basic"
-                     label="Corporate Code:"
-                     variant="standard"
-                     onChange={(e:any) =>
-                       setFormValue({ ...formValue, corporateCode: e.target.value })
-                     }/>
-        </Grid>
-
         <Grid item xs={12} sm={6} sx={{ mt: 0 }}>
           <Typography variant="h6">
-            Careers areas I’m interested in Mentoring/Teaching
+            Careers areas I’m interested in
           </Typography>
           <CareerDropdown
             selectedCareers={formValue.careers}
+            isRequired={true}
             handleSelectCareers={(careerIds) =>
               setFormValue({ ...formValue, careers: careerIds })
             }
@@ -158,10 +158,11 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
 
         <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
           <Typography variant="h6">
-            Subjects I’m interested in mentoring/teaching:
+            Subjects I’m interested in
           </Typography>
           <SubjectDropdown
             selectedSubjects={formValue.subjects}
+            isRequired={true}
             handleSelectSubjects={(subjectIds) =>
               setFormValue({ ...formValue, subjects: subjectIds })
             }
@@ -174,6 +175,7 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
           </Typography>
           <LanguageDropdown
             selectedLanguages={formValue.mentoringLanguages}
+            isRequired={true}
             handleSelectLanguages={(languageIds) =>
               setFormValue({ ...formValue, mentoringLanguages: languageIds })
             }
@@ -194,11 +196,16 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
 
         <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
           <Typography variant="h6">My Timezone Is</Typography>
+          <Box display="flex" alignItems="center" mb={2}>
+            <Typography variant="body1">We've detected you are in: <b>{userTimzezone}</b></Typography>
+            <Button sx={{ml:2}} onClick={()=>handleSetTimezone(userTimzezone)}>Use Timezone</Button>
+          </Box>
           <TimezonesDropdown
             selectedTimezone={formValue.timezone}
             handleSelectTimezone={(timezone) =>
               setFormValue({ ...formValue, timezone: timezone })
             }
+            isRequired={true}
           />
         </Grid>
 
@@ -227,11 +234,6 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
                 control={<Radio />}
                 label="Microsoft Teams"
               />
-              <FormControlLabel
-                value="Zoom"
-                control={<Radio />}
-                label="Zoom"
-              />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -240,14 +242,14 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
           <FormControl>
             <Typography variant="h6">
               Once you book a mentoring session, will you be able to meet with
-              your student consistently every week for at least 3 months?
+              your student consistently every week for at least 6 months?
             </Typography>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
             >
-              <FormControlLabel value={formValue.crimesOrMisdemanors} control={<Checkbox onChange={(e)=> setFormValue({ ...formValue, canMeetConsistently: !formValue.canMeetConsistently })} />} label="Yes, I can meet consistently." />
+              <FormControlLabel value={formValue.canMeetConsistently} control={<Checkbox required onChange={(e)=> setFormValue({ ...formValue, canMeetConsistently: !formValue.canMeetConsistently })} />} label="Yes, I can meet consistently." />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -290,7 +292,7 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
             >
-              <FormControlLabel value={formValue.agreedToTerms} control={<Checkbox onChange={(e)=> setFormValue({ ...formValue, agreedToTerms: !formValue.agreedToTerms })} />} label="I agree to the Village Book Terms and Conditions and its Privacy Policy." />
+              <FormControlLabel value={formValue.agreedToTerms} control={<Checkbox required onChange={(e)=> setFormValue({ ...formValue, agreedToTerms: !formValue.agreedToTerms })} />} label="I agree to the Village Book Terms and Conditions and its Privacy Policy." />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -299,16 +301,13 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
           <Button
             variant="contained"
             sx={{ml:2}}
-            onClick={(e) => {
-              handleSubmit(e, formValue)
-              console.log(formValue)
-            }}
+            type="submit"
           >
             Submit
           </Button>
         </Grid>
       </Grid>
-      </>
+      </form>
   );
 }
 export default MentorOnboardForm;

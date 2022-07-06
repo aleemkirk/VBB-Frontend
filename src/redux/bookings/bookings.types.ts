@@ -30,6 +30,21 @@ export const CREATE_COMPUTER_RESERVATION = 'CREATE_COMPUTER_RESERVATION';
 export const CREATE_COMPUTER_RESERVATION_SUCCESS = 'CREATE_COMPUTER_RESERVATION_SUCCESS';
 export const CREATE_COMPUTER_RESERVATION_FAILED = 'CREATE_COMPUTER_RESERVATION_FAILED';
 
+export const SET_USER_COMPUTER_RESERVATIONS = 'SET_USER_COMPUTER_RESERVATIONS';
+export const GET_USER_COMPUTER_RESERVATIONS = 'GET_USER_COMPUTER_RESERVATIONS';
+export const GET_USER_COMPUTER_RESERVATIONS_SUCCESS = 'GET_USER_COMPUTER_RESERVATIONS_SUCCESS';
+export const GET_USER_COMPUTER_RESERVATIONS_FAILED = 'GET_USER_COMPUTER_RESERVATIONS_FAILED';
+
+
+
+export interface SetUserComputerReservationAction {
+  type: typeof SET_USER_COMPUTER_RESERVATIONS;
+  payload: any;
+}
+
+export interface GetUserComputerReservationAction {
+  type: typeof GET_USER_COMPUTER_RESERVATIONS;
+}
 
 export interface CreateComputerReservationFailedAction {
   type: typeof CREATE_COMPUTER_RESERVATION_FAILED;
@@ -114,6 +129,7 @@ export interface SetAPIRequestFailed{
 
 export interface Bookings {
   library_slots: any[] | null;
+  user_reservation_slots: any[] | null;
   student_preference_slots:any[] | null;
   mentor_preference_slots:any[] | null;
   activePreferenceSlot:any | null;
@@ -122,4 +138,4 @@ export interface Bookings {
 
 
 
-export type BookingActions = GetLibraryStudentPreferenceSlotAction | SetLibraryStudentPreferenceSlotAction | DeleteUserPreferenceSlotAction | DeleteUserPreferenceResponseSuccessAction | SetUserPreferenceSlotsAction | GetUserPreferenceSlotsAction | CreateUserPreferenceResponseSuccessAction | CreateUserPreferenceSlotAction | GetLibraryComputerSlotsAction | SetLibraryComputerSlotsAction ;
+export type BookingActions = GetUserComputerReservationAction | SetUserComputerReservationAction | GetLibraryStudentPreferenceSlotAction | SetLibraryStudentPreferenceSlotAction | DeleteUserPreferenceSlotAction | DeleteUserPreferenceResponseSuccessAction | SetUserPreferenceSlotsAction | GetUserPreferenceSlotsAction | CreateUserPreferenceResponseSuccessAction | CreateUserPreferenceSlotAction | GetLibraryComputerSlotsAction | SetLibraryComputerSlotsAction ;

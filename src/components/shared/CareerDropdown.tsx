@@ -5,8 +5,10 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Box,
+  Chip,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../redux/rootReducer';
 import * as actions from '../../redux/actions';
@@ -22,13 +24,28 @@ const careerOptions = (careers: Career[]) =>
 interface Props {
   selectedCareers: number[];
   handleSelectCareers: (careerIds: number[]) => void;
+  isRequired?:boolean;
 }
-const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
+const CareerDropdown = ({ selectedCareers, handleSelectCareers, isRequired }: Props) => {
   const careers = useSelector((state: AppState) => state.careers);
   const dispatch = useDispatch();
+  const [actvieCareerOptions, setActvieCareerOptions] = useState<any>([])
+
   useEffect(() => {
     dispatch(actions.getCareers());
   }, [dispatch]);
+
+
+  useEffect(() => {
+    if (careers !== undefined && careers !== null) {
+      var tempArr:any = []
+      careers.forEach(element => {
+        tempArr.push({id:element.id, name:element.name, value:element.id})
+      });
+      setActvieCareerOptions(tempArr)
+    }
+  }, [careers]);
+
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
@@ -45,10 +62,18 @@ const CareerDropdown = ({ selectedCareers, handleSelectCareers }: Props) => {
         labelId="multi-career-select"
         id="select-careers-dropdown"
         multiple
+        required={isRequired ? true : false}
         value={selectedCareers}
         onChange={handleSelect}
+        renderValue={(selected) => (
+           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+             {selected.map((id) => (
+               <Chip key={id} label={actvieCareerOptions?.find((e:any) => e.id === id).name} />
+             ))}
+           </Box>
+         )}
       >
-        {careerOptions(careers)}
+        {careerOptions(actvieCareerOptions)}
       </Select>
     </FormControl>
   );

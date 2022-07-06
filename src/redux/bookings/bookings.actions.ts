@@ -6,6 +6,9 @@ import { GetLibraryStudentPreferenceSlotAction, SetLibraryStudentPreferenceSlotA
 ,GET_LIBRARY_STUDENT_PREFERENCE_SLOTS_SUCCESS, GET_LIBRARY_STUDENT_PREFERENCE_SLOTS_FAILED} from './bookings.types';
 import { apiRequest, apiSuccessful, apiFailed, setAppAlert} from '../app/app.actions';
 
+import * as bookingTypes from './bookings.types';
+import { renderAPIMsg } from '../../utils/api';
+
 export const setLibraryComputerSlots = (payload: any): SetLibraryComputerSlotsAction => ({
   type: SET_LIBRARY_COMPUTER_SLOTS,
   payload,
@@ -66,13 +69,13 @@ function* handleCreateUserPreferenceSlots(action: CreateUserPreferenceSlotAction
     } else {
       console.error('Error creating user preference slots');
       yield put(apiFailed(res.data));
-      yield put(setAppAlert({alertMsg:'Could not create timeslot...', alertSeverity:'error'}));
+      yield put(setAppAlert({alertMsg:`Could not create timeslot...${renderAPIMsg(res.data)}`, alertSeverity:'error'}));
 
     }
   } catch (e:any) {
     console.error('Failed to get preference', { e });
     yield put(apiFailed(e.response.data));
-    yield put(setAppAlert({alertMsg:'Could not create timeslot...', alertSeverity:'error'}));
+    yield put(setAppAlert({alertMsg:`Could not create timeslot...${renderAPIMsg(e.response.data)}`, alertSeverity:'error'}));
 
   }
 }
@@ -194,6 +197,92 @@ function* handleDeleteUserPreferenceSlots(action: DeleteUserPreferenceSlotAction
     console.error('Failed to delete preference', { e });
     yield put(apiFailed(e.response.data));
     yield put(setAppAlert({alertMsg:'Could not delete timeslot...', alertSeverity:'error'}));
+
+  }
+}
+
+
+
+// export const deleteUserPreferenceSlotSuccess = (payload: any): DeleteUserPreferenceResponseSuccessAction => ({
+//   type: DELETE_USER_PREFERENCE_SLOT_SUCCESS,
+//   payload,
+// });
+
+export const setUserComputerReservationSlots = (payload:any): bookingTypes.SetUserComputerReservationAction => ({
+  type: bookingTypes.SET_USER_COMPUTER_RESERVATIONS,
+  payload
+});
+
+export const getUserComputerReservationSlots = (): bookingTypes.GetUserComputerReservationAction => ({
+  type: bookingTypes.GET_USER_COMPUTER_RESERVATIONS
+});
+
+export function* watchGetUserComputerReservationSlot() {
+  yield takeLatest(bookingTypes.GET_USER_COMPUTER_RESERVATIONS, handleGetUserComputerReservationSlots);
+}
+
+function* handleGetUserComputerReservationSlots(action: bookingTypes.GetUserComputerReservationAction) {
+  try {
+
+    // const data = action.payload;
+    yield put(apiRequest({}));
+    const url = `computer-reservations/`;
+    const res: AxiosResponse<any> = yield vbbAPIV1.get<any>(url);
+    if (res.status >= 200 && res.status < 300) {
+      yield put(apiSuccessful(res.data));
+      yield put(setUserComputerReservationSlots(res.data));
+      //yield put(setAppAlert({alertMsg:'Timeslot removed successfully...', alertSeverity:'success'}));
+    } else {
+      console.error('Error getting user reservation slots');
+      yield put(apiFailed(res.data));
+      yield put(setAppAlert({alertMsg:`Could not retrieve reservations...${renderAPIMsg(res.data)}`, alertSeverity:'error'}));
+
+    }
+  } catch (e:any) {
+    console.error('Failed to get user reservation slots', { e });
+    yield put(apiFailed(e.response.data));
+    yield put(setAppAlert({alertMsg:`Could not retrieve reservations...${renderAPIMsg(e.response.data)}`, alertSeverity:'error'}));
+
+  }
+}
+
+
+export const createComputerReservationSlotSuccess = (payload:any): bookingTypes.CreateComputerReservationSuccessAction => ({
+  type: bookingTypes.CREATE_COMPUTER_RESERVATION_SUCCESS,
+  payload
+});
+
+
+export const createComputerReservationSlot = (payload:any): bookingTypes.CreateComputerReservationAction => ({
+  type: bookingTypes.CREATE_COMPUTER_RESERVATION,
+  payload
+});
+
+export function* watchCreateComputerReservationSlot() {
+  yield takeLatest(bookingTypes.CREATE_COMPUTER_RESERVATION, handleCreateComputerReservationSlots);
+}
+
+function* handleCreateComputerReservationSlots(action: bookingTypes.CreateComputerReservationAction) {
+  try {
+
+    const data = action.payload;
+    yield put(apiRequest(action.payload));
+    const url = `book-student-reservations/`;
+    const res: AxiosResponse<any> = yield vbbAPIV1.post<any>(url, data);
+    if (res.status >= 200 && res.status < 300) {
+      yield put(apiSuccessful(res.data));
+      yield put(createComputerReservationSlotSuccess(res.data));
+      yield put(setAppAlert({alertMsg:'Appointment booked successfully...', alertSeverity:'success'}));
+    } else {
+      console.error('Error creating appointment');
+      yield put(apiFailed(res.data));
+      yield put(setAppAlert({alertMsg:`Could not create reservation with student ${renderAPIMsg(res.data)}`, alertSeverity:'error'}));
+
+    }
+  } catch (e:any) {
+    console.error('Failed to create appointment', { e });
+    yield put(apiFailed(e.response.data));
+    yield put(setAppAlert({alertMsg:`Could not create reservation with student...${renderAPIMsg(e.response.data)}`, alertSeverity:'error'}));
 
   }
 }

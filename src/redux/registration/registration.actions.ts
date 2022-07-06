@@ -230,12 +230,16 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
   );
   try {
     const url = 'mentor-sign-up/';
+
+    yield put(apiRequest(action.payload));
+
     const res: AxiosResponse<undefined | SubmitMentorSignUpErrorResponse> =
       yield vbbAPIV1.post<undefined | SubmitMentorSignUpErrorResponse>(url, {
         ...action.payload,
       });
-    if (res.status === 201) {
-      yield put(setAppAlert({alertMsg:'Successful signup! Please log in with your new password...', alertSeverity:'success'}));
+    if (res.status >= 200 && res.status < 300) {
+      yield put(apiSuccessful(res.data));
+      yield put(setAppAlert({alertMsg:'Successful signup! Please check your email to activate your mentor account...', alertSeverity:'success'}));
       pushHistory('/login');
     } else {
       const errors = {
@@ -243,9 +247,15 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
         mentorSignUpErrors: { message: defaultErrorMessage },
       };
       yield put(setErrors(errors));
+      yield put(apiFailed(res.data));
+      yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
+
     }
   } catch (err) {
     console.error('Error signing up mentor', { err });
+    yield put(apiFailed(err.response?.data));
+    yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
+
     if (axios.isAxiosError(err)) {
       const error = err as AxiosError<any>;
       const errorMessage = error.response?.data?.message ?? defaultErrorMessage;

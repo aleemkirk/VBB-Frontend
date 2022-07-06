@@ -24,11 +24,13 @@ const languageOptions = (languages: Language[]) =>
 interface Props {
   selectedLanguages: number[];
   handleSelectLanguages: (languageIds: number[]) => void;
+  isRequired?:boolean;
 }
 
 const LanguageDropdown = ({
   selectedLanguages,
   handleSelectLanguages,
+  isRequired
 }: Props) => {
   const languages = useSelector((state: AppState) => state.languages);
   const dispatch = useDispatch();
@@ -51,6 +53,7 @@ const LanguageDropdown = ({
         label="Select Your Languages"
         labelId="multi-language-select"
         id="select-language-dropdown"
+        required={isRequired ? true : false}
         multiple
         value={selectedLanguages}
         onChange={handleSelect}

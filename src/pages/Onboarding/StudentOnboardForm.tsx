@@ -34,10 +34,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions';
 import { BasicModal } from '../../components/Modals';
 import { OnboardProps } from '.';
-
+import moment from "moment-timezone";
 
 const defaultForm = {
-  libraryCode:'',
   careers: [] as number[],
   mentoringLanguages: [] as number[],
   // should be a list from all subjects in the backend
@@ -45,9 +44,9 @@ const defaultForm = {
   favoriteSubjects: [] as number[],
   favoriteGenres: [] as number[],
   familyStatus: '',
-  familySupportLevel: 1,
+  familySupportLevel: null,
   graduationObstacle: '',
-  gradeLevel: 1,
+  gradeLevel: null,
   yearOfBirth: '',
   timezone: '',
   gender: '',
@@ -83,6 +82,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
 
     const [formValue, setFormValue] = React.useState(defaultForm);
     const [open, setOpen] = React.useState(false);
+    const userTimzezone = moment.tz.guess();
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -105,26 +105,26 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
       return renderList
     }
 
+    const handleSetTimezone = (timezone:string) =>{
+      setFormValue({ ...formValue, timezone: timezone })
+    }
+
+
+
+
     React.useEffect(() => {
 
     }, []);
 
 
     return(
-      <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(e, formValue)
+        }}
+      >
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">
-            Enter Your Library Registration Code *
-          </Typography>
-          <TextField id="standard-basic"
-                     label="Library Code:"
-                     variant="standard"
-                     onChange={(e:any) =>
-                       setFormValue({ ...formValue, libraryCode: e.target.value })
-                     }/>
-        </Grid>
-
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">
             What year were you born?
@@ -133,6 +133,10 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
             id="standard-basic"
             label="Year of Birth:"
             variant="standard"
+            required
+            onChange={(e:any) =>
+              setFormValue({ ...formValue, yearOfBirth: e.target.value })
+            }
           />
         </Grid>
 
@@ -145,6 +149,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
             <Select
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
+              required
               value={formValue.gender}
               onChange={(e:any) =>
                 setFormValue({ ...formValue, gender: e.target.value })
@@ -172,13 +177,14 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
 
         <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
           <Typography variant="h6">
-            What grade are you in?
+            Which grade are you in?
           </Typography>
           <FormControl fullWidth>
             <InputLabel id="demo-multiple-chip-label">Please Select</InputLabel>
             <Select
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
+              required
               value={formValue.gradeLevel}
               onChange={(e:any) =>
                 setFormValue({ ...formValue, gradeLevel: e.target.value })
@@ -199,13 +205,14 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
 
         <Grid item xs={12} sm={6} sx={{ mt: 0 }}>
           <Typography variant="h6">
-            Which careers/professional disciplines do you want to go into?{' '}
+            Which careers/professional disciplines are you interested in?{' '}
           </Typography>
           <CareerDropdown
             selectedCareers={formValue.careers}
             handleSelectCareers={(careerIds) =>
               setFormValue({ ...formValue, careers: careerIds })
             }
+            isRequired={true}
           />
         </Grid>
 
@@ -218,6 +225,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
             <Select
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
+              required
               value={formValue.familyStatus}
               onChange={(e:any) =>
                 setFormValue({ ...formValue, familyStatus: e.target.value })
@@ -256,6 +264,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
               value={formValue.familySupportLevel}
+              required
               onChange={(e:any) =>
                 setFormValue({ ...formValue, familySupportLevel: e.target.value })
               }
@@ -294,6 +303,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
               value={formValue.graduationObstacle}
+              required
               onChange={(e:any) =>
                 setFormValue({ ...formValue, graduationObstacle: e.target.value })
               }
@@ -345,6 +355,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
             handleSelectSubjects={(subjectIds) =>
               setFormValue({ ...formValue, favoriteSubjects: subjectIds })
             }
+            isRequired={true}
           />
         </Grid>
 
@@ -357,13 +368,14 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
             handleSelectSubjects={(subjectIds) =>
               setFormValue({ ...formValue, struggleSubjects: subjectIds })
             }
+            isRequired={true}
           />
         </Grid>
 
 
         <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
           <Typography variant="h6">
-            What is your favorite type of book to read?
+            What is your favorite types of book to read?
           </Typography>
           <GenreDropdown
             selectedGenres={formValue.favoriteGenres}
@@ -377,23 +389,29 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
 
         <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
           <Typography variant="h6">
-            Your native language?
+            Your native language(s)?
           </Typography>
           <LanguageDropdown
             selectedLanguages={formValue.mentoringLanguages}
             handleSelectLanguages={(languageIds) =>
               setFormValue({ ...formValue, mentoringLanguages: languageIds })
             }
+            isRequired={true}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
           <Typography variant="h6">My Timezone Is?</Typography>
+          <Box display="flex" alignItems="center" mb={2}>
+            <Typography variant="body1">We've detected you are in: <b>{userTimzezone}</b></Typography>
+            <Button sx={{ml:2}} onClick={()=>handleSetTimezone(userTimzezone)}>Use Timezone</Button>
+          </Box>
           <TimezonesDropdown
             selectedTimezone={formValue.timezone}
             handleSelectTimezone={(timezone) =>
               setFormValue({ ...formValue, timezone: timezone })
             }
+            isRequired={true}
           />
         </Grid>
 
@@ -404,7 +422,7 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
             >
-              <FormControlLabel value={formValue.agreedToTerms} control={<Checkbox onChange={(e)=> setFormValue({ ...formValue, agreedToTerms: !formValue.agreedToTerms })}/>} label="I agree to the Village Book Terms and Conditions and its Privacy Policy." />
+              <FormControlLabel value={formValue.agreedToTerms} control={<Checkbox required onChange={(e)=> setFormValue({ ...formValue, agreedToTerms: !formValue.agreedToTerms })}/>} label="I agree to the Village Book Terms and Conditions and its Privacy Policy." />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -413,18 +431,13 @@ const StudentOnboardForm = ({handleSubmit}:OnboardProps) => {
           <Button
             variant="contained"
             sx={{ml:2}}
-            onClick={(e) => {
-              // incTaskNo(2);
-              // handleClickOpen();
-              handleSubmit(e, formValue)
-              console.log(formValue)
-            }}
+            type="submit"
           >
             Submit
           </Button>
         </Grid>
       </Grid>
-      </>
+      </form>
   );
 }
 export default StudentOnboardForm;

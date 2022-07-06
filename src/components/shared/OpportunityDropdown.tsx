@@ -9,7 +9,7 @@ import {
   Box,
   Chip,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../redux/rootReducer';
 import { getOpportunity } from '../../redux/actions';
@@ -28,7 +28,7 @@ const MenuProps = {
 
 const opportunityOptions = (opportunities: Opportunity[]) =>
   opportunities.map((opportunity) => (
-    <MenuItem key={opportunity.id} value={opportunity.name}>
+    <MenuItem key={opportunity.id} value={opportunity.id}>
       <ListItemText primary={`${opportunity.name}`} />
     </MenuItem>
   ));
@@ -42,9 +42,23 @@ const OpportunityDropdown = ({
 }: Props) => {
   const opportunities = useSelector((state: AppState) => state.opportunity);
   const dispatch = useDispatch();
+
+  const [actvieOppOptions, setActvieOppOptions] = useState<any>([])
+
   useEffect(() => {
     dispatch(getOpportunity());
   }, [dispatch]);
+
+
+  useEffect(() => {
+    if (opportunities !== undefined && opportunities !== null) {
+      var tempArr:any = []
+      opportunities.forEach(element => {
+        tempArr.push({id:element.id, name:element.name, value:element.id})
+      });
+      setActvieOppOptions(tempArr)
+    }
+  }, [opportunities]);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
     const value = e.target.value;
@@ -64,15 +78,15 @@ const OpportunityDropdown = ({
         onChange={handleSelect}
         input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
         renderValue={(selected) => (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {selected.map((value) => (
-              <Chip key={value} label={value} />
-            ))}
-          </Box>
-        )}
+           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+             {selected.map((id) => (
+               <Chip key={id} label={actvieOppOptions?.find((e:any) => e.id === id).name} />
+             ))}
+           </Box>
+         )}
         MenuProps={MenuProps}
       >
-        {opportunityOptions(opportunities)}
+        {opportunityOptions(actvieOppOptions)}
       </Select>
     </FormControl>
   );

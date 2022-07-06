@@ -28,12 +28,12 @@ export const appState = (
 
     case UPDATE_APP_TOKEN:
       var token_data = action.payload;
-      state.access_token = token_data.access_token
-      state.refresh_token = token_data.refresh_token
-      state.isAuthenticated = true;
-      return state;
-
-
+      return {
+          ...state,
+          access_token:token_data.access_token,
+          refresh_token:token_data.refresh_token,
+          isAuthenticated:true
+        };
    case LOGOUT:
       state.access_token = null;
       state.refresh_token = null;
@@ -48,7 +48,6 @@ export const appState = (
           alertSeverity:alert_data.alertSeverity,
           isAlertOpen: true
         };
-      return state;
 
     case CLOSE_APP_ALERT:
       return {

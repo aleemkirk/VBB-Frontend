@@ -10,9 +10,13 @@ import ConfirmEmail from './pages/Registration/ConfirmEmail';
 import Bookings from './pages/Bookings';
 import AccountSettings from './pages/AccountSettings';
 import Onboarding from './pages/Onboarding';
+import Reservations from './pages/Reservations';
+
 import AdvisorIndex from './components/advisor/AdvisorIndex';
 import MentorIndex from './components/mentor/MentorIndex';
 import OnboardingIndex from './components/Onboarding/OnboardingIndex';
+
+
 import EmailSent from './components/EmailSent';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAppAlertIsOpen, getAppAlert, getAppAlertSeverity} from './redux/app/app.selectors';
@@ -133,6 +137,8 @@ function App(){
         <Route path="/account" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
         <Route path="/onboarding/*" element={<PrivateRoute><Onboarding /></PrivateRoute>} />
+        <Route path="/sessions/*" element={<PrivateRoute><Reservations /></PrivateRoute>} />
+
         <Route path="/mentor/*" element={<MentorIndex />} />
         <Route path="/mentor/onboarding/*" element={<OnboardingIndex />} />
 
