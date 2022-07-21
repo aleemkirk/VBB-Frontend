@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Typography, Box, Button, Pagination, CircularProgress,
+import { Grid, Typography, Box, Button, Pagination, CircularProgress,InputLabel, Select,ListItemText,
 Table,TableBody,TableCell,TableContainer,TableHead,TableRow, Paper, Menu, MenuItem, FormControl, FormLabel, TextField, Radio, RadioGroup, FormControlLabel} from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppState } from '../../redux/rootReducer'
@@ -8,73 +8,67 @@ import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {paginate} from '../../utils/api';
 import moment from 'moment'
-import { getLibraryComputers,  createLibraryComputer, updateLibraryComputer, deleteLibraryComputer} from '../../redux/library/library.actions'
+import { getLibraryStudents, updateStudentStatus } from '../../redux/library/library.actions'
 import {FaDesktop, FaEllipsisV} from 'react-icons/fa'
 import { BasicModal } from '../../components/Modals';
 
 
 const defaultForm = {
   name:'',
-  key:'',
-  ipAddress:'',
-  email:'',
   notes:'',
+  end_date:'',
+  uniqueID:''
 };
 
-const Computers = () => {
+const Students = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const appState = useSelector((store: AppState) => store.appState);
     const user = useSelector((store: AppState) => store.user);
-    const computersState = useSelector((store: AppState) => store.library.computers);
+    const studentsState = useSelector((store: AppState) => store.library.students);
     const [activePaginationIndex, set_activePaginationIndex] = React.useState(1);
     const [numOfItems, set_numOfItems] = React.useState(10);
-    const [computers, set_computers] = React.useState<any>(null);
+    const [students, set_students] = React.useState<any>(null);
 
+    const [studentStatusModalOpen, set_studentStatusModalOpen] = React.useState(false);
+    const [activeStudentStatus, set_activeStudentStatus] = React.useState<any>('');
 
-    const [addComputerModalOpen, set_addComputerModalOpen] = React.useState(false);
-    const [editComputerModalOpen, set_editComputerModalOpen] = React.useState(false);
-    const [deleteComputerConfirmModalOpen, set_deleteComputerConfirmModalOpen] = React.useState(false);
-    const [activeComputerToDelete, set_activeComputerToDelete] = React.useState<any>(null);
-    const [activeComputerForm, set_activeComputerForm] = React.useState<any>(defaultForm);
-    const [activeComputer, set_activeComputer] = React.useState<any>(null);
-    const [libID, set_libID] = React.useState<any>('');
+    const [editStudentModalOpen, set_editStudentModalOpen] = React.useState(false);
+    const [deleteStudentConfirmModalOpen, set_deleteStudentConfirmModalOpen] = React.useState(false);
+    const [activeStudentToDelete, set_activeStudentToDelete] = React.useState<any>(null);
+    const [activeStudentForm, set_activeStudentForm] = React.useState<any>(defaultForm);
+    const [activeStudent, set_activeStudent] = React.useState<any>(null);
     const [filterText, set_filterText] = React.useState<any>('');
 
     React.useEffect(() => {
-      if (computersState !== undefined && computersState !== null) {
-        let computerSort:any = [...computersState]
-        let newSort = computerSort.sort(function(a:any, b:any){return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()});
-        set_computers(newSort)
+      if (studentsState !== undefined && studentsState !== null) {
+        let studentSort:any = [...studentsState]
+        let newSort = studentSort.sort(function(a:any, b:any){return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()});
+        set_students(newSort)
       }
-    }, [computersState]);
+    }, [studentsState]);
 
     React.useEffect(() => {
       if (user && user.role === 1 && user.studentProfile) {
         if (user.studentProfile.assignedLibrary) {
           var libraryID = user.studentProfile?.assignedLibrary.uniqueID
-          set_libID(user.studentProfile?.assignedLibrary.id)
-          dispatch(getLibraryComputers(libraryID))
+          dispatch(getLibraryStudents(libraryID))
         }
       }else if (user && user.role === 2 && user.mentorProfile ) {
         if (user.mentorProfile.assignedLibrary) {
           var libraryID2 = user.mentorProfile.assignedLibrary.uniqueID
-          set_libID(user.mentorProfile.assignedLibrary.id)
-
-          dispatch(getLibraryComputers(libraryID2))
+          dispatch(getLibraryStudents(libraryID2))
         }
       }else if (user && user.role === 3 && user.advisorProfile) {
         if (user.advisorProfile.library) {
           var libraryID3 = user.advisorProfile.library.uniqueID
-          set_libID(user.advisorProfile.library.id)
-          dispatch(getLibraryComputers(libraryID3))
+          dispatch(getLibraryStudents(libraryID3))
         }
       }else if (user && user.role === 4 && user.librarianProfile) {
         if (user.librarianProfile.library) {
           var libraryID4 = user.librarianProfile.library.uniqueID
-          set_libID(libraryID4)
-          dispatch(getLibraryComputers(libraryID4))
+          dispatch(getLibraryStudents(libraryID4))
         }
       }
     }, [user]);
@@ -84,48 +78,59 @@ const Computers = () => {
       set_activePaginationIndex(value)
     };
 
-    const handleToggleActiveComputerView = (computer: any) => {
-      if (editComputerModalOpen) {
-        set_activeComputer(null)
-        set_editComputerModalOpen(false)
-        set_activeComputerForm(defaultForm)
+    const handleToggleActiveStudentView = (student: any) => {
+      if (editStudentModalOpen) {
+        set_activeStudent(null)
+        set_editStudentModalOpen(false)
+        set_activeStudentForm(defaultForm)
       }else{
-        set_activeComputer(computer)
-        set_editComputerModalOpen(true)
-        set_activeComputerForm(computer)
+        set_activeStudent(student)
+        set_editStudentModalOpen(true)
+        set_activeStudentForm(student)
       }
     };
 
 
-    const handleToggleDeleteComputerConfirm = (computer: any) => {
-      if (deleteComputerConfirmModalOpen) {
-        set_activeComputerToDelete(null)
-        set_deleteComputerConfirmModalOpen(false)
+    const handleToggleDeleteStudentConfirm = (student: any) => {
+      if (deleteStudentConfirmModalOpen) {
+        set_activeStudentToDelete(null)
+        set_deleteStudentConfirmModalOpen(false)
       }else{
-        set_activeComputerToDelete(computer)
-        set_deleteComputerConfirmModalOpen(true)
+        set_activeStudentToDelete(student)
+        set_deleteStudentConfirmModalOpen(true)
       }
     };
 
-    const handleAddComputer = (computer: any) => {
-      console.log(computer)
-
-      let obj = {...computer, library:libID}
-      delete obj.uniqueID
-      dispatch(createLibraryComputer(obj))
+    const handleToggleApproveStudentModal = (student: any) => {
+      if (studentStatusModalOpen) {
+        set_activeStudent(null)
+        set_studentStatusModalOpen(false)
+      }else{
+        set_activeStudent(student)
+        set_studentStatusModalOpen(true)
+      }
     };
 
-    const handleEditComputer = (computer: any) => {
-      console.log(computer)
-      dispatch(updateLibraryComputer(computer,computer.uniqueID))
+    const handleChangeStudentStatus = (student: any, status:string) => {
+      console.log(student)
+      console.log(status)
+      dispatch(updateStudentStatus({student_id:student.user.pk, status:status}))
+
+
     };
 
 
-    const handleDeleteComputer = (computer: any) => {
-      dispatch(deleteLibraryComputer(computer.uniqueID))
+
+    const handleEditStudent = (student: any) => {
+      console.log(student)
     };
 
-    const ComputerRow = ({ computer }: {computer:any}) => {
+
+    const handleDeleteStudent = (student: any) => {
+
+    };
+
+    const StudentRow = ({ student }: {student:any}) => {
       const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
       const open = Boolean(anchorEl);
       const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -137,12 +142,14 @@ const Computers = () => {
 
       return(
         <TableRow
-          key={computer.uniqueID}
+          key={student.uniqueID}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
-          <TableCell component="th" scope="column"><b>{computer.name}</b><br/>Notes: {computer.notes}</TableCell>
-          <TableCell>{computer.key || '-'}</TableCell>
-          <TableCell>{moment(computer.createdAt).format('MM/DD/YY HH:MM A') || '-'}</TableCell>
+          <TableCell>{student.user?.firstName}</TableCell>
+          <TableCell>{student.user?.lastName}</TableCell>
+          <TableCell>{student.user?.username}</TableCell>
+          <TableCell>{student.approvalStatus}</TableCell>
+          <TableCell>{moment(student.createdAt).format('MM/DD/YY HH:MM A') || '-'}</TableCell>
           <TableCell align="right">
             <Button
                id="positioned-button"
@@ -168,8 +175,9 @@ const Computers = () => {
                    horizontal: 'left',
                  }}
                >
-                 <MenuItem onClick={()=>handleToggleActiveComputerView(computer)}>View/Edit...</MenuItem>
-                 <MenuItem onClick={()=>handleToggleDeleteComputerConfirm(computer)}><div style={{color:"red"}}>Remove...</div></MenuItem>
+                 <MenuItem onClick={()=>handleToggleActiveStudentView(student.user)}>View/Edit...</MenuItem>
+                 <MenuItem onClick={()=>handleToggleApproveStudentModal(student)}>Approve/Reject Account...</MenuItem>
+                 <MenuItem onClick={()=>handleToggleDeleteStudentConfirm(student)}><div style={{color:"red"}}>Remove...</div></MenuItem>
              </Menu>
           </TableCell>
 
@@ -178,20 +186,20 @@ const Computers = () => {
     }
 
 
-    const renderComputers = (computers: any[], filterTxt:string) => {
-      if (computers.length === 0) {
+    const renderStudents = (students: any[], filterTxt:string) => {
+      if (students.length === 0) {
         return null
       }
       let renderList = []
       let filteredList = []
       if (filterTxt === "") {
-        filteredList = [...computers]
+        filteredList = [...students]
       }else{
-        filteredList = computers.filter((item:any) => item.name && item.name.toLowerCase().includes(filterTxt.toLowerCase()));
+        filteredList = students.filter((item:any) => item.name && item.name.toLowerCase().includes(filterTxt.toLowerCase()));
       }
-      renderList = filteredList.map(computer => {
+      renderList = filteredList.map(student => {
         return(
-          <ComputerRow computer={computer}/>
+          <StudentRow student={student}/>
         )
       });
       return renderList
@@ -212,7 +220,7 @@ const Computers = () => {
       const { value } = e.currentTarget;
       let newEndDate = calculateEndDate(value)
       if (newEndDate) {
-        set_activeComputerForm({ ...activeComputerForm, displayEnd: newEndDate.toISOString()})
+        set_activeStudentForm({ ...activeStudentForm, displayEnd: newEndDate.toISOString()})
       }
     }
 
@@ -227,49 +235,51 @@ const Computers = () => {
 
 
     return(<>
-      <BasicModal open={deleteComputerConfirmModalOpen} onClose={()=>set_deleteComputerConfirmModalOpen(false)} title={'Delete Computer?'}>
+      <BasicModal open={deleteStudentConfirmModalOpen} onClose={()=>set_deleteStudentConfirmModalOpen(false)} title={'Delete Student?'}>
         <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Are you sure you want to delete this computer? It will no longer be usable by library users.
+          Are you sure you want to delete this student? It will no longer be viewable by library users.
         </Typography>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Computer: <b>{activeComputerToDelete ? `${activeComputerToDelete.name}`:`No computer details...`}</b>
-        </Typography>
-        <Typography mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Email: <b>{activeComputerToDelete ? `${activeComputerToDelete.email}`:`No email assigned...`}</b>
-        </Typography>
-        <Typography mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Key: <b>{activeComputerToDelete ? `${activeComputerToDelete.key}`:`No id...`}</b>
-        </Typography>
-        <Typography mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Unique ID: <b>{activeComputerToDelete ? `${activeComputerToDelete.uniqueID}`:`No unique id...`}</b>
+          Student: <b>{activeStudentToDelete ? `${activeStudentToDelete.text}`:`No student details...`}</b>
         </Typography>
 
-          <Button onClick={()=>handleDeleteComputer(activeComputerToDelete)} variant="contained" color="info" sx={{mt:2}} >
+          <Button onClick={()=>handleDeleteStudent(activeStudentToDelete)} variant="contained" color="info" sx={{mt:2}} >
             {appState.loading
             ? (<CircularProgress />)
-            : (`Yes, delete this computer.`)
+            : (`Yes, delete this student.`)
             }
           </Button>
-          <Button onClick={()=>handleToggleDeleteComputerConfirm(activeComputerToDelete)} variant="contained" color="error" sx={{mt:2}} >
+          <Button onClick={()=>handleToggleDeleteStudentConfirm(activeStudentToDelete)} variant="contained" color="error" sx={{mt:2}} >
             No, cancel.
           </Button>
         </Box>
       </BasicModal>
-      <BasicModal open={editComputerModalOpen} onClose={()=>set_deleteComputerConfirmModalOpen(false)} title={'Edit Computer'}>
+      <BasicModal open={editStudentModalOpen} onClose={()=>set_deleteStudentConfirmModalOpen(false)} title={'Edit Student'}>
         <Box mt={2} display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
           <>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <FormLabel>Computer Name</FormLabel>
+              <FormLabel>First Name</FormLabel>
               <TextField
                 id="standard-basic"
-                value={activeComputerForm.name}
-                multiline
-                rows={3}
+                value={activeStudentForm.firstName}
                 onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, name: e.target.value })
+                  set_activeStudentForm({ ...activeStudentForm, firstName: e.target.value })
+                }
+                variant="standard"
+                required/>
+            </FormControl>
+            <br/>
+            <br/>
+            <FormControl fullWidth>
+              <FormLabel>Last Name</FormLabel>
+              <TextField
+                id="standard-basic"
+                value={activeStudentForm.lastName}
+                onChange={(e) =>
+                  set_activeStudentForm({ ...activeStudentForm, lastName: e.target.value })
                 }
                 variant="standard"
                 required/>
@@ -280,9 +290,9 @@ const Computers = () => {
               <FormLabel>Email</FormLabel>
               <TextField
                 id="standard-basic"
-                value={activeComputerForm.email}
+                value={activeStudentForm.email}
                 onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, email: e.target.value })
+                  set_activeStudentForm({ ...activeStudentForm, email: e.target.value })
                 }
                 variant="standard"
                 />
@@ -290,12 +300,12 @@ const Computers = () => {
             <br/>
             <br/>
             <FormControl fullWidth>
-              <FormLabel>Identifier</FormLabel>
+              <FormLabel>Username</FormLabel>
               <TextField
                 id="standard-basic"
-                value={activeComputerForm.key}
+                value={activeStudentForm.username}
                 onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, key: e.target.value })
+                  set_activeStudentForm({ ...activeStudentForm, username: e.target.value })
                 }
                 variant="standard"
                 />
@@ -303,12 +313,13 @@ const Computers = () => {
             <br/>
             <br/>
             <FormControl fullWidth>
-              <FormLabel>IP - Address</FormLabel>
+              <FormLabel>Date of Birth</FormLabel>
               <TextField
                 id="standard-basic"
-                value={activeComputerForm.ipAddress}
+                type="date"
+                value={activeStudentForm.dateOfBirth}
                 onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, ipAddress: e.target.value })
+                  set_activeStudentForm({ ...activeStudentForm, dateOfBirth: e.target.value })
                 }
                 variant="standard"
                 />
@@ -316,43 +327,41 @@ const Computers = () => {
             <br/>
             <br/>
             <FormControl fullWidth>
-              <FormLabel>Notes</FormLabel>
+              <FormLabel>Timezone</FormLabel>
               <TextField
                 id="standard-basic"
-                value={activeComputerForm.notes}
+                value={activeStudentForm.timeZone}
                 onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, notes: e.target.value })
+                  set_activeStudentForm({ ...activeStudentForm, timeZone: e.target.value })
                 }
-                multiline
-                rows={3}
                 variant="standard"
                 required/>
             </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Status:
+                Role: {activeStudentForm.role}
               </Typography>
               <br/>
               <br/>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Created At: <br/><b>{activeComputer && moment(activeComputer.createdAt).format('MM/DD/YY HH:MM A')}</b>
+                Created At: <br/><b>{activeStudent && moment(activeStudent.createdAt).format('MM/DD/YY HH:MM A')}</b>
               </Typography>
               <br/>
               <br/>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Computer Actions
+                Student Actions
               </Typography>
-              <Button onClick={()=>handleToggleDeleteComputerConfirm(activeComputer)} variant="contained" color="error" sx={{mt:2}} >
+              <Button variant="contained" color="error" sx={{mt:2}} >
                 Delete
               </Button>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row" justifyContent="flex-end">
-            <Button onClick={()=>handleToggleActiveComputerView(activeComputer)} variant="contained" color="error" sx={{mt:2}} >
+            <Button onClick={()=>handleToggleActiveStudentView(activeStudent)} variant="contained" color="error" sx={{mt:2}} >
               Cancel
             </Button>
-            <Button type="submit" onClick={()=>handleEditComputer(activeComputerForm)} variant="contained" color="info" sx={{mt:2, ml:2}} >
+            <Button type="submit" onClick={()=>handleEditStudent(activeStudentForm)} variant="contained" color="info" sx={{mt:2, ml:2}} >
               {appState.loading
               ? (<CircularProgress />)
               : (`Save`)
@@ -362,89 +371,46 @@ const Computers = () => {
           </>
         </Box>
       </BasicModal>
-      <BasicModal open={addComputerModalOpen} onClose={()=>set_addComputerModalOpen(false)} title={'Add Computer'}>
+      <BasicModal open={studentStatusModalOpen} onClose={()=>set_studentStatusModalOpen(false)} title={'Change Student Approval Status'}>
         <Box mt={2} display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
           <>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
+            <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color} mb={3}>
+              Approve or reject this student account.
+            </Typography>
             <FormControl fullWidth>
-              <FormLabel>Computer Name</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeComputerForm.name}
+              <InputLabel id="multi-career-select">Change Student Status</InputLabel>
+              <Select
+                label="Change Student Status"
+                labelId="multi-career-select"
+                id="select-careers-dropdown"
+                value={activeStudentStatus}
                 onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, name: e.target.value })
+                  set_activeStudentStatus(e.target.value)
                 }
-                variant="standard"
-                required/>
+              >
+                <MenuItem key={1} value={'not-reviewed'}>
+                  <ListItemText primary={`Not Reviewed`} />
+                </MenuItem>
+                <MenuItem key={2} value={'approved'}>
+                  <ListItemText primary={`Approved`} />
+                </MenuItem>
+                <MenuItem key={3} value={'rejected'}>
+                  <ListItemText primary={`Rejected`} />
+                </MenuItem>
+              </Select>
             </FormControl>
-            <br/>
-            <br/>
-            <FormControl fullWidth>
-              <FormLabel>Email</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeComputerForm.email}
-                onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, email: e.target.value })
-                }
-                variant="standard"
-                />
-            </FormControl>
-            <br/>
-            <br/>
-            <FormControl fullWidth>
-              <FormLabel>Identifier</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeComputerForm.key}
-                onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, key: e.target.value })
-                }
-                variant="standard"
-                />
-            </FormControl>
-            <br/>
-            <br/>
-            <FormControl fullWidth>
-              <FormLabel>IP - Address</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeComputerForm.ipAddress}
-                onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, ipAddress: e.target.value })
-                }
-                variant="standard"
-                />
-            </FormControl>
-            <br/>
-            <br/>
-            <FormControl fullWidth>
-              <FormLabel>Notes</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeComputerForm.notes}
-                onChange={(e) =>
-                  set_activeComputerForm({ ...activeComputerForm, notes: e.target.value })
-                }
-                multiline
-                rows={3}
-                variant="standard"
-                required/>
-            </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row" justifyContent="flex-end">
-            <Button onClick={()=>set_addComputerModalOpen(false)} variant="contained" color="error" sx={{mt:2}} >
+            <Button onClick={()=>handleToggleApproveStudentModal(activeStudent)} variant="contained" color="error" sx={{mt:2}} >
               Cancel
             </Button>
-            <Button type="submit" onClick={()=>handleAddComputer(activeComputerForm)} variant="contained" color="info" sx={{mt:2, ml:2}} >
+            <Button type="submit" onClick={()=>handleChangeStudentStatus(activeStudent, activeStudentStatus)} variant="contained" color="info" sx={{mt:2, ml:2}} >
               {appState.loading
               ? (<CircularProgress />)
-              : (`Add`)
+              : (`Save`)
               }
             </Button>
           </Box>
@@ -458,7 +424,7 @@ const Computers = () => {
               <div className="card-container">
                 <div className="card-header">
                 <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
-                  Computers
+                  Students
                 </Typography>
                 </div>
                 <div className="card-body">
@@ -474,12 +440,7 @@ const Computers = () => {
                         variant="standard"
                         />
                     </FormControl>
-                    <Button onClick={()=>set_addComputerModalOpen(true)} variant="contained" color="info" sx={{mt:2, ml:2}} >
-                      {appState.loading
-                      ? (<CircularProgress />)
-                      : (`+ Add Computers`)
-                      }
-                    </Button>
+
                   </Box>
                   <Box display="flex" flexDirection="column" alignItems="flex-start" width="100%" mt={2}>
 
@@ -487,20 +448,22 @@ const Computers = () => {
                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
                        <TableHead>
                          <TableRow>
-                           <TableCell>Computer Name</TableCell>
-                           <TableCell>Identifier</TableCell>
+                           <TableCell>First Name</TableCell>
+                           <TableCell>Last Name</TableCell>
+                           <TableCell>Username</TableCell>
+                           <TableCell>Approval Status</TableCell>
                            <TableCell>Created At</TableCell>
                            <TableCell align="right">Action</TableCell>
                          </TableRow>
                        </TableHead>
                        <TableBody>
-                         {computers
+                         {students
                            ? (
                              <>
-                               {computers.length > 0
+                               {students.length > 0
                                ? (
                                  <>
-                                   {renderComputers(paginate(computers, activePaginationIndex, numOfItems).data, filterText)}
+                                   {renderStudents(paginate(students, activePaginationIndex, numOfItems).data, filterText)}
                                  </>
                                )
                                : (
@@ -508,7 +471,7 @@ const Computers = () => {
                                    key={0}
                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                  >
-                                   <TableCell component="th" scope="row">No computers...</TableCell>
+                                   <TableCell component="th" scope="row">No students...</TableCell>
                                    <TableCell>-</TableCell>
                                    <TableCell>-</TableCell>
                                    <TableCell>-</TableCell>
@@ -525,9 +488,9 @@ const Computers = () => {
                    </TableContainer>
 
                   </Box>
-                  {computers &&
+                  {students &&
                     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-                      <Pagination shape="rounded" count={paginate(computers, activePaginationIndex, numOfItems).totalPages} page={activePaginationIndex} onChange={handlePageChange} />
+                      <Pagination shape="rounded" count={paginate(students, activePaginationIndex, numOfItems).totalPages} page={activePaginationIndex} onChange={handlePageChange} />
                     </Box>
                   }
 
@@ -540,4 +503,4 @@ const Computers = () => {
     </>
   );
 }
-export default Computers;
+export default Students;

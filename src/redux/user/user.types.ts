@@ -23,6 +23,7 @@ export interface User {
   lastName: string;
   name: string;
   username?: string;
+  role:number;
   timeZone: string;
   isEmailVerified: boolean;
   isLibrarian: boolean;
@@ -32,10 +33,13 @@ export interface User {
   dateOfBirth: string | null;
   mentorProfile?: MentorProfile;
   studentProfile?: StudentProfile;
+  advisorProfile?: AdvisorProfile;
+  librarianProfile?: LibrarianProfile;
 }
 
 export interface MentorProfile {
   assignedLibrary: Library;
+  organization: any | null;
   careers: Career[];
   subjects: Subject[];
   hasCompletedTraining: boolean;
@@ -54,6 +58,17 @@ export interface StudentProfile {
   mentoringLanguages: Language[];
   subjects: Subject[];
   isOnboarded:boolean;
+}
+
+
+export interface AdvisorProfile {
+  library: Library;
+  bio:string;
+}
+
+export interface LibrarianProfile {
+  library: Library;
+  bio:string;
 }
 
 export interface AuthToken {

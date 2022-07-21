@@ -27,25 +27,56 @@ const SideMenu = () => {
         <Grid item xs={12}>
           <Link to="/">Dashboard</Link>
         </Grid>
-        {user && user.isStudent &&
+        {user && (user.role === 0 || user.role === 1 || user.role === 2) &&
           (<>
             <Grid item xs={12}>
               <Link to="/bookings">Bookings</Link>
             </Grid>
             <Grid item xs={12}>
               <Link to="/sessions">My Sessions</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/profile">My Profile</Link>
             </Grid>
            </>
           )
         }
 
-        {user && user.isMentor &&
+
+        {user && user.role === 3 &&
           (<>
             <Grid item xs={12}>
-              <Link to="/bookings">Bookings</Link>
+              <Link to="/reservations">Reservations</Link>
             </Grid>
             <Grid item xs={12}>
-              <Link to="/sessions">My Sessions</Link>
+              <Link to="/announcements">Announcements</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/computers">Computers</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/students">Students</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/mentors">Mentors</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/library-profile">Library Profile</Link>
+            </Grid>
+           </>
+          )
+        }
+
+        {user && user.role === 4 &&
+          (<>
+            <Grid item xs={12}>
+              <Link to="/students">Students</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/mentors">Mentors</Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/announcements">Announcements</Link>
             </Grid>
            </>
           )

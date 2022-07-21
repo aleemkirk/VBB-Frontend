@@ -251,7 +251,7 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
       yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
 
     }
-  } catch (err) {
+  } catch (err:any) {
     console.error('Error signing up mentor', { err });
     yield put(apiFailed(err.response?.data));
     yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));

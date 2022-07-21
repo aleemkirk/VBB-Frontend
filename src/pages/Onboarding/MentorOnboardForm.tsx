@@ -55,6 +55,8 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
     const taskState = useSelector((state: AppState) => state.addTaskNo);
     const checkState = useSelector((state: AppState) => state.onboardingSteps);
 
+    const [isCorporate, setIsCorporate] = React.useState(false);
+
     const incTaskNo = (indexOfOnboardingStep: number) => {
       if (taskState < 6 && !checkState[indexOfOnboardingStep]) {
         dispatch(actions.addTask());
@@ -79,7 +81,9 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
     };
 
     React.useEffect(() => {
-
+      if (user.mentorProfile && user.mentorProfile?.organization) {
+        setIsCorporate(true)
+      }
     }, []);
 
 
@@ -137,7 +141,7 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
           <TextField id="standard-basic"
             label="URL:"
             variant="standard"
-            required
+            required={isCorporate ? false : true}
             onChange={(e) =>
               setFormValue({ ...formValue, applicationVideoUrl: e.target.value })
             }

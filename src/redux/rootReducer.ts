@@ -10,12 +10,14 @@ import { addTaskNo, onboardingSteps } from './onboarding/onboarding.reducer';
 import { opportunity } from './opportunity/opportunity.reducer';
 import { appState } from './app/app.reducer';
 import { genres } from './genre/genre.reducer';
+import { library } from './library/library.reducer';
 
 const rootReducer = combineReducers({
   appState,
   careers,
   bookings,
   genres,
+  library,
   languages,
   subjects,
   timezones,

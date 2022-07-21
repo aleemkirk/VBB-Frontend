@@ -286,3 +286,45 @@ function* handleCreateComputerReservationSlots(action: bookingTypes.CreateComput
 
   }
 }
+
+
+
+export const updateUserComputerReservationAttendanceSuccess = (payload:any): bookingTypes.UpdateComputerReservationAttendanceSuccessAction => ({
+  type: bookingTypes.UPDATE_USER_COMPUTER_RESERVATION_ATTENDANCE_SUCCESS,
+  payload
+});
+
+
+export const updateUserComputerReservationAttendance = (payload:any): bookingTypes.UpdateComputerReservationAttendanceAction => ({
+  type: bookingTypes.UPDATE_USER_COMPUTER_RESERVATION_ATTENDANCE,
+  payload
+});
+
+export function* watchUpdateUserComputerReservationAttendance() {
+  yield takeLatest(bookingTypes.UPDATE_USER_COMPUTER_RESERVATION_ATTENDANCE, handleUpdateUserComputerReservationAttendance);
+}
+
+function* handleUpdateUserComputerReservationAttendance(action: bookingTypes.UpdateComputerReservationAttendanceAction) {
+  try {
+
+    const data = action.payload;
+    yield put(apiRequest(action.payload));
+    const url = `computer-reservations/`;
+    const res: AxiosResponse<any> = yield vbbAPIV1.patch<any>(url, data);
+    if (res.status >= 200 && res.status < 300) {
+      yield put(apiSuccessful(res.data));
+      yield put(updateUserComputerReservationAttendanceSuccess(res.data));
+      //yield put(setAppAlert({alertMsg:' booked successfully...', alertSeverity:'success'}));
+    } else {
+      console.error('Error updating appointment');
+      yield put(apiFailed(res.data));
+      yield put(setAppAlert({alertMsg:`Could not update reservation. ${renderAPIMsg(res.data)}`, alertSeverity:'error'}));
+
+    }
+  } catch (e:any) {
+    console.error('Failed to update appointment', { e });
+    yield put(apiFailed(e.response.data));
+    yield put(setAppAlert({alertMsg:`Could not update reservation attendence...${renderAPIMsg(e.response.data)}`, alertSeverity:'error'}));
+
+  }
+}

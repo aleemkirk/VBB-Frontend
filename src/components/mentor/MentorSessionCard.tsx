@@ -13,7 +13,7 @@ import {FaDesktop, FaEllipsisV} from 'react-icons/fa'
 
 interface SessionProps {
   session: Session;
-  onCheckIn: (link:string) => void;
+  onCheckIn: (session:any) => void;
   manage?:boolean;
 }
 
@@ -89,11 +89,15 @@ const MentorSessionCard = ({ session, onCheckIn, manage }: SessionProps) => {
           <Box display="flex" alignItems="center">
             {session.conferenceURL && session.conferenceURL !== null
               ? (
-                <Button onClick={()=>onCheckIn(session.conferenceURL || '')}>
+                <Button onClick={()=>onCheckIn(session || null)}>
                   {session.conferenceURL !== null ? 'Meeting Link' : 'No Meeting Link'}
                 </Button>
               )
-              : null
+              : (
+                <Button>
+                  {'No Meeting Link'}
+                </Button>
+              )
             }
             {manage
               ? (

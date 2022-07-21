@@ -156,9 +156,60 @@ const Bookings = () => {
       if (student_preference_slots !==undefined && student_preference_slots !== null && user !== undefined && user !== null ) {
         var student_slots:any = []
 
-        if (student_preference_slots.length > 0) {
-          for (let index = 0; index < student_preference_slots.length; index++) {
-            const slot:any = student_preference_slots[index];
+        //Duplicate Check
+        // for (let index = 0; index < student_preference_slots.length; index++) {
+        //   const slot:any = student_preference_slots[index];
+        //
+
+
+        // var keys = ['startTime'];
+        // var filtered = student_preference_slots.filter(
+        //     (s => o =>
+        //         (k => !s.has(k) && s.add(k))
+        //         (keys.map(k => o[k]).join('|'))
+        //     )
+        //     (new Set)
+        // );
+        // }
+
+        let filteredSlots = []
+
+        const sortedSlots = student_preference_slots.slice().sort((a, b) => b.createdAt - a.createdAt)
+
+        for (let index = 0; index < sortedSlots.length; index++) {
+          const slotelement:any = sortedSlots[index];
+
+          var prev = sortedSlots[index - 1]
+          var next = sortedSlots[index + 1]
+
+          if(!prev){
+            filteredSlots.push(slotelement)
+            continue;
+          }
+
+          if (slotelement.startTime === prev.startTime) {
+            var prevIdx = index - 1
+
+            if (slotelement.createdAt > prev.createdAt) {
+              continue;
+            }else{
+              filteredSlots.splice(prevIdx, 1);
+              filteredSlots.push(slotelement)
+              continue;
+            }
+          }else{
+            filteredSlots.push(slotelement)
+          }
+
+        }
+
+
+        //console.log(sortedSlots)
+        console.log(filteredSlots)
+
+        if (filteredSlots.length > 0) {
+          for (let index = 0; index < filteredSlots.length; index++) {
+            const slot:any = filteredSlots[index];
             var idList:any = []
             scheduleEvents.forEach((element:any) => {
                 idList.push(element.extendedProps.uniqueID)
