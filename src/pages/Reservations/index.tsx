@@ -9,7 +9,7 @@ import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {paginate} from '../../utils/api';
 import moment from 'moment'
-import { getLibraryUserSlots,updateLibraryUserSlot, getLibraryComputerReservations, getLibraryMentors, createLibraryComputerReservation, deleteLibraryUserSlot} from '../../redux/library/library.actions'
+import { getLibraryUserSlots,updateLibraryUserSlot, updateLibraryComputerReservation, deleteLibraryComputerReservation, getLibraryComputerReservations, getLibraryMentors, createLibraryComputerReservation, deleteLibraryUserSlot} from '../../redux/library/library.actions'
 import {FaDesktop, FaEllipsisV} from 'react-icons/fa'
 import { BasicModal } from '../../components/Modals';
 import {
@@ -147,6 +147,7 @@ const Reservations = () => {
     };
 
     const handleToggleDeleteReservationConfirm = (reservation: any) => {
+      console.log(reservation)
       if (deleteReservationConfirmModalOpen) {
         set_activeReservationToDelete(null)
         set_deleteReservationConfirmModalOpen(false)
@@ -166,10 +167,23 @@ const Reservations = () => {
 
     const handleEditReservation = (reservation: any) => {
       console.log(reservation)
+
+      var studentId = null
+      var comp = null
+      if (reservation.computer) {
+        comp = reservation.computer?.id
+      }
+
+      if (reservation.student) {
+        studentId = reservation?.student?.id
+      }
+      let obj = {...reservation, student:studentId, computer:comp, mentor:reservation?.mentor}
+      console.log(obj)
+      dispatch(updateLibraryComputerReservation(obj,obj.uniqueID))
     };
 
     const handleDeleteReservation = (reservation: any) => {
-
+      dispatch(deleteLibraryComputerReservation(reservation.uniqueID))
     };
 
     const ReservationRow = ({ reservation }: {reservation:any}) => {
@@ -430,10 +444,17 @@ const Reservations = () => {
       <BasicModal open={deleteReservationConfirmModalOpen} onClose={()=>set_deleteReservationConfirmModalOpen(false)} title={'Delete Reservation?'}>
         <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Are you sure you want to delete this reservation? It will no longer be viewable by library users.
+          Are you sure you want to delete this reservation? This student's session will be cancelled, but if in a recurring series, all other sessions have been kept.
+        </Typography>
+
+        <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+          Student: <b>{(activeReservationToDelete && activeReservationToDelete.student) ? `${activeReservationToDelete.student?.firstName} ${activeReservationToDelete.student?.lastName}`:`No student...`}</b>
         </Typography>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Reservation: <b>{activeReservationToDelete ? `${activeReservationToDelete.text}`:`No reservation details...`}</b>
+          Assigned Mentor: <b>{(activeReservationToDelete && activeReservationToDelete.mentor) ? `${activeReservationToDelete.mentor.firstName} ${activeReservationToDelete.mentor?.lastName}`:`No mentor...`}</b>
+        </Typography>
+        <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+          Start - End Date & Time: <b>{activeReservationToDelete ? `${moment(activeReservationToDelete.startTime).format('dddd, MMMM Do hh:mm a') || '-'} - ${moment(activeReservationToDelete.endTime).format('dddd, MMMM Do') || '-'}`:`No user preference time...`}</b>
         </Typography>
 
           <Button onClick={()=>handleDeleteReservation(activeReservationToDelete)} variant="contained" color="info" sx={{mt:2}} >
@@ -458,7 +479,7 @@ const Reservations = () => {
           Student: <b>{activeUserPrefSlotToDelete && activeUserPrefSlotToDelete.student ? `${activeUserPrefSlotToDelete.student.firstName} ${activeUserPrefSlotToDelete.student.lastName}`:`No student...`}</b>
         </Typography>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Assigned Mentor: <b>{activeUserPrefSlotToDelete && activeUserPrefSlotToDelete.mentor ? `${activeUserPrefSlotToDelete.mentor.firstName} ${activeUserPrefSlotToDelete.student.lastName}`:`No mentor...`}</b>
+          Assigned Mentor: <b>{activeUserPrefSlotToDelete && activeUserPrefSlotToDelete.mentor ? `${activeUserPrefSlotToDelete.mentor.firstName} ${activeUserPrefSlotToDelete.mentor.lastName}`:`No mentor...`}</b>
         </Typography>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
           Initial Start - End Date & Time: <b>{activeUserPrefSlotToDelete ? `${moment(activeUserPrefSlotToDelete.startTime).format('dddd, MMMM Do hh:mm a') || '-'} - ${moment(activeUserPrefSlotToDelete.endTime).format('dddd, MMMM Do') || '-'}`:`No user preference time...`}</b>
@@ -471,7 +492,7 @@ const Reservations = () => {
           <Button onClick={()=>handleDeleteUserPrefSlot(activeUserPrefSlotToDelete)} variant="contained" color="info" sx={{mt:2}} >
             {appState.loading
             ? (<CircularProgress />)
-            : (`Yes, delete this reservation.`)
+            : (`Yes, delete this user slot.`)
             }
           </Button>
           <Button onClick={()=>handleToggleDeleteUserPrefConfirm(activeUserPrefSlotToDelete)} variant="contained" color="error" sx={{mt:2}} >
@@ -486,88 +507,88 @@ const Reservations = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <FormLabel>Reservation Name</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeReservationForm.name}
-                multiline
-                rows={3}
-                onChange={(e) =>
-                  set_activeReservationForm({ ...activeReservationForm, name: e.target.value })
-                }
-                variant="standard"
-                required/>
+              <FormLabel>Student</FormLabel>
+              <b>{activeReservationForm && activeReservationForm.student?.firstName} {activeReservationForm && activeReservationForm.student?.lastName}</b>
             </FormControl>
             <br/>
             <br/>
             <FormControl fullWidth>
-              <FormLabel>Email</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeReservationForm.email}
-                onChange={(e) =>
-                  set_activeReservationForm({ ...activeReservationForm, email: e.target.value })
-                }
-                variant="standard"
+              <FormLabel>Assigned Mentor</FormLabel>
+              <p>Current: <b>{(activeReservation && activeReservation.mentor) ? `${activeReservation && activeReservation.mentor.firstName} ${activeReservation && activeReservation.mentor.lastName}`: 'No mentor assigned'}</b></p>
+
+              <FormLabel mt={2}>Change Active Mentor</FormLabel>
+              {activeReservationForm !== undefined && activeReservationForm !== null
+                ? (
+                  <MentorUserDropdown
+                    selectedUser={activeReservationForm.mentor}
+                    isRequired={false}
+                    defaultValue={activeReservationForm.mentor ? activeReservationForm.mentor?.pk : null}
+                    handleSelectUser={(id) =>
+                      set_activeReservationForm({ ...activeReservationForm, mentor: id })
+                    }
+                  />
+                )
+                : null
+              }
+
+
+            </FormControl>
+            <br/>
+            <br/>
+            <FormControl fullWidth>
+              <FormLabel>Start Date & Time</FormLabel>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+               <DateTimePicker
+                 renderInput={(props) => <TextField {...props} />}
+                 label=""
+                 disabled={true}
+                 value={activeReservationForm.startTime}
+                 onChange={(newValue) => {
+                   set_activeReservationForm({ ...activeReservationForm, startTime:newValue })
+                 }}
+               />
+             </LocalizationProvider>
+            </FormControl>
+            <br/>
+            <br/>
+            <FormControl fullWidth>
+              <FormLabel>End Date & Time</FormLabel>
+               <LocalizationProvider dateAdapter={AdapterMoment}>
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
+                  label=""
+                  disabled={true}
+                  value={activeUserPrefSlotForm.endTime}
+                  onChange={(newValue) => {
+                    set_activeReservationForm({ ...activeReservationForm, endTime:newValue })
+                  }}
                 />
+              </LocalizationProvider>
             </FormControl>
             <br/>
             <br/>
-            <FormControl fullWidth>
-              <FormLabel>Identifier</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeReservationForm.key}
-                onChange={(e) =>
-                  set_activeReservationForm({ ...activeReservationForm, key: e.target.value })
-                }
-                variant="standard"
-                />
-            </FormControl>
-            <br/>
-            <br/>
-            <FormControl fullWidth>
-              <FormLabel>IP - Address</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeReservationForm.ipAddress}
-                onChange={(e) =>
-                  set_activeReservationForm({ ...activeReservationForm, ipAddress: e.target.value })
-                }
-                variant="standard"
-                />
-            </FormControl>
-            <br/>
-            <br/>
-            <FormControl fullWidth>
-              <FormLabel>Notes</FormLabel>
-              <TextField
-                id="standard-basic"
-                value={activeReservationForm.notes}
-                onChange={(e) =>
-                  set_activeReservationForm({ ...activeReservationForm, notes: e.target.value })
-                }
-                multiline
-                rows={3}
-                variant="standard"
-                required/>
-            </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Status:
+                Unique ID: <b>{activeReservationForm.uniqueID}</b>
               </Typography>
               <br/>
               <br/>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Created At: <br/><b>{activeReservation && moment(activeReservation.createdAt).format('MM/DD/YY HH:MM A')}</b>
+                Computer:<b>{activeReservationForm.computer ? 'Yes' : 'No'}</b><br/>
+
               </Typography>
               <br/>
               <br/>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Reservation Actions
+                Created At: <br/><b>{activeReservationForm && moment(activeReservationForm.createdAt).format('MM/DD/YY HH:MM A')}</b>
               </Typography>
-              <Button onClick={()=>handleToggleActiveReservationView(activeReservation)} variant="contained" color="error" sx={{mt:2}} >
+              <br/>
+              <br/>
+              <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+                Reservation Slot Actions
+              </Typography>
+              <Button onClick={()=>handleToggleDeleteReservationConfirm(activeReservation)} variant="contained" color="error" sx={{mt:2}} >
                 Delete
               </Button>
             </Grid>

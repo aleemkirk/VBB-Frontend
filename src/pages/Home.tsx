@@ -70,7 +70,7 @@ const Home = () => {
     React.useEffect(() => {
       if (user_reservations !== undefined && user_reservations !== null) {
         let reserveSort:any = [...user_reservations]
-        let newSort = reserveSort.sort(function(a:any, b:any){return new Date(a.startTime).valueOf() - new Date(b.startTime).valueOf()});
+        let newSort = reserveSort.sort(function(a:any, b:any){return new Date(b.startTime).valueOf() - new Date(a.startTime).valueOf()});
         set_reservations(newSort)
       }
     }, [user_reservations]);
@@ -78,8 +78,13 @@ const Home = () => {
     React.useEffect(() => {
       if (announcementsState !== undefined && announcementsState !== null) {
         let announcementSort:any = [...announcementsState]
-        let newSort = announcementSort.sort(function(a:any, b:any){return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()});
-        set_announcements(newSort)
+        let newSort = announcementSort.sort(function(a:any, b:any){return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()});
+
+        let today = moment().format("YYYY-MM-DD");
+
+        let displaySort = newSort.filter(item => moment(item.displayEnd,'YYYY-MM-DD').isSameOrAfter(today));
+
+        set_announcements(displaySort)
       }
     }, [announcementsState]);
 
@@ -138,6 +143,7 @@ const Home = () => {
                 height: 500,
                 overflow: "hidden",
                 overflowY: "scroll",
+
               }}>
                 {announcements.slice(0,3).map((announcement:any) => {
                   return (
@@ -266,7 +272,7 @@ const Home = () => {
                   <a onClick={()=> set_viewAllAnnouncementsModalOpen(true)}>View All</a>
                 </div>
                 <div className="card-body" style={{padding:"0rem 0rem 1rem 0rem"}}>
-                  <Box display="flex" flexDirection="column">
+                  <Box display="flex" flexDirection="column" width="100%">
                     {announcements
                       ? (
                         <>
@@ -307,6 +313,9 @@ const Home = () => {
           ? <Alert severity="info" sx={{mt:3}}>Your Mentor Application Is Currently Under Review! You won't be able to book a session until that has been approved.</Alert>
           : null }
 
+          {user.studentProfile && user.studentProfile.isOnboarded === true && user.studentProfile.approvalStatus === "Not Reviewed"
+          ? <Alert severity="info" sx={{mt:3}}>Your Student Account Is Currently Under Review! You won't be able to book a session until that has been approved.</Alert>
+          : null }
 
           {user.role === 1
             ? (
@@ -340,9 +349,15 @@ const Home = () => {
                                     You have no student sessions yet...
                                   </Typography>
                                 </Box>
-                                <Button component={Link} to='/bookings' variant="contained" color="info" sx={{mt:2}}>
-                                  Find New Student Sessions
-                                </Button>
+
+                                {user.studentProfile && user.studentProfile.isOnboarded === true && user.studentProfile.approvalStatus === "Not Reviewed"
+                                ? null
+                                : (
+                                  <Button component={Link} to='/bookings' variant="contained" color="info" sx={{mt:2}}>
+                                    Find New Student Sessions
+                                  </Button>
+                                ) }
+
                               </>
                             )
 

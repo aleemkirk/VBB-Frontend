@@ -8,7 +8,7 @@ import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {paginate} from '../../utils/api';
 import moment from 'moment'
-import { getLibraryStudents, updateStudentStatus } from '../../redux/library/library.actions'
+import { getLibraryStudents, updateStudentStatus, deleteLibraryStudent } from '../../redux/library/library.actions'
 import {FaDesktop, FaEllipsisV} from 'react-icons/fa'
 import { BasicModal } from '../../components/Modals';
 
@@ -123,11 +123,13 @@ const Students = () => {
 
     const handleEditStudent = (student: any) => {
       console.log(student)
+      dispatch(deleteLibraryStudent(student.user.pk))
     };
 
 
     const handleDeleteStudent = (student: any) => {
-
+      console.log(student)
+      dispatch(deleteLibraryStudent(student.user.pk))
     };
 
     const StudentRow = ({ student }: {student:any}) => {
@@ -241,9 +243,11 @@ const Students = () => {
           Are you sure you want to delete this student? It will no longer be viewable by library users.
         </Typography>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Student: <b>{activeStudentToDelete ? `${activeStudentToDelete.text}`:`No student details...`}</b>
+          Student: <b>{activeStudentToDelete ? `${activeStudentToDelete.user?.firstName} ${activeStudentToDelete.user?.lastName}`:`No student details...`}</b>
         </Typography>
-
+        <Typography mt={0} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+          Username: <b>{activeStudentToDelete ? `${activeStudentToDelete.user?.username} `:`No student username...`}</b>
+        </Typography>
           <Button onClick={()=>handleDeleteStudent(activeStudentToDelete)} variant="contained" color="info" sx={{mt:2}} >
             {appState.loading
             ? (<CircularProgress />)

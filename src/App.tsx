@@ -12,6 +12,10 @@ import Bookings from './pages/Bookings';
 import AccountSettings from './pages/AccountSettings';
 import Onboarding from './pages/Onboarding';
 import Reservations from './pages/Reservations';
+import Sessions from './pages/Sessions';
+import LibraryProfile from './pages/LibraryProfile';
+
+
 import Announcements from './pages/Announcements';
 import Computers from './pages/Computers';
 import Students from './pages/Students';
@@ -64,27 +68,27 @@ const PrivateRoute = ({ children, roles }: { children: JSX.Element, roles: Array
 
   const now = new Date()
 
-  if(tokenCookie !== null && refreshCookie !== null){
-      let now = new Date();
-      var decoded_refresh:any = jwt_decode(tokenCookie);
-      var expires_at:any = decoded_refresh.exp
-      let expiresAt = new Date(parseInt(expires_at)*1000);
-      if(now > expiresAt){
-        return <Navigate to="/login" state={{ from: location }} />;
-      }
-
-      // if(!user){
-      //   return <Navigate to="/login" state={{ from: location }} />;
-      // }
-      console.log(user)
-      if (user && !userHasRequiredRole) {
-        return <Navigate to="/access-denied" state={{ from: location }} />;
-      }
-  }else{
-    if (!appState.isAuthenticated) {
-      return <Navigate to="/login" state={{ from: location }} />;
-    }
-  }
+  // if(tokenCookie !== null && refreshCookie !== null){
+  //     let now = new Date();
+  //     var decoded_refresh:any = jwt_decode(tokenCookie);
+  //     var expires_at:any = decoded_refresh.exp
+  //     let expiresAt = new Date(parseInt(expires_at)*1000);
+  //     if(now > expiresAt){
+  //       return <Navigate to="/login" state={{ from: location }} />;
+  //     }
+  //
+  //     // if(!user){
+  //     //   return <Navigate to="/login" state={{ from: location }} />;
+  //     // }
+  //     console.log(user)
+  //     if (user && !userHasRequiredRole) {
+  //       return <Navigate to="/access-denied" state={{ from: location }} />;
+  //     }
+  // }else{
+  //   if (!appState.isAuthenticated) {
+  //     return <Navigate to="/login" state={{ from: location }} />;
+  //   }
+  // }
 
   return children;
 };
@@ -164,8 +168,9 @@ function App(){
         <Route path="/announcements" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Announcements /></PrivateRoute>} />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
         <Route path="/onboarding/*" element={<PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}><Onboarding /></PrivateRoute>} />
-        <Route path="/sessions/*" element={<PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}><Reservations /></PrivateRoute>} />
+        <Route path="/sessions/*" element={<PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}><Sessions /></PrivateRoute>} />
         <Route path="/reservations/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Reservations /></PrivateRoute>} />
+        <Route path="/library-profile/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><LibraryProfile /></PrivateRoute>} />
         <Route path="/computers/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Computers /></PrivateRoute>} />
         <Route path="/students/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Students /></PrivateRoute>} />
         <Route path="/mentors/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Mentors /></PrivateRoute>} />

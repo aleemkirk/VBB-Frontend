@@ -331,7 +331,7 @@ const Computers = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                Status:
+                Status: <b>{activeComputer && activeComputer.isDown ? 'Down for Maintainence' : 'Open for Reservations'}</b>
               </Typography>
               <br/>
               <br/>

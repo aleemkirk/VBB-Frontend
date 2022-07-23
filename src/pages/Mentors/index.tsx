@@ -8,7 +8,7 @@ import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {paginate} from '../../utils/api';
 import moment from 'moment'
-import { getLibraryMentors, updateMentorStatus } from '../../redux/library/library.actions'
+import { getLibraryMentors, updateMentorStatus, deleteLibraryMentor } from '../../redux/library/library.actions'
 import {FaDesktop, FaEllipsisV} from 'react-icons/fa'
 import { BasicModal } from '../../components/Modals';
 
@@ -115,11 +115,13 @@ const Mentors = () => {
 
     const handleEditMentor = (mentor: any) => {
       console.log(mentor)
+
+
     };
 
 
     const handleDeleteMentor = (mentor: any) => {
-
+      dispatch(deleteLibraryMentor(mentor.pk))
     };
 
     const MentorRow = ({ mentor }: {mentor:any}) => {
@@ -241,10 +243,13 @@ const Mentors = () => {
       <BasicModal open={deleteMentorConfirmModalOpen} onClose={()=>set_deleteMentorConfirmModalOpen(false)} title={'Delete Mentor?'}>
         <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Are you sure you want to delete this mentor? It will no longer be viewable by library users.
+          Are you sure you want to delete this mentor? They will no longer be able to log into Village Book Builders, and all user info & exsiting reservations will be deleted.
         </Typography>
         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-          Mentor: <b>{activeMentorToDelete ? `${activeMentorToDelete.text}`:`No mentor details...`}</b>
+          Mentor: <b>{activeMentorToDelete ? `${activeMentorToDelete.firstName} ${activeMentorToDelete.lastName}`:`No mentor details...`}</b>
+        </Typography>
+        <Typography mt={0} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
+          Email: <b>{activeMentorToDelete ? `${activeMentorToDelete.email} `:`No mentor email...`}</b>
         </Typography>
 
           <Button onClick={()=>handleDeleteMentor(activeMentorToDelete)} variant="contained" color="info" sx={{mt:2}} >

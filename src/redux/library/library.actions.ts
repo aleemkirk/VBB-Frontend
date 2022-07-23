@@ -319,7 +319,7 @@ function* handleUpdateLibraryComputer(action:libraryTypes.UpdateLibraryComputerA
 function* handleDeleteLibraryComputer(action:libraryTypes.DeleteLibraryComputerAction)  {
   try {
     const uniqueID = action.uniqueID;
-    //yield put(apiRequest(uniqueID));
+    yield put(apiRequest(uniqueID));
     const url = `library/computers/${uniqueID}`;
     const res: AxiosResponse<any> = yield vbbAPIV1.delete<any>(url);
     if (res.status >= 200 && res.status < 300) {
@@ -361,7 +361,7 @@ export function* watchGetLibraryStudents() {
 }
 function* handleGetLibraryStudents(action:GetLibraryStudentsAction)  {
   try {
-    const url = `library/students/${action.uniqueID}`;
+    const url = `library/all-students/${action.uniqueID}`;
     const res: AxiosResponse<any> = yield vbbAPIV1.get<any>(url);
     if (res.status >= 200 && res.status < 300) {
       yield put(setLibraryStudents(res.data));
@@ -391,7 +391,7 @@ export function* watchGetLibraryMentors() {
 }
 function* handleGetLibraryMentors(action:GetLibraryMentorsAction)  {
   try {
-    const url = `library/mentors/${action.uniqueID}`;
+    const url = `library/all-mentors/${action.uniqueID}`;
     const res: AxiosResponse<any> = yield vbbAPIV1.get<any>(url);
     if (res.status >= 200 && res.status < 300) {
       yield put(setLibraryMentors(res.data));
@@ -403,16 +403,30 @@ function* handleGetLibraryMentors(action:GetLibraryMentorsAction)  {
   }
 }
 
-
-//Create Computer
+/**
+* Library STUDENTS
+**/
 export const updateStudentStatus = (payload: any): libraryTypes.ChangeStudentStatusAction => ({
   type: libraryTypes.UPDATE_LIBRARY_STUDENT_STATUS,
   payload
 });
 
 
+export const deleteLibraryStudent = (id: number): libraryTypes.DeleteStudentAction => ({
+  type: libraryTypes.DELETE_LIBRARY_STUDENT,
+  id
+});
+
+export const deleteLibraryMentor = (id: number): libraryTypes.DeleteMentorAction => ({
+  type: libraryTypes.DELETE_LIBRARY_MENTOR,
+  id
+});
+
 export function* watchChangeStudentStatus() {
+
+  yield takeLatest(libraryTypes.DELETE_LIBRARY_STUDENT, handleDeleteStudent);
   yield takeLatest(libraryTypes.UPDATE_LIBRARY_STUDENT_STATUS, handleChangeStudentStatus);
+
 }
 
 function* handleChangeStudentStatus(action:libraryTypes.ChangeStudentStatusAction)  {
@@ -441,6 +455,36 @@ function* handleChangeStudentStatus(action:libraryTypes.ChangeStudentStatusActio
 }
 
 
+function* handleDeleteStudent(action:libraryTypes.DeleteStudentAction)  {
+  try {
+    const id = action.id;
+    yield put(apiRequest(id));
+    const url = `library/students/${id}`;
+    const res: AxiosResponse<any> = yield vbbAPIV1.delete<any>(url);
+    if (res.status >= 200 && res.status < 300) {
+      yield put(apiSuccessful(res.data));
+      yield put(setAppAlert({alertMsg:`Student deleted successfully!`, alertSeverity:'success'}));
+
+      //yield put(setLibraryComputers(res.data));
+    } else {
+      console.error('Error deleting student');
+      yield put(apiFailed(res.data));
+      yield put(setAppAlert({alertMsg:`Could not delete student. ${renderAPIMsg(res.data)}`, alertSeverity:'error'}));
+
+    }
+  } catch (e:any) {
+    console.error('Failed to delete student', { e });
+    yield put(apiFailed(e.response.data));
+    yield put(setAppAlert({alertMsg:`Could not delete student...${renderAPIMsg(e.response.data)}`, alertSeverity:'error'}));
+
+  }
+}
+
+
+
+
+
+
 //Create Computer
 export const updateMentorStatus = (payload: any): libraryTypes.ChangeMentorStatusAction => ({
   type: libraryTypes.UPDATE_LIBRARY_MENTOR_STATUS,
@@ -450,6 +494,8 @@ export const updateMentorStatus = (payload: any): libraryTypes.ChangeMentorStatu
 
 export function* watchChangeMentorStatus() {
   yield takeLatest(libraryTypes.UPDATE_LIBRARY_MENTOR_STATUS, handleChangeMentorStatus);
+  yield takeLatest(libraryTypes.DELETE_LIBRARY_MENTOR, handleDeleteMentor);
+
 }
 
 function* handleChangeMentorStatus(action:libraryTypes.ChangeMentorStatusAction)  {
@@ -476,6 +522,34 @@ function* handleChangeMentorStatus(action:libraryTypes.ChangeMentorStatusAction)
 
   }
 }
+
+
+
+function* handleDeleteMentor(action:libraryTypes.DeleteMentorAction)  {
+  try {
+    const id = action.id;
+    yield put(apiRequest(id));
+    const url = `library/mentors/${id}`;
+    const res: AxiosResponse<any> = yield vbbAPIV1.delete<any>(url);
+    if (res.status >= 200 && res.status < 300) {
+      yield put(apiSuccessful(res.data));
+      yield put(setAppAlert({alertMsg:`Mentor deleted successfully!`, alertSeverity:'success'}));
+
+      //yield put(setLibraryComputers(res.data));
+    } else {
+      console.error('Error deleting mentor');
+      yield put(apiFailed(res.data));
+      yield put(setAppAlert({alertMsg:`Could not delete mentor. ${renderAPIMsg(res.data)}`, alertSeverity:'error'}));
+
+    }
+  } catch (e:any) {
+    console.error('Failed to delete mentor', { e });
+    yield put(apiFailed(e.response.data));
+    yield put(setAppAlert({alertMsg:`Could not delete mentor...${renderAPIMsg(e.response.data)}`, alertSeverity:'error'}));
+
+  }
+}
+
 
 
 /**
@@ -660,7 +734,7 @@ function* handleGetLibraryComputerReservations(action:libraryTypes.GetLibraryCom
   try {
     const uniqueID = action.uniqueID;
     yield put(apiRequest(action.uniqueID));
-    const url = `library/computer-reservations/${uniqueID}`;
+    const url = `library/all-computer-reservations/${uniqueID}`;
     const res: AxiosResponse<any> = yield vbbAPIV1.get<any>(url);
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));

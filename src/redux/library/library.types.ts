@@ -291,6 +291,18 @@ export interface DeleteLibraryAnnouncementAction {
 * Library User and Mentor Updates
 **/
 
+
+export interface DeleteStudentAction {
+  type: typeof DELETE_LIBRARY_STUDENT;
+  id: number;
+}
+
+export interface DeleteMentorAction {
+  type: typeof DELETE_LIBRARY_MENTOR;
+  id: number;
+}
+
+
 export interface ChangeStudentStatusAction {
   type: typeof UPDATE_LIBRARY_STUDENT_STATUS;
   payload: any;
@@ -413,4 +425,4 @@ export interface DeleteLibraryTimeSlotAction {
 
 
 
-export type LibraryActions =  ChangeMentorStatusAction | ChangeStudentStatusAction | DeleteLibraryAnnouncementAction | UpdateLibraryAnnouncementAction | SetActiveLibraryAnnouncementAction | CreateLibraryAnnouncementAction | CreateLibraryComputerAction | UpdateLibraryComputerAction | DeleteLibraryComputerAction | SetActiveLibraryComputerAction | GetLibraryMentorsAction | SetLibraryMentorsAction | GetLibraryStudentsAction | SetLibraryStudentsAction | GetLibraryAction | SetLibraryAction | GetLibraryAnnouncementsAction | SetLibraryAnnouncementsAction | SetLibraryComputersAction | GetLibraryComputersAction | GetLibraryUserPreferenceSlotsAction | SetActiveLibraryUserPreferenceSlotAction | SetLibraryUserPreferenceSlotsAction | CreateLibraryUserPreferenceSlotAction | UpdateLibraryUserPreferenceSlotAction | DeleteLibraryUserPreferenceSlotAction | GetLibraryComputerReservationsAction | SetLibraryComputerReservationsAction | SetActiveLibraryComputerReservationAction | CreateLibraryComputerReservationAction | UpdateLibraryComputerReservationAction | DeleteLibraryComputerReservationAction | GetLibraryTimeSlotsAction | SetLibraryTimeSlotsAction | SetActiveLibraryTimeSlotAction | CreateLibraryTimeSlotAction | UpdateLibraryTimeSlotAction | DeleteLibraryTimeSlotAction;
+export type LibraryActions = DeleteMentorAction | DeleteStudentAction | ChangeMentorStatusAction | ChangeStudentStatusAction | DeleteLibraryAnnouncementAction | UpdateLibraryAnnouncementAction | SetActiveLibraryAnnouncementAction | CreateLibraryAnnouncementAction | CreateLibraryComputerAction | UpdateLibraryComputerAction | DeleteLibraryComputerAction | SetActiveLibraryComputerAction | GetLibraryMentorsAction | SetLibraryMentorsAction | GetLibraryStudentsAction | SetLibraryStudentsAction | GetLibraryAction | SetLibraryAction | GetLibraryAnnouncementsAction | SetLibraryAnnouncementsAction | SetLibraryComputersAction | GetLibraryComputersAction | GetLibraryUserPreferenceSlotsAction | SetActiveLibraryUserPreferenceSlotAction | SetLibraryUserPreferenceSlotsAction | CreateLibraryUserPreferenceSlotAction | UpdateLibraryUserPreferenceSlotAction | DeleteLibraryUserPreferenceSlotAction | GetLibraryComputerReservationsAction | SetLibraryComputerReservationsAction | SetActiveLibraryComputerReservationAction | CreateLibraryComputerReservationAction | UpdateLibraryComputerReservationAction | DeleteLibraryComputerReservationAction | GetLibraryTimeSlotsAction | SetLibraryTimeSlotsAction | SetActiveLibraryTimeSlotAction | CreateLibraryTimeSlotAction | UpdateLibraryTimeSlotAction | DeleteLibraryTimeSlotAction;
