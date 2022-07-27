@@ -889,11 +889,11 @@ function* handleCreateLibraryTimeSlot(action:libraryTypes.CreateLibraryTimeSlotA
   try {
     const data = action.payload;
     yield put(apiRequest(data));
-    const url = `library/computer-reservations/`;
+    const url = `library-slots/`;
     const res: AxiosResponse<any> = yield vbbAPIV1.post<any>(url, data);
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));
-      yield put(setAppAlert({alertMsg:`Computer Reservation completed successfully!`, alertSeverity:'success'}));
+      yield put(setAppAlert({alertMsg:`Library Slot completed successfully!`, alertSeverity:'success'}));
       yield put(setActiveLibraryTimeSlot(res.data));
     } else {
       console.error('Error creating library computer slot');
@@ -912,11 +912,11 @@ function* handleUpdateLibraryTimeSlot(action:libraryTypes.UpdateLibraryTimeSlotA
     const data = action.payload;
     const uniqueID = action.uniqueID;
     yield put(apiRequest(data));
-    const url = `library/computer-reservations/${uniqueID}`;
+    const url = `library-slots/detail/${uniqueID}`;
     const res: AxiosResponse<any> = yield vbbAPIV1.patch<any>(url, data);
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));
-      yield put(setAppAlert({alertMsg:`Computer Reservation updated successfully!`, alertSeverity:'success'}));
+      yield put(setAppAlert({alertMsg:`Library Slot updated successfully!`, alertSeverity:'success'}));
       yield put(setActiveLibraryTimeSlot(res.data));
     } else {
       console.error('Error updating library computer slot');
@@ -934,7 +934,7 @@ function* handleDeleteLibraryTimeSlot(action:libraryTypes.DeleteLibraryTimeSlotA
   try {
     const uniqueID = action.uniqueID;
     yield put(apiRequest(action.uniqueID));
-    const url = `library//${uniqueID}`;
+    const url = `library-slots/detail/${uniqueID}`;
     const res: AxiosResponse<any> = yield vbbAPIV1.delete<any>(url);
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));

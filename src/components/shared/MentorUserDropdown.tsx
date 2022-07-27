@@ -25,9 +25,10 @@ interface Props {
   selectedUser: number;
   handleSelectUser: (userIds: number) => void;
   isRequired?:boolean;
+  defaultValue?:any;
 }
 
-const MentorUserDropdown = ({ selectedUser, handleSelectUser, isRequired}: Props) => {
+const MentorUserDropdown = ({ selectedUser, handleSelectUser, isRequired, defaultValue}: Props) => {
   const users = useSelector((state: AppState) => state.library.mentors);
   const dispatch = useDispatch();
 
@@ -64,6 +65,7 @@ const MentorUserDropdown = ({ selectedUser, handleSelectUser, isRequired}: Props
         labelId="multi-user-select"
         id="select-users-dropdown"
         required={isRequired ? true : false}
+        defaultValue={defaultValue ? defaultValue : null}
         value={selectedUser}
         onChange={handleSelect}
 

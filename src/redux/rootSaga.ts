@@ -38,6 +38,7 @@ import {
   watchLibraryUserPreferenceSlots,
   watchLibraryComputerReservations,
   watchLibraryTimeSlots,
+  watchUpdateMentorProfile,
   watchLogout
 } from './actions';
 
@@ -65,6 +66,7 @@ export default function* rootSaga() {
     watchLogin(),
     watchOnboardMentor(),
     watchOnboardStudent(),
+    watchUpdateMentorProfile(),
     watchSubmitMentorSignUpForm(),
     watchSubmitStudentRegistration(),
     watchTaskStep(),

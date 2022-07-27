@@ -91,15 +91,15 @@ const Home = () => {
 
     React.useEffect(() => {
       if (user !== undefined && user !== null) {
-        if (user.mentorProfile === null && user.studentProfile === null) {
+        // if (user.mentorProfile === null && user.studentProfile === null && user.role === 2) {
+        //   set_onboardingModalOpen(true)
+        // }
+
+        if (user.studentProfile && user.studentProfile.isOnboarded === false && user.role === 1) {
           set_onboardingModalOpen(true)
         }
 
-        if (user.studentProfile && user.studentProfile.isOnboarded === false) {
-          set_onboardingModalOpen(true)
-        }
-
-        if (user.mentorProfile && user.mentorProfile.isOnboarded === false) {
+        if (user.mentorProfile && user.mentorProfile.isOnboarded === false && user.role === 2) {
           set_onboardingModalOpen(true)
         }
       }
@@ -194,7 +194,7 @@ const Home = () => {
                 }
                 </div>
                 <div className="card-body">
-                  {user && (user.role === 1 || user.role === 1)
+                  {user && (user.role === 0 || user.role === 1)
                     ? (
                       <>
                         <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
@@ -212,7 +212,7 @@ const Home = () => {
                     : user.role === 2 ? (
                       <>
                       <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-                        <b>Getting started with Village Book Builders is easy!</b>
+                        <b>Mentoring with Village Book Builders makes a difference!</b>
                       </Typography>
                       <Box display="flex" flexDirection="column" pb={1}>
                         <Link to="#">Book Your Mentoring Orientation</Link>
@@ -241,7 +241,7 @@ const Home = () => {
 
                 </div>
               </div>
-              {user && user.role === 4
+              {user && (user.role === 3 || user.role === 4)
                 ? (
                   <div className="card-container" style={{marginTop:"1rem"}}>
                     <div className="card-header">
@@ -309,11 +309,11 @@ const Home = () => {
             </Grid>
           </Grid>
 
-          {user.mentorProfile && user.mentorProfile.isOnboarded === true && user.mentorProfile.approvalStatus === "Not Reviewed"
+          {user.mentorProfile && user.mentorProfile.isOnboarded === true && user.mentorProfile.approvalStatus === "Not Reviewed" && user.role === 2
           ? <Alert severity="info" sx={{mt:3}}>Your Mentor Application Is Currently Under Review! You won't be able to book a session until that has been approved.</Alert>
           : null }
 
-          {user.studentProfile && user.studentProfile.isOnboarded === true && user.studentProfile.approvalStatus === "Not Reviewed"
+          {user.studentProfile && user.studentProfile.isOnboarded === true && user.studentProfile.approvalStatus === "Not Reviewed" && user.role === 1
           ? <Alert severity="info" sx={{mt:3}}>Your Student Account Is Currently Under Review! You won't be able to book a session until that has been approved.</Alert>
           : null }
 

@@ -14,6 +14,7 @@ import Onboarding from './pages/Onboarding';
 import Reservations from './pages/Reservations';
 import Sessions from './pages/Sessions';
 import LibraryProfile from './pages/LibraryProfile';
+import Profile from './pages/Profile';
 
 
 import Announcements from './pages/Announcements';
@@ -176,6 +177,7 @@ function App(){
         <Route path="/mentors/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Mentors /></PrivateRoute>} />
         <Route path="/mentor/*" element={<MentorIndex />} />
         <Route path="/mentor/onboarding/*" element={<OnboardingIndex />} />
+        <Route path="/profile/" element={<PrivateRoute roles={[Role.Student, Role.User, Role.Mentor]}><Profile /></PrivateRoute>} />
 
         <Route path='*' element={<NotFound/>} />
         <Route path='/access-denied' element={<AccessDenied/>} />

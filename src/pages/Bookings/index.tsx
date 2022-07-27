@@ -730,7 +730,7 @@ const Bookings = () => {
                       headerToolbar={{
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        right: 'timeGridWeek,timeGridDay'
                       }}
                       titleFormat= {isMobile ? {month: 'short', year: '2-digit', day: 'numeric', weekday: 'short'} : {month: 'long', year: 'numeric', day: 'numeric', weekday: 'long'}}
                       events={rescheduleActive ? scheduleEvents : events}

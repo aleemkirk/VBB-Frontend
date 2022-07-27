@@ -6,6 +6,11 @@ import { Subject } from '../subjects/subjects.types';
 export const SET_USER = 'SET_USER';
 export const GET_USER = 'GET_USER';
 
+export const UPDATE_MENTOR_PROFILE = 'UPDATE_MENTOR_PROFILE';
+export const UPDATE_MENTOR_PROFILE_SUCCESS = 'UPDATE_MENTOR_PROFILE_SUCCESS';
+export const UPDATE_MENTOR_PROFILE_FAILED = 'UPDATE_MENTOR_PROFILE_FAILED';
+
+
 export interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
@@ -50,6 +55,12 @@ export interface MentorProfile {
   mentoringLanguages: Language[];
   approvalStatus: ApprovalStatus;
   isOnboarded:boolean;
+  canMeetConsistently?:boolean;
+  crimesOrMisdemeanor?:boolean;
+  crimesOrMisdemeanorResponses?: string;
+  meetProvider:any;
+  corporateCode:string;
+  applicationVideoUrl:string;
 }
 
 export interface StudentProfile {
@@ -58,6 +69,7 @@ export interface StudentProfile {
   mentoringLanguages: Language[];
   subjects: Subject[];
   isOnboarded:boolean;
+  approvalStatus: ApprovalStatus;
 }
 
 
@@ -76,6 +88,11 @@ export interface AuthToken {
   refresh: string;
 }
 
+export interface UpdateMentorProfileAction {
+  type: typeof UPDATE_MENTOR_PROFILE;
+  payload: any;
+}
+
 // Values are kept in backend
 enum ApprovalStatus {
   APPROVED = 'Approved',
@@ -83,4 +100,6 @@ enum ApprovalStatus {
   REJECTED = 'Rejected',
 }
 
-export type UserActions = SetUserAction;
+
+
+export type UserActions = SetUserAction | UpdateMentorProfileAction;

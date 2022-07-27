@@ -11,6 +11,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import moment from 'moment';
 import { getUserComputerReservationSlots, getLibraryComputerSlots, createUserPreferenceSlot, getUserPreferenceSlots, deleteUserPreferenceSlot, getLibraryStudentPreferenceSlots, createComputerReservationSlot } from '../../redux/bookings/bookings.actions';
+import { createLibraryTimeSlot, updateLibraryTimeSlot, deleteLibraryTimeSlot, setLibraryTimeSlots, setActiveLibraryTimeSlot } from '../../redux/library/library.actions';
 import { selectLibrarySlots } from '../../redux/bookings/bookings.selectors';
 import { BasicModal } from '../../components/Modals';
 import MentorBookingModal from '../../components/mentor/MentorBookingModal';
@@ -53,7 +54,7 @@ const LibraryProfile = () => {
     const nextWeekDate = new Date();
     nextWeekDate.setDate(nextWeekDate.getDate() + 6);
 
-    const [createUserSlotModalOpen, set_createUserSlotModalOpen] = React.useState(false);
+    const [createLibraryHourSlotModalOpen, set_createLibraryHourSlotModalOpen] = React.useState(false);
     const [deleteSlotConfirmModalOpen, set_deleteSlotConfirmModalOpen] = React.useState(false);
     const [slotReservationModalOpen, setSlotReservationModalOpen] = React.useState(false);
 
@@ -153,8 +154,8 @@ const LibraryProfile = () => {
                     title  : 'Open Library Slot',
                     start  : slot.startTime,
                     end  : slot.endTime,
-                    startTime  : "12:00",
-                    endTime  : "18:00",
+                    startTime  : startTime,
+                    endTime  : endTime,
                     startRecur  : slot.startRecurring,
                     endRecur  : slot.endRecurring,
                     daysOfWeek:[slot.day],
@@ -199,8 +200,8 @@ const LibraryProfile = () => {
       return (
           <div className='fc-event-main-frame'>
 
-              { innerProps.event.groupId !== "openSlots" && innerProps.event.groupId !== "alreadyBooked" && rescheduleActive === true &&
-              <div style={{position:"absolute",bottom:0,right:0, zIndex:99}} ><button type='button' onClick={(e)=> handleStudentSlotRemove(innerProps.event)} style={{padding:1}} id='btnDeleteEvent'>X</button></div>
+              { innerProps.event.groupId !== "alreadyBooked" && rescheduleActive === true &&
+              <div style={{position:"absolute",bottom:0,right:0, zIndex:99}} ><button type='button' onClick={(e)=> handleLibSlotRemove(innerProps.event)} style={{padding:1}} id='btnDeleteEvent'>X</button></div>
               }
               { innerProps.timeText &&
               <div className='fc-event-time'>{ innerProps.timeText }</div>
@@ -226,37 +227,6 @@ const LibraryProfile = () => {
       );
     }
 
-    function renderInnerContent2( innerProps:any ) {
-        let splitTag = innerProps.event.groupId.split(":")
-        let id = splitTag[0]
-        return (
-            <div className='fc-event-main-frame' onClick={()=> toggleShowAvailableSlotReservation(innerProps.event)}>
-
-                {  innerProps.event.groupId !== "alreadyBooked" && id !== "myBooks" && id !== "openSlots" && rescheduleActive === true &&
-                <div style={{position:"absolute",bottom:0,right:0, zIndex:99}} ><button type='button' onClick={(e)=> console.log(innerProps.event)} style={{padding:1}} id='btnDeleteEvent'>X</button></div>
-                }
-                { innerProps.timeText &&
-                <div className='fc-event-time'>{ innerProps.timeText }</div>
-                }
-                <div className='fc-event-title-container'>
-                    {  innerProps.event.groupId === "" || id === "myBooks" || innerProps.event.groupId === "alreadyBooked"?
-                      (
-                        <div className='fc-event-title fc-sticky'>
-                            { innerProps.event.title || <>&nbsp;</> }
-                        </div>
-                      )
-                    : (
-                      <div style={{ fontSize:"14px", color:"#fff", padding:5, borderRadius:7}} className='fc-event-title fc-sticky'>
-                          { innerProps.event.title || <>&nbsp;</> }
-                      </div>
-                    )
-                    }
-
-                </div>
-            </div>
-        );
-    }
-
     function getNextWeekDay (startDate:any, dayOfWeek:any){
         var dayOffset = dayOfWeek > startDate.getDay()
             ? dayOfWeek - startDate.getDay()
@@ -277,7 +247,7 @@ const LibraryProfile = () => {
       event.remove()
     };
 
-    const handleStudentSlotRemove = (event:any) => {
+    const handleLibSlotRemove = (event:any) => {
       //console.log(event)
       const { defId, extendedProps } = event._def;
       const { start, end } = event;
@@ -287,18 +257,14 @@ const LibraryProfile = () => {
       set_deleteSlotConfirmModalOpen(true)
     };
 
-    const handleDeleteUserPreferenceSlot = (bookingToDelete:any) => {
-      dispatch(deleteUserPreferenceSlot(bookingToDelete.uniqueID))
+    const handleDeleteLibraryHourSlot = (bookingToDelete:any) => {
+      console.log(bookingToDelete)
+      dispatch(deleteLibraryTimeSlot(bookingToDelete.uniqueID))
     };
 
-    const handleCancelDeleteUserPreferenceSlot = () => {
+    const handleCancelDeleteLibraryHourSlot = () => {
       set_activeBookingToDelete({start:'', end:'', uniqueID:'', startRecur: "", endRecur:"", is_recurring:false, event:null})
       set_deleteSlotConfirmModalOpen(false)
-    };
-
-    const handleReserveOpenSlot = (selectedOpenReservation:any) => {
-      console.log(selectedOpenReservation)
-      dispatch(createComputerReservationSlot({unique_id:selectedOpenReservation.uniqueID, mentor:user.pk, conferenceType:selectedConferenceType, start_time:selectedOpenReservation.start, end_time:selectedOpenReservation.end,notes:selectedOpenReservationNotes}))
     };
 
     const handleCancelReserveOpenSlot = () => {
@@ -313,41 +279,40 @@ const LibraryProfile = () => {
       var calevents = api.getEvents();
       var allowed_area:any = [];
 
-      calevents.forEach(function(evt:any) {
-          console.log(evt)
+      console.log(event)
+      const { start, end } = event;
 
-          if (evt.groupId !== 'openSlots') {
-              if (evt.start <= event.start
-                      && evt.end >= event.end) {
-                      // console.log(apiEvent)
-                      // console.log(apiEvent._def.defId)
-                      //const { defId } = apiEvent._def;
-                      const { extendedProps, defId } = evt._def;
+      // console.log(apiEvent._def.defId)
+      //const { defId } = apiEvent._def;
+      // const { extendedProps, defId } = evt._def;
+      //
+      // console.log(extendedProps.uniqueID)
+      // //console.log(event)
+      let eventObj: any = {start:start, end:end, eventId:'', defId:'', is_recurring:false, startRecur: "", endRecur:""}
+      set_newBooking(eventObj)
+      set_createLibraryHourSlotModalOpen(true)
 
 
-                      const { start, end } = event;
-                      console.log(extendedProps.uniqueID)
-                      //console.log(event)
-                      let eventObj: any = {start:start, end:end, eventId:evt.id, defId:defId, is_recurring:false, startRecur: "", endRecur:"", libComputerSlotID:extendedProps.uniqueID}
-                      set_newBooking(eventObj)
-                      set_createUserSlotModalOpen(true)
-                      //setOffersForCheckout(eventsForCheckout => [...eventsForCheckout,eventObj] );
-              }
-          }
-      });
     };
 
     const allowedSelection = (event:any) => {
       const api = calendarRef.current.getApi();
       var calevents = api.getEvents();
       var allowed_area:any = [];
-      calevents.forEach(function(evt:any) {
-        allowed_area.push(evt)
+      console.log(event)
 
-      });
+      // calevents.forEach(function(evt:any) {
+      //     console.log(evt)
+      //
+      //     if (evt.groupId !== 'openSlots') {
+      //       allowed_area.push(evt)
+      //
+      //     }
+      // });
 
-      //console.log(event)
-      return allowed_area.length > 0;
+      //console.log(allowed_area)
+
+      return true
     };
 
     const allowedDrop = (event:any) => {
@@ -356,7 +321,7 @@ const LibraryProfile = () => {
       var allowed_area:any = [];
 
       calevents.forEach(function(evt:any) {
-          if (evt.groupId !== 'openSlots') {
+          if (evt.groupId === 'openSlots') {
             allowed_area.push(evt)
 
           }
@@ -378,38 +343,31 @@ const LibraryProfile = () => {
       let splitTag = event.groupId.split(":")
       let id = splitTag[0]
       console.log(id)
-      return event.groupId !== 'openSlots';
+      return event.groupId === 'openSlots';
     };
 
-    const handleCreateUserPreferenceSlot = (event:any) => {
+    const handleCreateLibraryHourSlot = (event:any) => {
       //console.log(event)
       var endDte = event.endRecur.split('-');
+
+      let newDate = moment(event.start)
+      const day = newDate.day();
+
       //console.log(endDte)
       var endDateRecurr = new Date(endDte[0], endDte[1] - 1, endDte[2]);
       let payloadObj = {}
       if (event.startRecur && event.endRecur && event.startRecur !== "" && event.endRecur !== "" ) {
-        payloadObj = {startTime:event.start, endTime:event.end, start_recurring:event.start, end_recurring:endDateRecurr, lib_computer_slot:event.libComputerSlotID, student:user.pk}
+        payloadObj = {startTime:event.start, endTime:event.end, start_recurring:event.start, end_recurring:endDateRecurr, library:activeLibrary.uniqueID, day:day}
       }else{
-        payloadObj = {startTime:event.start, endTime:event.end, lib_computer_slot:event.libComputerSlotID, student:user.pk}
+        payloadObj = {startTime:event.start, endTime:event.end, library:activeLibrary.uniqueID, day:day}
       }
       console.log(payloadObj)
-      //dispatch(createUserPreferenceSlot(payloadObj))
+      dispatch(createLibraryTimeSlot(payloadObj))
     };
 
-    const toggleShowAvailableSlotReservation = (event:any) => {
-      if (event.groupId !== 'myBooks') {
-        return
-      }
-      //console.log(event)
-      const { defId, extendedProps } = event._def;
-      const { start, end } = event;
-      let eventObj: any = {start:start, end:end, uniqueID:extendedProps.uniqueID, event:event}
-      setSelectedOpenReservation(eventObj)
-      setSlotReservationModalOpen(true)
-    };
 
     return(<>
-    <BasicModal open={createUserSlotModalOpen} onClose={()=>set_createUserSlotModalOpen(false)} title={'Create Open Time Slot'}>
+    <BasicModal open={createLibraryHourSlotModalOpen} onClose={()=>set_createLibraryHourSlotModalOpen(false)} title={'Create Library Time Slot'}>
       <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
       <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
         Are you sure you want to create this open slot? These are designated open hours for students and mentors
@@ -455,7 +413,7 @@ const LibraryProfile = () => {
       </Typography>
 
 
-      <Button onClick={()=>handleCreateUserPreferenceSlot(newBooking)} variant="contained" color="info" sx={{mt:2}} >
+      <Button onClick={()=>handleCreateLibraryHourSlot(newBooking)} variant="contained" color="info" sx={{mt:2}} >
         {appState.loading
         ? (<CircularProgress />)
         : (`Create Timeslot`)
@@ -468,49 +426,23 @@ const LibraryProfile = () => {
     <BasicModal open={deleteSlotConfirmModalOpen} onClose={()=>set_deleteSlotConfirmModalOpen(false)} title={'Delete Open Slot'}>
       <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
       <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-        Are you sure you want to delete this open slot? No mentors will be able to book a session during this time.
+        Are you sure you want to delete this open slot? No students or mentors will be able to book a session/reserve computers during this time.
       </Typography>
       <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
         Timeslot Details: <b>{activeBookingToDelete ? `${activeBookingToDelete.start} - ${activeBookingToDelete.end}`:`No timeslot details...`}</b>
       </Typography>
 
-      <Button onClick={()=>handleDeleteUserPreferenceSlot(activeBookingToDelete)} variant="contained" color="info" sx={{mt:2}} >
+      <Button onClick={()=>handleDeleteLibraryHourSlot(activeBookingToDelete)} variant="contained" color="info" sx={{mt:2}} >
         {appState.loading
         ? (<CircularProgress />)
         : (`Yes, delete this slot.`)
         }
       </Button>
-      <Button onClick={()=>handleCancelDeleteUserPreferenceSlot()} variant="contained" color="error" sx={{mt:2}} >
+      <Button onClick={()=>handleCancelDeleteLibraryHourSlot()} variant="contained" color="error" sx={{mt:2}} >
         No, cancel.
       </Button>
       </Box>
     </BasicModal>
-
-
-    <BasicModal open={slotReservationModalOpen} onClose={()=>setSlotReservationModalOpen(false)} title={'Reserve Student Slot'}>
-      <Box display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
-      <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-        Are you sure you want to reserve this open slot?
-      </Typography>
-
-      {selectedOpenReservation
-        ? <MentorBookingModal eventOrSlot={selectedOpenReservation.event} onClose={()=>null} />
-        : null
-
-      }
-
-      <Button onClick={()=>handleReserveOpenSlot(selectedOpenReservation)} variant="contained" color="info" sx={{mt:2}} >
-        {appState.loading
-        ? (<CircularProgress />)
-        : (`Yes, reserve this slot.`)
-        }
-      </Button>
-      <Button onClick={()=>handleCancelReserveOpenSlot()} variant="contained" color="error" sx={{mt:2}} >
-        No, cancel.
-      </Button>
-      </Box>
-    </BasicModal>
-
 
     <PageLayout>
       <MainCardLayoutWithSideMenu>
@@ -549,7 +481,7 @@ const LibraryProfile = () => {
               <div className="card-container">
                 <div className="card-header">
                 <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
-                  Bookings
+                  Library Calendar
                 </Typography>
                 </div>
                 <div className="card-body">
@@ -569,29 +501,28 @@ const LibraryProfile = () => {
                   </Grid>
                 <Box display={'flex'} width={"100%"} justifyContent={'center'}>
 
-                {user && user && scheduleEvents && scheduleEvents.length > 0
+                {user && user && scheduleEvents
                   ?  (
                     <FullCalendar
                       plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin]}
                       ref={calendarRef}
                       initialView= {isMobile ? 'timeGridDay' : 'timeGridWeek'}
-                      selectable={true}
-                      editable={true}
+                      selectable={rescheduleActive ? true : false}
                       aspectRatio={1}
                       contentHeight={'auto'}
+                      slotDuration={'00:60:00'}
                       headerToolbar={{
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        right: 'timeGridWeek,timeGridDay'
                       }}
                       titleFormat= {isMobile ? {month: 'short', year: '2-digit', day: 'numeric', weekday: 'short'} : {month: 'long', year: 'numeric', day: 'numeric', weekday: 'long'}}
                       events={scheduleEvents}
                       select={onEventAdded}
                       selectOverlap={selectOverlap}
                       selectAllow={allowedSelection}
-                      eventContent={rescheduleActive ? renderInnerContent : renderInnerContent2 }
+                      eventContent={renderInnerContent}
                       eventOverlap={eventOverlap}
-                      eventAllow={allowedDrop}
                       validRange={{
                           start: Date.now()
                        }}

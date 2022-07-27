@@ -41,8 +41,8 @@ const defaultForm = {
   timezone: '',
   opportunities: [] as number[],
   canMeetConsistently: false,
-  crimesOrMisdemanors: false,
-  crimesOrMisdemanorsResponses: '',
+  crimesOrMisdemeanor: false,
+  crimesOrMisdemeanorResponses: '',
   agreedToTerms: false
 };
 
@@ -268,9 +268,9 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
             >
-              <FormControlLabel value={formValue.crimesOrMisdemanors} control={<Checkbox onChange={(e)=> setFormValue({ ...formValue, crimesOrMisdemanors: !formValue.crimesOrMisdemanors })} />} label="Yes, I have prior crimes & misdemeanors." />
+              <FormControlLabel value={formValue.crimesOrMisdemeanor} control={<Checkbox onChange={(e)=> setFormValue({ ...formValue, crimesOrMisdemeanor: !formValue.crimesOrMisdemeanor })} />} label="Yes, I have prior crimes & misdemeanors." />
             </RadioGroup>
-            {formValue && formValue.crimesOrMisdemanors === true &&
+            {formValue && formValue.crimesOrMisdemeanor === true &&
               (<>
                 <Typography variant="body1" mt={2}>
                   If YES, please list every record:
@@ -280,7 +280,7 @@ const MentorOnboardForm = ({handleSubmit}:OnboardProps) => {
                     fullWidth
                     multiline
                     onChange={(e:any) =>
-                      setFormValue({ ...formValue, crimesOrMisdemanorsResponses: e.target.value })
+                      setFormValue({ ...formValue, crimesOrMisdemeanorResponses: e.target.value })
                     }
                     />
               </>)

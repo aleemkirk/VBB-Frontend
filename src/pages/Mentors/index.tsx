@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Grid, Typography, Box, Button, Pagination, CircularProgress,
-Table,TableBody,TableCell,TableContainer,TableHead,TableRow, Paper, Menu, MenuItem, FormControl, FormLabel, TextField, Radio, RadioGroup, FormControlLabel, InputLabel, Select, ListItemText } from '@mui/material';
+import { Grid, Typography, Box, Button, Pagination, CircularProgress, FormGroup, Chip,
+Table,TableBody,TableCell,TableContainer,TableHead,TableRow, Paper, Menu, MenuItem, FormControl, FormLabel, TextField, Radio, RadioGroup, FormControlLabel, InputLabel, Select, ListItemText, Checkbox } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppState } from '../../redux/rootReducer'
 import { PageLayout, MainCardLayoutWithSideMenu} from '../../components/layout/Page';
@@ -361,10 +361,147 @@ const Mentors = () => {
         <Box mt={2} display={'flex'} flexWrap={'wrap'} width={"100%"} flexDirection={'column'} justifyContent={'flex-start'}>
           <>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
             <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color} mb={3}>
+              Mentor Profile
+            </Typography>
+
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12}>
+                <Typography variant="h6">Video Uploaded</Typography>
+                {activeMentor &&
+                  <TextField id="standard-basic"
+                    label="URL:"
+                    variant="standard"
+                    value={activeMentor.applicationVideoUrl}
+                  />
+                }
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 0 }}>
+                <Typography variant="h6">
+                  Careers areas I’m interested in
+                </Typography>
+
+                {activeMentor ?(<>
+                  {activeMentor.careers.map(career => {
+                    return <Chip label={career.name}/>
+                  })}
+                  </>
+                ): null}
+
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <Typography variant="h6">
+                  Subjects I’m interested in
+                </Typography>
+
+                {activeMentor ?(<>
+                  {activeMentor.subjects.map(sub => {
+                    return <Chip label={sub.name}/>
+                  })}
+                  </>
+                ): null}
+
+
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <Typography variant="h6">
+                  What languages do you speak?
+                </Typography>
+
+                {activeMentor ?(<>
+                  {activeMentor.mentoringLanguages?.map(lang => {
+                    return <Chip label={lang.englishDisplayName}/>
+                  })}
+                  </>
+                ): null}
+
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <Typography variant="h6">
+                  How do you find out this opportunity?
+                </Typography>
+
+                {activeMentor ?(<>
+                  {activeMentor.opportunities?.map(opp => {
+                    return <Chip label={opp.name}/>
+                  })}
+                  </>
+                ): null}
+
+
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <Typography variant="h6">Timezone Is</Typography>
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Typography variant="body1"><b>{activeMentor && activeMentor.user?.timeZone}</b></Typography>
+                </Box>
+
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <FormControl>
+                  <Typography variant="h6">
+                    Please indicate whether you would like to mentor via Microsoft
+                    Teams or Google Meets
+                  </Typography>
+                  <FormGroup></FormGroup>
+                  <Typography variant="body1">
+                    <b>{activeMentor && activeMentor.meetProvider}</b>
+                  </Typography>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <FormControl>
+                  <Typography variant="h6">
+                    Once you book a mentoring session, will you be able to meet with
+                    your student consistently every week for at least 6 months?
+                  </Typography>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                  >
+                    <FormControlLabel control={<Checkbox checked={activeMentor && activeMentor.canMeetConsistently}/>} label="Yes, I can meet consistently." />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+                <FormControl>
+                  <Typography variant="h6">
+                    Do you have any crimes or misdemeanors?
+                  </Typography>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                  >
+                    <FormControlLabel  control={<Checkbox checked={activeMentor && activeMentor.crimesOrMisdemeanor} />} label="Yes, I have prior crimes & misdemeanors." />
+                  </RadioGroup>
+
+                  <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color} mt={3} mb={3}>
+                    {activeMentor && activeMentor.crimesOrMisdemeanorResponses}
+                  </Typography>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color} mt={3} mb={3}>
+              <hr/>
+            </Typography>
+
+            <Typography variant="body1" alignSelf="flex-start" color={scss_variables.primary_color} mt={3} mb={3}>
               Approve or reject this mentor account.
             </Typography>
+
             <FormControl fullWidth>
               <InputLabel id="multi-career-select">Change Mentor Status</InputLabel>
               <Select
@@ -389,6 +526,8 @@ const Mentors = () => {
             </FormControl>
             </Grid>
           </Grid>
+
+
           <Box display="flex" flexDirection="row" justifyContent="flex-end">
             <Button onClick={()=>handleToggleApproveMentorModal(activeMentor)} variant="contained" color="error" sx={{mt:2}} >
               Cancel

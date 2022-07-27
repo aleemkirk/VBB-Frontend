@@ -169,6 +169,7 @@ const Reservations = () => {
       console.log(reservation)
 
       var studentId = null
+      var mentorId = null
       var comp = null
       if (reservation.computer) {
         comp = reservation.computer?.id
@@ -177,7 +178,11 @@ const Reservations = () => {
       if (reservation.student) {
         studentId = reservation?.student?.id
       }
-      let obj = {...reservation, student:studentId, computer:comp, mentor:reservation?.mentor}
+
+      if (reservation.mentor) {
+        mentorId = reservation?.mentor?.id
+      }
+      let obj = {...reservation, student:studentId, computer:comp, mentor:mentorId}
       console.log(obj)
       dispatch(updateLibraryComputerReservation(obj,obj.uniqueID))
     };
@@ -541,7 +546,6 @@ const Reservations = () => {
                <DateTimePicker
                  renderInput={(props) => <TextField {...props} />}
                  label=""
-                 disabled={true}
                  value={activeReservationForm.startTime}
                  onChange={(newValue) => {
                    set_activeReservationForm({ ...activeReservationForm, startTime:newValue })
@@ -557,8 +561,7 @@ const Reservations = () => {
                 <DateTimePicker
                   renderInput={(props) => <TextField {...props} />}
                   label=""
-                  disabled={true}
-                  value={activeUserPrefSlotForm.endTime}
+                  value={activeReservationForm.endTime}
                   onChange={(newValue) => {
                     set_activeReservationForm({ ...activeReservationForm, endTime:newValue })
                   }}
