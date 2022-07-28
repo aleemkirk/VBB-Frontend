@@ -39,7 +39,7 @@ import {
   watchLibraryComputerReservations,
   watchLibraryTimeSlots,
   watchUpdateMentorProfile,
-  watchLogout
+  watchLogout,
 } from './actions';
 
 export default function* rootSaga() {

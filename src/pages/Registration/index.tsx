@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Paper, Typography } from '@mui/material';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -14,11 +14,10 @@ import moment from 'moment';
 // }
 
 export default function Registration() {
-
   const [searchParams] = useSearchParams();
   const isMentee = searchParams.get('type') === 'mentee';
 
-  return(
+  return (
     <Paper
       sx={{ pr: 3, mt: 10, maxWidth: '720px', mx: 'auto', display: 'flex' }}
       elevation={0}
@@ -60,5 +59,5 @@ export default function Registration() {
         {isMentee ? <RegisterMenteeForm /> : <MentorSignUpForm />}
       </Paper>
     </Paper>
-  )
+  );
 }

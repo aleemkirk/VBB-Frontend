@@ -15,9 +15,7 @@ import { Genre } from '../../redux/genre/genre.types';
 const genreOptions = (genres: Genre[]) =>
   genres.map((genre) => (
     <MenuItem key={genre.id} value={genre.id}>
-      <ListItemText
-        primary={`${genre.name}`}
-      />
+      <ListItemText primary={`${genre.name}`} />
     </MenuItem>
   ));
 
@@ -26,10 +24,7 @@ interface Props {
   handleSelectGenres: (genreIds: number[]) => void;
 }
 
-const GenreDropdown = ({
-  selectedGenres,
-  handleSelectGenres,
-}: Props) => {
+const GenreDropdown = ({ selectedGenres, handleSelectGenres }: Props) => {
   const genres = useSelector((state: AppState) => state.genres);
   const dispatch = useDispatch();
 

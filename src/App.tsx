@@ -16,7 +16,6 @@ import Sessions from './pages/Sessions';
 import LibraryProfile from './pages/LibraryProfile';
 import Profile from './pages/Profile';
 
-
 import Announcements from './pages/Announcements';
 import Computers from './pages/Computers';
 import Students from './pages/Students';
@@ -26,15 +25,18 @@ import AdvisorIndex from './components/advisor/AdvisorIndex';
 import MentorIndex from './components/mentor/MentorIndex';
 import OnboardingIndex from './components/Onboarding/OnboardingIndex';
 
-
 import EmailSent from './components/EmailSent';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAppAlertIsOpen, getAppAlert, getAppAlertSeverity} from './redux/app/app.selectors';
+import {
+  getAppAlertIsOpen,
+  getAppAlert,
+  getAppAlertSeverity,
+} from './redux/app/app.selectors';
 import { getUserDetail } from './redux/user/user.actions';
 import { closeAppAlert, setAppToken } from './redux/app/app.actions';
-import { AppState } from './redux/rootReducer'
+import { AppState } from './redux/rootReducer';
 import * as actions from './redux/actions';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
 export type AlertColor = 'success' | 'error' | 'warning' | 'info';
 
@@ -53,21 +55,26 @@ export enum Role {
   User = 0,
 }
 
-const PrivateRoute = ({ children, roles }: { children: JSX.Element, roles: Array<Role>}) => {
+const PrivateRoute = ({
+  children,
+  roles,
+}: {
+  children: JSX.Element;
+  roles: Array<Role>;
+}) => {
   let location = useLocation();
 
   const appState = useSelector((store: AppState) => store.appState);
 
-  const tokenCookie = localStorage.getItem('token')
-  const refreshCookie = localStorage.getItem('refresh_token')
-  const userCookie = localStorage.getItem('user')
+  const tokenCookie = localStorage.getItem('token');
+  const refreshCookie = localStorage.getItem('refresh_token');
+  const userCookie = localStorage.getItem('user');
 
-  const user = userCookie ? JSON.parse(userCookie) : null
+  const user = userCookie ? JSON.parse(userCookie) : null;
 
   const userHasRequiredRole = user && roles.includes(user.role) ? true : false;
 
-
-  const now = new Date()
+  const now = new Date();
 
   // if(tokenCookie !== null && refreshCookie !== null){
   //     let now = new Date();
@@ -94,49 +101,54 @@ const PrivateRoute = ({ children, roles }: { children: JSX.Element, roles: Array
   return children;
 };
 
-
-function App(){
+function App() {
   const dispatch = useDispatch();
-  const isAlertOpen = useSelector(getAppAlertIsOpen)
-  const alertMsg = useSelector(getAppAlert)
-  const alertSeverity = useSelector(getAppAlertSeverity)
+  const isAlertOpen = useSelector(getAppAlertIsOpen);
+  const alertMsg = useSelector(getAppAlert);
+  const alertSeverity = useSelector(getAppAlertSeverity);
   const appState = useSelector((store: AppState) => store.appState);
 
   React.useEffect(() => {
-    console.log(isAlertOpen)
+    console.log(isAlertOpen);
   }, [isAlertOpen]);
 
   React.useEffect(() => {
+    const userCookie = localStorage.getItem('user');
+    const tokenCookie = localStorage.getItem('token');
+    const refreshCookie = localStorage.getItem('refresh_token');
 
-    const userCookie = localStorage.getItem('user')
-    const tokenCookie = localStorage.getItem('token')
-    const refreshCookie = localStorage.getItem('refresh_token')
+    const now = new Date();
 
-    const now = new Date()
+    if (tokenCookie !== null && refreshCookie !== null) {
+      let now = new Date();
 
-    if(tokenCookie !== null && refreshCookie !== null){
-        let now = new Date();
+      var decoded_refresh: any = jwt_decode(tokenCookie);
+      var expires_at: any = decoded_refresh.exp;
+      let expiresAt = new Date(parseInt(expires_at) * 1000);
 
-        var decoded_refresh:any = jwt_decode(tokenCookie);
-        var expires_at:any = decoded_refresh.exp
-        let expiresAt = new Date(parseInt(expires_at)*1000);
-
-        if(now > expiresAt){
-          setTimeout(() => dispatch(actions.logout()), 100);
-        }else{
-          setTimeout(() => dispatch(setAppToken({access_token:tokenCookie, refresh_token:refreshCookie})), 0);
-          dispatch(getUserDetail())
-        }
+      if (now > expiresAt) {
+        setTimeout(() => dispatch(actions.logout()), 100);
+      } else {
+        setTimeout(
+          () =>
+            dispatch(
+              setAppToken({
+                access_token: tokenCookie,
+                refresh_token: refreshCookie,
+              })
+            ),
+          0
+        );
+        dispatch(getUserDetail());
+      }
     }
-
-  },[])
-
+  }, []);
 
   function handleCloseAlert(e: any) {
     setTimeout(() => dispatch(closeAppAlert()), 0);
   }
 
-  return(
+  return (
     <>
       <GlobalStyles styles={{ body: { margin: 0 } }} />
       <Snackbar
@@ -144,7 +156,7 @@ function App(){
         open={isAlertOpen}
         autoHideDuration={10000}
         onClose={handleCloseAlert}
-        >
+      >
         <Alert
           onClose={handleCloseAlert}
           severity={alertSeverity}
@@ -156,33 +168,134 @@ function App(){
           }}
         >
           {alertMsg}
-      </Alert>
+        </Alert>
       </Snackbar>
       <Routes>
-
-        <Route path="/" element={<PrivateRoute roles={[Role.Admin, Role.Student, Role.Mentor, Role.Librarian, Role.Advisor, Role.User]}><Home /></PrivateRoute>}/>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute
+              roles={[
+                Role.Admin,
+                Role.Student,
+                Role.Mentor,
+                Role.Librarian,
+                Role.Advisor,
+                Role.User,
+              ]}
+            >
+              <Home />
+            </PrivateRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/confirm" element={<ConfirmEmail />} />
-        <Route path="/bookings" element={<PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}><Bookings /></PrivateRoute>} />
-        <Route path="/account" element={<PrivateRoute roles={[Role.Admin, Role.Student, Role.User, Role.Mentor, Role.Librarian, Role.Advisor]}><AccountSettings/></PrivateRoute>} />
-        <Route path="/announcements" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Announcements /></PrivateRoute>} />
+        <Route
+          path="/bookings"
+          element={
+            <PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}>
+              <Bookings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <PrivateRoute
+              roles={[
+                Role.Admin,
+                Role.Student,
+                Role.User,
+                Role.Mentor,
+                Role.Librarian,
+                Role.Advisor,
+              ]}
+            >
+              <AccountSettings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/announcements"
+          element={
+            <PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}>
+              <Announcements />
+            </PrivateRoute>
+          }
+        />
         <Route path="/advisor/*" element={<AdvisorIndex />} />
-        <Route path="/onboarding/*" element={<PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}><Onboarding /></PrivateRoute>} />
-        <Route path="/sessions/*" element={<PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}><Sessions /></PrivateRoute>} />
-        <Route path="/reservations/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Reservations /></PrivateRoute>} />
-        <Route path="/library-profile/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><LibraryProfile /></PrivateRoute>} />
-        <Route path="/computers/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Computers /></PrivateRoute>} />
-        <Route path="/students/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Students /></PrivateRoute>} />
-        <Route path="/mentors/*" element={<PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}><Mentors /></PrivateRoute>} />
+        <Route
+          path="/onboarding/*"
+          element={
+            <PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}>
+              <Onboarding />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/sessions/*"
+          element={
+            <PrivateRoute roles={[Role.Student, Role.Mentor, Role.User]}>
+              <Sessions />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/reservations/*"
+          element={
+            <PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}>
+              <Reservations />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/library-profile/*"
+          element={
+            <PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}>
+              <LibraryProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/computers/*"
+          element={
+            <PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}>
+              <Computers />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/students/*"
+          element={
+            <PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}>
+              <Students />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/mentors/*"
+          element={
+            <PrivateRoute roles={[Role.Admin, Role.Librarian, Role.Advisor]}>
+              <Mentors />
+            </PrivateRoute>
+          }
+        />
         <Route path="/mentor/*" element={<MentorIndex />} />
         <Route path="/mentor/onboarding/*" element={<OnboardingIndex />} />
-        <Route path="/profile/" element={<PrivateRoute roles={[Role.Student, Role.User, Role.Mentor]}><Profile /></PrivateRoute>} />
+        <Route
+          path="/profile/"
+          element={
+            <PrivateRoute roles={[Role.Student, Role.User, Role.Mentor]}>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path='*' element={<NotFound/>} />
-        <Route path='/access-denied' element={<AccessDenied/>} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="/access-denied" element={<AccessDenied />} />
       </Routes>
     </>
-  )
+  );
 }
 export default App;

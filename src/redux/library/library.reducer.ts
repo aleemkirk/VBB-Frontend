@@ -12,7 +12,6 @@ import {
   SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION_SLOTS,
   SET_LIBRARY_TIME_SLOTS,
   SET_ACTIVE_LIBRARY_TIME_SLOT,
-
 } from './library.types';
 
 export const initialState = {
@@ -22,15 +21,15 @@ export const initialState = {
   library_slots: [],
   students: [],
   mentors: [],
-  computers:[],
+  computers: [],
   activeUserSlot: null,
   activeComputerReservationSlot: null,
   activeLibrarySlot: null,
   activeLibrary: null,
   activeComputer: null,
   isAcceptingNewMentors: false,
-  name:'',
-  uniqueID:'',
+  name: '',
+  uniqueID: '',
 } as Library;
 
 export const library = (
@@ -39,79 +38,76 @@ export const library = (
 ): Library => {
   switch (action.type) {
     case SET_LIBRARY:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        activeLibrary: data
+        activeLibrary: data,
       };
     case SET_LIBRARY_ANNOUNCEMENTS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        announcements: data
+        announcements: data,
       };
     case SET_LIBRARY_COMPUTERS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        computers: data
+        computers: data,
       };
     case SET_LIBRARY_STUDENTS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        students: data
+        students: data,
       };
 
     case SET_LIBRARY_MENTORS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        mentors: data
+        mentors: data,
       };
 
     case SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOTS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        user_preference_slots: data
+        user_preference_slots: data,
       };
     case SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION_SLOTS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        reservations: data
+        reservations: data,
       };
 
     case SET_LIBRARY_TIME_SLOTS:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        library_slots: data
+        library_slots: data,
       };
 
     case SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOT:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        activeUserSlot: data
+        activeUserSlot: data,
       };
-
 
     case SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        activeComputerReservationSlot: data
+        activeComputerReservationSlot: data,
       };
 
-
-
     case SET_ACTIVE_LIBRARY_TIME_SLOT:
-      var data:any = action.payload;
+      var data: any = action.payload;
       return {
         ...state,
-        activeLibrarySlot: data
+        activeLibrarySlot: data,
       };
     default:
       return state;

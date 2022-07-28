@@ -43,20 +43,19 @@ const OpportunityDropdown = ({
   const opportunities = useSelector((state: AppState) => state.opportunity);
   const dispatch = useDispatch();
 
-  const [actvieOppOptions, setActvieOppOptions] = useState<any>([])
+  const [actvieOppOptions, setActvieOppOptions] = useState<any>([]);
 
   useEffect(() => {
     dispatch(getOpportunity());
   }, [dispatch]);
 
-
   useEffect(() => {
     if (opportunities !== undefined && opportunities !== null) {
-      var tempArr:any = []
-      opportunities.forEach(element => {
-        tempArr.push({id:element.id, name:element.name, value:element.id})
+      var tempArr: any = [];
+      opportunities.forEach((element) => {
+        tempArr.push({ id: element.id, name: element.name, value: element.id });
       });
-      setActvieOppOptions(tempArr)
+      setActvieOppOptions(tempArr);
     }
   }, [opportunities]);
 
@@ -78,12 +77,15 @@ const OpportunityDropdown = ({
         onChange={handleSelect}
         input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
         renderValue={(selected) => (
-           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-             {selected.map((id) => (
-               <Chip key={id} label={actvieOppOptions?.find((e:any) => e.id === id).name} />
-             ))}
-           </Box>
-         )}
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {selected.map((id) => (
+              <Chip
+                key={id}
+                label={actvieOppOptions?.find((e: any) => e.id === id).name}
+              />
+            ))}
+          </Box>
+        )}
         MenuProps={MenuProps}
       >
         {opportunityOptions(actvieOppOptions)}

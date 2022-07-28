@@ -13,11 +13,13 @@ export interface SubmitStudentRegistrationAction {
 }
 
 export const COMPLETE_STUDENT_ONBOARD = 'COMPLETE_STUDENT_ONBOARD';
-export const COMPLETE_STUDENT_ONBOARD_SUCCESS = 'COMPLETE_STUDENT_ONBOARD_SUCCESS';
-export const COMPLETE_STUDENT_ONBOARD_FAILED = 'COMPLETE_STUDENT_ONBOARD_FAILED';
+export const COMPLETE_STUDENT_ONBOARD_SUCCESS =
+  'COMPLETE_STUDENT_ONBOARD_SUCCESS';
+export const COMPLETE_STUDENT_ONBOARD_FAILED =
+  'COMPLETE_STUDENT_ONBOARD_FAILED';
 
 export interface StudentOnboardingForm {
-  libraryCode:string;
+  libraryCode: string;
   careers: number[];
   mentoringLanguages: number[];
   struggleSubjects: number[];
@@ -58,7 +60,8 @@ export interface SubmitMentorSignUpErrorResponse {
 
 //Mentor Onboarding
 export const COMPLETE_MENTOR_ONBOARD = 'COMPLETE_MENTOR_ONBOARD';
-export const COMPLETE_MENTOR_ONBOARD_SUCCESS = 'COMPLETE_MENTOR_ONBOARD_SUCCESS';
+export const COMPLETE_MENTOR_ONBOARD_SUCCESS =
+  'COMPLETE_MENTOR_ONBOARD_SUCCESS';
 export const COMPLETE_MENTOR_ONBOARD_FAILED = 'COMPLETE_MENTOR_ONBOARD_FAILED';
 
 export interface MentorOnboardingForm {
@@ -71,12 +74,12 @@ export interface MentorOnboardingForm {
   isOfAge: boolean;
   timezone: string;
   dateOfBirth: string;
-  crimesOrMisdemeanorResponses:string;
-  crimesOrMisdemeanor:boolean;
+  crimesOrMisdemeanorResponses: string;
+  crimesOrMisdemeanor: boolean;
   canMeetConsistently: boolean;
-  opportunities:any[];
-  meetProvider:string;
-  corporateCode:string;
+  opportunities: any[];
+  meetProvider: string;
+  corporateCode: string;
 }
 
 export interface CompleteMentorOnboardAction {
@@ -109,5 +112,12 @@ export interface VerifyResponseFailedAction {
   payload: any;
 }
 
-
-export type RegistrationActions = VerifyResponseFailedAction | VerifyResponseAction | VerifyTokenAction | CompleteMentorOnboardAction | SubmitStudentRegistrationAction | SubmitMentorSignUpAction | CompleteStudentOnboardAction | CompleteMentorOnboardAction;
+export type RegistrationActions =
+  | VerifyResponseFailedAction
+  | VerifyResponseAction
+  | VerifyTokenAction
+  | CompleteMentorOnboardAction
+  | SubmitStudentRegistrationAction
+  | SubmitMentorSignUpAction
+  | CompleteStudentOnboardAction
+  | CompleteMentorOnboardAction;

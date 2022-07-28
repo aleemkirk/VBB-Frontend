@@ -24,13 +24,13 @@ const languageOptions = (languages: Language[]) =>
 interface Props {
   selectedLanguages: number[];
   handleSelectLanguages: (languageIds: number[]) => void;
-  isRequired?:boolean;
+  isRequired?: boolean;
 }
 
 const LanguageDropdown = ({
   selectedLanguages,
   handleSelectLanguages,
-  isRequired
+  isRequired,
 }: Props) => {
   const languages = useSelector((state: AppState) => state.languages);
   const dispatch = useDispatch();

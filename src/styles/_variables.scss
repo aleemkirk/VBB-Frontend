@@ -1,20 +1,20 @@
 // Brand Colors
 $primary: #003066; // Navy blue
-$secondary: #0078FF; // Bright nlue
-$tertiary: #E9EEF4; // grey
+$secondary: #0078ff; // Bright nlue
+$tertiary: #e9eef4; // grey
 $white: #fff; // White
 $black: #000;
-$grey: #E9EEF4;// Black
+$grey: #e9eef4; // Black
 
 // Canvas
-$canvas: linear-gradient(180deg, #ffffff 25%, #eff7fe 100% );
+$canvas: linear-gradient(180deg, #ffffff 25%, #eff7fe 100%);
 
 //Box Shadow
 $shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
 // Supporting Colors
 
-$valid: #389B48; // Green
+$valid: #389b48; // Green
 $error: #ed4e66; // Coral pink
 
 // Break Points (min)
@@ -52,12 +52,11 @@ $paragraph01: 22px;
 $paragraph02: 18px;
 $paragraph03: 14px;
 
-
-:export{
+:export {
   primary_color: $primary;
-  secondary_color:$secondary;
-  tertiary_color:$tertiary;
-  white_color:$white;
-  black_color:$black;
-  grey_color:$grey;
+  secondary_color: $secondary;
+  tertiary_color: $tertiary;
+  white_color: $white;
+  black_color: $black;
+  grey_color: $grey;
 }

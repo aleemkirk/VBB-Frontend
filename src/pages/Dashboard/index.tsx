@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
@@ -9,8 +9,5 @@ import moment from 'moment';
 // }
 
 export default function Dashboard() {
-  return(
-    <>
-    </>
-  )
+  return <></>;
 }

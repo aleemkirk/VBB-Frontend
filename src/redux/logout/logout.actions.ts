@@ -8,16 +8,13 @@ export function* watchLogout() {
   yield takeLatest(LOGOUT, handleLogout);
 }
 
-function* handleLogout(
-  action: LogoutAction
-) {
+function* handleLogout(action: LogoutAction) {
   try {
-    yield localStorage.removeItem('token')
-    yield localStorage.removeItem('refresh_token')
-    yield localStorage.removeItem('user')
+    yield localStorage.removeItem('token');
+    yield localStorage.removeItem('refresh_token');
+    yield localStorage.removeItem('user');
     pushHistory('/login');
-
-  } catch (e:any) {
+  } catch (e: any) {
     console.error('Could not logout', e);
   }
 }

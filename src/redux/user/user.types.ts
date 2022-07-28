@@ -10,7 +10,6 @@ export const UPDATE_MENTOR_PROFILE = 'UPDATE_MENTOR_PROFILE';
 export const UPDATE_MENTOR_PROFILE_SUCCESS = 'UPDATE_MENTOR_PROFILE_SUCCESS';
 export const UPDATE_MENTOR_PROFILE_FAILED = 'UPDATE_MENTOR_PROFILE_FAILED';
 
-
 export interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
@@ -20,22 +19,21 @@ export interface GetUserAction {
   type: typeof GET_USER;
 }
 
-
 export interface User {
-  id:number;
-  pk:number;
+  id: number;
+  pk: number;
   email?: string;
   firstName: string;
   lastName: string;
   name: string;
   username?: string;
-  role:number;
+  role: number;
   timeZone: string;
   isEmailVerified: boolean;
   isLibrarian: boolean;
   isMentor: boolean;
   isStudent: boolean;
-  profileImage?:string;
+  profileImage?: string;
   dateOfBirth: string | null;
   mentorProfile?: MentorProfile;
   studentProfile?: StudentProfile;
@@ -56,13 +54,13 @@ export interface MentorProfile {
   completedRegistration: boolean;
   mentoringLanguages: Language[];
   approvalStatus: ApprovalStatus;
-  isOnboarded:boolean;
-  canMeetConsistently:boolean;
-  crimesOrMisdemeanor:boolean;
+  isOnboarded: boolean;
+  canMeetConsistently: boolean;
+  crimesOrMisdemeanor: boolean;
   crimesOrMisdemeanorResponses?: string;
-  meetProvider:any;
-  corporateCode:string;
-  applicationVideoUrl:string;
+  meetProvider: any;
+  corporateCode: string;
+  applicationVideoUrl: string;
 }
 
 export interface StudentProfile {
@@ -70,19 +68,18 @@ export interface StudentProfile {
   careersOfInterest: Career[];
   mentoringLanguages: Language[];
   subjects: Subject[];
-  isOnboarded:boolean;
+  isOnboarded: boolean;
   approvalStatus: ApprovalStatus;
 }
 
-
 export interface AdvisorProfile {
   library: Library;
-  bio:string;
+  bio: string;
 }
 
 export interface LibrarianProfile {
   library: Library;
-  bio:string;
+  bio: string;
 }
 
 export interface AuthToken {
@@ -101,7 +98,5 @@ enum ApprovalStatus {
   NOT_REVIEWED = 'Not Reviewed',
   REJECTED = 'Rejected',
 }
-
-
 
 export type UserActions = SetUserAction | UpdateMentorProfileAction;

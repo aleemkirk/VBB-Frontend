@@ -36,7 +36,6 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
   return (
     <>
       <Grid container spacing={2} py={2}>
-
         <Grid item xs={6}>
           <TextField
             fullWidth
@@ -62,8 +61,9 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="body1" >
-            I commit to this reservation and mentoring this individual to the best of my ability.
+          <Typography variant="body1">
+            I commit to this reservation and mentoring this individual to the
+            best of my ability.
           </Typography>
         </Grid>
 
@@ -79,13 +79,11 @@ const MentorBookingModal = ({ eventOrSlot, onClose }: EventModalProps) => {
           </Box>
         </Grid>
 
-
         <Grid item xs={12}>
           <Typography variant="h6">Select Your Conference Type</Typography>
         </Grid>
 
         <Grid item xs={12} display="flex" alignItems="center">
-
           <PhotoCameraFront sx={{ mr: 2 }} />
           <RadioGroup
             row

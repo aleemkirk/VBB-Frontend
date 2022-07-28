@@ -1,9 +1,15 @@
-import { Button, Grid, TextField, Typography, CircularProgress} from '@mui/material';
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  CircularProgress,
+} from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, submitMentorSignUp } from '../../redux/actions';
 import { mentorSignUpErrors } from '../../redux/selectors';
-import { AppState } from '../../redux/rootReducer'
+import { AppState } from '../../redux/rootReducer';
 import { renderAPIMsg } from '../../utils/api';
 import scss_variables from '../../styles/_variables.scss';
 
@@ -13,7 +19,7 @@ const defaultForm = {
   last_name: '',
   password: '',
   confirm_password: '',
-  corporateCode:''
+  corporateCode: '',
 };
 
 const MentorSignUpForm = () => {
@@ -28,13 +34,19 @@ const MentorSignUpForm = () => {
     }
   };
 
-
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(formValue)
-        const { email, first_name, last_name, confirm_password, password, corporateCode } = formValue;
+        console.log(formValue);
+        const {
+          email,
+          first_name,
+          last_name,
+          confirm_password,
+          password,
+          corporateCode,
+        } = formValue;
         if (email && first_name && last_name && password && confirm_password) {
           dispatch(submitMentorSignUp(formValue));
         }
@@ -46,14 +58,19 @@ const MentorSignUpForm = () => {
         </Grid>
 
         <Grid item xs={12}>
-        {appState.error === null
-        ? null : (
-          <>
-          <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-            <b>{renderAPIMsg(appState.error)}</b>
-          </Typography>
-          </>
-        )}
+          {appState.error === null ? null : (
+            <>
+              <Typography
+                mt={1}
+                mb={1}
+                variant="body1"
+                alignSelf="flex-start"
+                color={scss_variables.primary_color}
+              >
+                <b>{renderAPIMsg(appState.error)}</b>
+              </Typography>
+            </>
+          )}
         </Grid>
 
         <Grid item xs={6}>
@@ -144,14 +161,17 @@ const MentorSignUpForm = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          {appState.loading === true ?
+          {appState.loading === true ? (
             <CircularProgress />
-            : (
-              <Button type="submit" variant="contained" disabled={appState.loading}>
-                Register
-              </Button>
-            )
-          }
+          ) : (
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={appState.loading}
+            >
+              Register
+            </Button>
+          )}
         </Grid>
       </Grid>
     </form>

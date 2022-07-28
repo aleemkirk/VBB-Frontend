@@ -27,6 +27,4 @@ export interface SlotSessions {
   availableSessions: CalendarEvent[];
 }
 
-export const Sessions: Session[] = [
-
-];
+export const Sessions: Session[] = [];

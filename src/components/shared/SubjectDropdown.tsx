@@ -6,7 +6,7 @@ import {
   Select,
   SelectChangeEvent,
   Box,
-  Chip
+  Chip,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,32 +24,35 @@ const subjectOptions = (subjects: Subject[]) =>
 interface Props {
   selectedSubjects: number[];
   handleSelectSubjects: (subjectIds: number[]) => void;
-  isRequired?:boolean;
+  isRequired?: boolean;
 }
 
-const SubjectDropdown = ({ selectedSubjects, handleSelectSubjects, isRequired}: Props) => {
+const SubjectDropdown = ({
+  selectedSubjects,
+  handleSelectSubjects,
+  isRequired,
+}: Props) => {
   const subjects = useSelector((state: AppState) => state.subjects);
   const dispatch = useDispatch();
 
-  const [actvieSubjectOptions, setActvieSubjectOptions] = useState<any>([])
+  const [actvieSubjectOptions, setActvieSubjectOptions] = useState<any>([]);
 
   useEffect(() => {
     dispatch(actions.getSubjects());
   }, [dispatch]);
 
-
   useEffect(() => {
     if (subjects !== undefined && subjects !== null) {
-      var tempArr:any = []
-      subjects.forEach(element => {
-        tempArr.push({id:element.id, name:element.name, value:element.id})
+      var tempArr: any = [];
+      subjects.forEach((element) => {
+        tempArr.push({ id: element.id, name: element.name, value: element.id });
       });
-      setActvieSubjectOptions(tempArr)
+      setActvieSubjectOptions(tempArr);
     }
   }, [subjects]);
 
   const handleSelect = (e: SelectChangeEvent<number[]>) => {
-    console.log(e)
+    console.log(e);
     const value = e.target.value;
     if (Array.isArray(value)) {
       handleSelectSubjects(value);
@@ -68,12 +71,15 @@ const SubjectDropdown = ({ selectedSubjects, handleSelectSubjects, isRequired}: 
         value={selectedSubjects}
         onChange={handleSelect}
         renderValue={(selected) => (
-         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-           {selected.map((id) => (
-             <Chip key={id} label={actvieSubjectOptions?.find((e:any) => e.id === id).name} />
-           ))}
-         </Box>
-         )}
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {selected.map((id) => (
+              <Chip
+                key={id}
+                label={actvieSubjectOptions?.find((e: any) => e.id === id).name}
+              />
+            ))}
+          </Box>
+        )}
       >
         {subjectOptions(actvieSubjectOptions)}
       </Select>

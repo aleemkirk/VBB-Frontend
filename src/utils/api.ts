@@ -72,24 +72,21 @@ export const getSessions = (userProfile?: Profile) => {
   return [];
 };
 
-
 export const renderAPIMsg = (apiResponse?: any) => {
-  if (apiResponse === undefined || apiResponse === null ) return '';
-  if (apiResponse.message)
-    return apiResponse.message
-  else if (apiResponse.detail)
-    return apiResponse.detail
-  else if (apiResponse.error)
-    return apiResponse.error
-  else if (apiResponse.success)
-    return apiResponse.success
+  if (apiResponse === undefined || apiResponse === null) return '';
+  if (apiResponse.message) return apiResponse.message;
+  else if (apiResponse.detail) return apiResponse.detail;
+  else if (apiResponse.error) return apiResponse.error;
+  else if (apiResponse.success) return apiResponse.success;
   return '';
 };
 
-
-
-export function paginate(collection:any[], page:number = 1, numItems:number = 10){
-  if( !Array.isArray(collection) ) {
+export function paginate(
+  collection: any[],
+  page: number = 1,
+  numItems: number = 10
+) {
+  if (!Array.isArray(collection)) {
     throw `Expect array and got ${typeof collection}`;
   }
   const currentPage = page;
@@ -102,6 +99,6 @@ export function paginate(collection:any[], page:number = 1, numItems:number = 10
     perPage,
     total: collection.length,
     totalPages: Math.ceil(collection.length / perPage),
-    data: paginatedItems
+    data: paginatedItems,
   };
 }

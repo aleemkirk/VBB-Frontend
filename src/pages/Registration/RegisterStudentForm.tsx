@@ -6,12 +6,12 @@ import CareerDropdown from '../../components/shared/CareerDropdown';
 import SubjectDropdown from '../../components/shared/SubjectDropdown';
 import TimezonesDropdown from '../../components/shared/TimezoneSelect';
 import { renderAPIMsg } from '../../utils/api';
-import { AppState } from '../../redux/rootReducer'
+import { AppState } from '../../redux/rootReducer';
 import scss_variables from '../../styles/_variables.scss';
 
 const defaultForm = {
   libraryCode: '',
-  first_name:'',
+  first_name: '',
   last_name: '',
   password: '',
   confirm_password: '',
@@ -36,19 +36,20 @@ const RegisterMenteeForm = () => {
         </Grid>
 
         <Grid item xs={12}>
-
-        {appState.error === null
-        ? null : (
-          <>
-          <Typography mt={1} mb={1} variant="body1" alignSelf="flex-start" color={scss_variables.primary_color}>
-            <b>{renderAPIMsg(appState.error)}</b>
-          </Typography>
-          </>
-        )}
-
+          {appState.error === null ? null : (
+            <>
+              <Typography
+                mt={1}
+                mb={1}
+                variant="body1"
+                alignSelf="flex-start"
+                color={scss_variables.primary_color}
+              >
+                <b>{renderAPIMsg(appState.error)}</b>
+              </Typography>
+            </>
+          )}
         </Grid>
-
-
 
         <Grid item xs={6}>
           <TextField

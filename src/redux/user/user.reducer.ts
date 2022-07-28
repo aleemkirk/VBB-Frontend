@@ -2,7 +2,7 @@ import { LOGOUT, LogoutAction } from '../logout/logout.types';
 import { UserActions, SET_USER, User } from './user.types';
 
 const initUser = {
-  pk:0,
+  pk: 0,
   email: '',
   name: '',
   firstName: '',

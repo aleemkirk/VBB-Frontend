@@ -1,43 +1,50 @@
-
 /**
-* Library Library
-**/
+ * Library Library
+ **/
 export const SET_LIBRARY = 'SET_LIBRARY';
 export const GET_LIBRARY = 'GET_LIBRARY';
 
 /**
-* Library Announcements
-**/
+ * Library Announcements
+ **/
 export const SET_LIBRARY_ANNOUNCEMENTS = 'SET_LIBRARY_ANNOUNCEMENTS';
-export const SET_ACTIVE_LIBRARY_ANNOUNCEMENT = 'SET_ACTIVE_LIBRARY_ANNOUNCEMENT';
+export const SET_ACTIVE_LIBRARY_ANNOUNCEMENT =
+  'SET_ACTIVE_LIBRARY_ANNOUNCEMENT';
 export const GET_LIBRARY_ANNOUNCEMENTS = 'GET_LIBRARY_ANNOUNCEMENTS';
-export const GET_LIBRARY_ANNOUNCEMENTS_SUCCESS = 'GET_LIBRARY_ANNOUNCEMENTS_SUCCESS';
-export const GET_LIBRARY_ANNOUNCEMENTS_FAILED = 'GET_LIBRARY_ANNOUNCEMENTS_FAILED';
+export const GET_LIBRARY_ANNOUNCEMENTS_SUCCESS =
+  'GET_LIBRARY_ANNOUNCEMENTS_SUCCESS';
+export const GET_LIBRARY_ANNOUNCEMENTS_FAILED =
+  'GET_LIBRARY_ANNOUNCEMENTS_FAILED';
 
 export const CREATE_LIBRARY_ANNOUNCEMENT = 'CREATE_LIBRARY_ANNOUNCEMENT';
-export const CREATE_LIBRARY_ANNOUNCEMENT_SUCCESS = 'CREATE_LIBRARY_ANNOUNCEMENT_SUCCESS';
-export const CREATE_LIBRARY_ANNOUNCEMENT_FAILED = 'CREATE_LIBRARY_ANNOUNCEMENT_FAILED';
+export const CREATE_LIBRARY_ANNOUNCEMENT_SUCCESS =
+  'CREATE_LIBRARY_ANNOUNCEMENT_SUCCESS';
+export const CREATE_LIBRARY_ANNOUNCEMENT_FAILED =
+  'CREATE_LIBRARY_ANNOUNCEMENT_FAILED';
 
 export const UPDATE_LIBRARY_ANNOUNCEMENT = 'UPDATE_LIBRARY_ANNOUNCEMENT';
-export const UPDATE_LIBRARY_ANNOUNCEMENT_SUCCESS = 'UPDATE_LIBRARY_ANNOUNCEMENT_SUCCESS';
-export const UPDATE_LIBRARY_ANNOUNCEMENT_FAILED = 'UPDATE_LIBRARY_ANNOUNCEMENT_FAILED';
+export const UPDATE_LIBRARY_ANNOUNCEMENT_SUCCESS =
+  'UPDATE_LIBRARY_ANNOUNCEMENT_SUCCESS';
+export const UPDATE_LIBRARY_ANNOUNCEMENT_FAILED =
+  'UPDATE_LIBRARY_ANNOUNCEMENT_FAILED';
 
 export const DELETE_LIBRARY_ANNOUNCEMENT = 'DELETE_LIBRARY_ANNOUNCEMENT';
-export const DELETE_LIBRARY_ANNOUNCEMENT_SUCCESS = 'DELETE_LIBRARY_ANNOUNCEMENT_SUCCESS';
-export const DELETE_LIBRARY_ANNOUNCEMENT_FAILED = 'DELETE_LIBRARY_ANNOUNCEMENT_FAILED';
+export const DELETE_LIBRARY_ANNOUNCEMENT_SUCCESS =
+  'DELETE_LIBRARY_ANNOUNCEMENT_SUCCESS';
+export const DELETE_LIBRARY_ANNOUNCEMENT_FAILED =
+  'DELETE_LIBRARY_ANNOUNCEMENT_FAILED';
 
 /**
-* Library Computers List
-**/
+ * Library Computers List
+ **/
 export const SET_LIBRARY_COMPUTERS = 'SET_LIBRARY_COMPUTERS';
 export const GET_LIBRARY_COMPUTERS = 'GET_LIBRARY_COMPUTERS';
 export const GET_LIBRARY_COMPUTERS_SUCCESS = 'GET_LIBRARY_COMPUTERS_SUCCESS';
 export const GET_LIBRARY_COMPUTERS_FAILED = 'GET_LIBRARY_COMPUTERS_FAILED';
 
-
 /**
-* Library Students
-**/
+ * Library Students
+ **/
 export const SET_LIBRARY_STUDENTS = 'SET_LIBRARY_STUDENTS';
 export const SET_ACTIVE_LIBRARY_STUDENT = 'SET_ACTIVE_LIBRARY_STUDENT';
 
@@ -54,13 +61,14 @@ export const DELETE_LIBRARY_STUDENT_SUCCESS = 'DELETE_LIBRARY_STUDENT_SUCCESS';
 export const DELETE_LIBRARY_STUDENT_FAILED = 'DELETE_LIBRARY_STUDENT_FAILED';
 
 export const UPDATE_LIBRARY_STUDENT_STATUS = 'UPDATE_LIBRARY_STUDENT_STATUS';
-export const UPDATE_LIBRARY_STUDENT_STATUS_SUCCESS = 'UPDATE_LIBRARY_STUDENT_STATUS_SUCCESS';
-export const UPDATE_LIBRARY_STUDENT_STATUS_FAILED = 'UPDATE_LIBRARY_STUDENT_STATUS_FAILED';
-
+export const UPDATE_LIBRARY_STUDENT_STATUS_SUCCESS =
+  'UPDATE_LIBRARY_STUDENT_STATUS_SUCCESS';
+export const UPDATE_LIBRARY_STUDENT_STATUS_FAILED =
+  'UPDATE_LIBRARY_STUDENT_STATUS_FAILED';
 
 /**
-* Library Mentors
-**/
+ * Library Mentors
+ **/
 export const SET_LIBRARY_MENTORS = 'SET_LIBRARY_MENTORS';
 export const GET_LIBRARY_MENTORS = 'GET_LIBRARY_MENTORS';
 export const GET_LIBRARY_MENTORS_SUCCESS = 'GET_LIBRARY_MENTORS_SUCCESS';
@@ -75,82 +83,107 @@ export const DELETE_LIBRARY_MENTOR_SUCCESS = 'DELETE_LIBRARY_MENTOR_SUCCESS';
 export const DELETE_LIBRARY_MENTOR_FAILED = 'DELETE_LIBRARY_MENTOR_FAILED';
 
 export const UPDATE_LIBRARY_MENTOR_STATUS = 'UPDATE_LIBRARY_MENTOR_STATUS';
-export const UPDATE_LIBRARY_MENTOR_STATUS_SUCCESS = 'UPDATE_LIBRARY_MENTOR_STATUS_SUCCESS';
-export const UPDATE_LIBRARY_MENTOR_STATUS_FAILED = 'UPDATE_LIBRARY_MENTOR_STATUS_FAILED';
-
-
-
+export const UPDATE_LIBRARY_MENTOR_STATUS_SUCCESS =
+  'UPDATE_LIBRARY_MENTOR_STATUS_SUCCESS';
+export const UPDATE_LIBRARY_MENTOR_STATUS_FAILED =
+  'UPDATE_LIBRARY_MENTOR_STATUS_FAILED';
 
 /**
-* Library Active Computer
-**/
+ * Library Active Computer
+ **/
 export const SET_ACTIVE_LIBRARY_COMPUTER = 'SET_ACTIVE_LIBRARY_COMPUTER';
 export const CREATE_LIBRARY_COMPUTER = 'CREATE_LIBRARY_COMPUTER';
-export const CREATE_LIBRARY_COMPUTER_SUCCESS = 'CREATE_LIBRARY_COMPUTER_SUCCESS';
+export const CREATE_LIBRARY_COMPUTER_SUCCESS =
+  'CREATE_LIBRARY_COMPUTER_SUCCESS';
 export const CREATE_LIBRARY_COMPUTER_FAILED = 'CREATE_LIBRARY_COMPUTER_FAILED';
 
 export const UPDATE_LIBRARY_COMPUTER = 'UPDATE_LIBRARY_COMPUTER';
-export const UPDATE_LIBRARY_COMPUTER_SUCCESS = 'UPDATE_LIBRARY_COMPUTER_SUCCESS';
+export const UPDATE_LIBRARY_COMPUTER_SUCCESS =
+  'UPDATE_LIBRARY_COMPUTER_SUCCESS';
 export const UPDATE_LIBRARY_COMPUTER_FAILED = 'UPDATE_LIBRARY_COMPUTER_FAILED';
 
 export const DELETE_LIBRARY_COMPUTER = 'DELETE_LIBRARY_COMPUTER';
-export const DELETE_LIBRARY_COMPUTER_SUCCESS = 'DELETE_LIBRARY_COMPUTER_SUCCESS';
+export const DELETE_LIBRARY_COMPUTER_SUCCESS =
+  'DELETE_LIBRARY_COMPUTER_SUCCESS';
 export const DELETE_LIBRARY_COMPUTER_FAILED = 'DELETE_LIBRARY_COMPUTER_FAILED';
 
 /**
-* Library Computer Preference Slots
-**/
-export const SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOTS = 'SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOTS';
+ * Library Computer Preference Slots
+ **/
+export const SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOTS =
+  'SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOTS';
 
-export const SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOT = 'SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOT';
+export const SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOT =
+  'SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOT';
 
+export const GET_LIBRARY_USER_PREFERENCE_SLOTS =
+  'GET_LIBRARY_USER_PREFERENCE_SLOTS';
+export const GET_LIBRARY_USER_PREFERENCE_SLOTS_SUCCESS =
+  'GET_LIBRARY_USER_PREFERENCE_SLOTS_SUCCESS';
+export const GET_LIBRARY_USER_PREFERENCE_SLOTS_FAILED =
+  'GET_LIBRARY_USER_PREFERENCE_SLOTS_FAILED';
 
-export const GET_LIBRARY_USER_PREFERENCE_SLOTS = 'GET_LIBRARY_USER_PREFERENCE_SLOTS';
-export const GET_LIBRARY_USER_PREFERENCE_SLOTS_SUCCESS = 'GET_LIBRARY_USER_PREFERENCE_SLOTS_SUCCESS';
-export const GET_LIBRARY_USER_PREFERENCE_SLOTS_FAILED = 'GET_LIBRARY_USER_PREFERENCE_SLOTS_FAILED';
+export const CREATE_LIBRARY_USER_PREFERENCE_SLOT =
+  'CREATE_LIBRARY_USER_PREFERENCE_SLOT';
+export const CREATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS =
+  'CREATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS';
+export const CREATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED =
+  'CREATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED';
 
+export const UPDATE_LIBRARY_USER_PREFERENCE_SLOT =
+  'UPDATE_LIBRARY_USER_PREFERENCE_SLOT';
+export const UPDATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS =
+  'UPDATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS';
+export const UPDATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED =
+  'UPDATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED';
 
-export const CREATE_LIBRARY_USER_PREFERENCE_SLOT = 'CREATE_LIBRARY_USER_PREFERENCE_SLOT';
-export const CREATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS = 'CREATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS';
-export const CREATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED = 'CREATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED';
-
-export const UPDATE_LIBRARY_USER_PREFERENCE_SLOT = 'UPDATE_LIBRARY_USER_PREFERENCE_SLOT';
-export const UPDATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS = 'UPDATE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS';
-export const UPDATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED = 'UPDATE_LIBRARY_USER_PREFERENCE_SLOT_FAILED';
-
-export const DELETE_LIBRARY_USER_PREFERENCE_SLOT = 'DELETE_LIBRARY_USER_PREFERENCE_SLOT';
-export const DELETE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS = 'DELETE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS';
-export const DELETE_LIBRARY_USER_PREFERENCE_SLOT_FAILED = 'DELETE_LIBRARY_USER_PREFERENCE_SLOT_FAILED';
-
-
-/**
-* Library Reservation Slots
-**/
-export const SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION_SLOTS = 'SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION_SLOTS';
-
-export const SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION = 'SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION';
-
-
-export const GET_LIBRARY_COMPUTER_RESERVATIONS = 'GET_LIBRARY_COMPUTER_RESERVATIONS';
-export const GET_LIBRARY_COMPUTER_RESERVATIONS_SUCCESS = 'GET_LIBRARY_COMPUTER_RESERVATIONS_SUCCESS';
-export const GET_LIBRARY_COMPUTER_RESERVATIONS_FAILED = 'GET_LIBRARY_COMPUTER_RESERVATIONS_FAILED';
-
-export const CREATE_LIBRARY_COMPUTER_RESERVATION = 'CREATE_LIBRARY_COMPUTER_RESERVATION';
-export const CREATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS = 'CREATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS';
-export const CREATE_LIBRARY_COMPUTER_RESERVATION_FAILED = 'CREATE_LIBRARY_COMPUTER_RESERVATION_FAILED';
-
-export const UPDATE_LIBRARY_COMPUTER_RESERVATION = 'UPDATE_LIBRARY_COMPUTER_RESERVATION';
-export const UPDATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS = 'UPDATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS';
-export const UPDATE_LIBRARY_COMPUTER_RESERVATION_FAILED = 'UPDATE_LIBRARY_COMPUTER_RESERVATION_FAILED';
-
-export const DELETE_LIBRARY_COMPUTER_RESERVATION = 'DELETE_LIBRARY_COMPUTER_RESERVATION';
-export const DELETE_LIBRARY_COMPUTER_RESERVATION_SUCCESS = 'DELETE_LIBRARY_COMPUTER_RESERVATION_SUCCESS';
-export const DELETE_LIBRARY_COMPUTER_RESERVATION_FAILED = 'DELETE_LIBRARY_COMPUTER_RESERVATION_FAILED';
-
+export const DELETE_LIBRARY_USER_PREFERENCE_SLOT =
+  'DELETE_LIBRARY_USER_PREFERENCE_SLOT';
+export const DELETE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS =
+  'DELETE_LIBRARY_USER_PREFERENCE_SLOT_SUCCESS';
+export const DELETE_LIBRARY_USER_PREFERENCE_SLOT_FAILED =
+  'DELETE_LIBRARY_USER_PREFERENCE_SLOT_FAILED';
 
 /**
-* Library Time Slots
-**/
+ * Library Reservation Slots
+ **/
+export const SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION_SLOTS =
+  'SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION_SLOTS';
+
+export const SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION =
+  'SET_ACTIVE_LIBRARY_COMPUTER_RESERVATION';
+
+export const GET_LIBRARY_COMPUTER_RESERVATIONS =
+  'GET_LIBRARY_COMPUTER_RESERVATIONS';
+export const GET_LIBRARY_COMPUTER_RESERVATIONS_SUCCESS =
+  'GET_LIBRARY_COMPUTER_RESERVATIONS_SUCCESS';
+export const GET_LIBRARY_COMPUTER_RESERVATIONS_FAILED =
+  'GET_LIBRARY_COMPUTER_RESERVATIONS_FAILED';
+
+export const CREATE_LIBRARY_COMPUTER_RESERVATION =
+  'CREATE_LIBRARY_COMPUTER_RESERVATION';
+export const CREATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS =
+  'CREATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS';
+export const CREATE_LIBRARY_COMPUTER_RESERVATION_FAILED =
+  'CREATE_LIBRARY_COMPUTER_RESERVATION_FAILED';
+
+export const UPDATE_LIBRARY_COMPUTER_RESERVATION =
+  'UPDATE_LIBRARY_COMPUTER_RESERVATION';
+export const UPDATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS =
+  'UPDATE_LIBRARY_COMPUTER_RESERVATION_SUCCESS';
+export const UPDATE_LIBRARY_COMPUTER_RESERVATION_FAILED =
+  'UPDATE_LIBRARY_COMPUTER_RESERVATION_FAILED';
+
+export const DELETE_LIBRARY_COMPUTER_RESERVATION =
+  'DELETE_LIBRARY_COMPUTER_RESERVATION';
+export const DELETE_LIBRARY_COMPUTER_RESERVATION_SUCCESS =
+  'DELETE_LIBRARY_COMPUTER_RESERVATION_SUCCESS';
+export const DELETE_LIBRARY_COMPUTER_RESERVATION_FAILED =
+  'DELETE_LIBRARY_COMPUTER_RESERVATION_FAILED';
+
+/**
+ * Library Time Slots
+ **/
 export const SET_LIBRARY_TIME_SLOTS = 'SET_LIBRARY_TIME_SLOTS';
 export const SET_ACTIVE_LIBRARY_TIME_SLOT = 'SET_ACTIVE_LIBRARY_TIME_SLOT';
 
@@ -159,22 +192,25 @@ export const GET_LIBRARY_TIME_SLOTS_SUCCESS = 'GET_LIBRARY_TIME_SLOTS_SUCCESS';
 export const GET_LIBRARY_TIME_SLOTS_FAILED = 'GET_LIBRARY_TIME_SLOTS_FAILED';
 
 export const CREATE_LIBRARY_TIME_SLOT = 'CREATE_LIBRARY_TIME_SLOT';
-export const CREATE_LIBRARY_TIME_SLOT_SUCCESS = 'CREATE_LIBRARY_TIME_SLOT_SUCCESS';
-export const CREATE_LIBRARY_TIME_SLOT_FAILED = 'CREATE_LIBRARY_TIME_SLOT_FAILED';
+export const CREATE_LIBRARY_TIME_SLOT_SUCCESS =
+  'CREATE_LIBRARY_TIME_SLOT_SUCCESS';
+export const CREATE_LIBRARY_TIME_SLOT_FAILED =
+  'CREATE_LIBRARY_TIME_SLOT_FAILED';
 
 export const UPDATE_LIBRARY_TIME_SLOT = 'UPDATE_LIBRARY_TIME_SLOT';
-export const UPDATE_LIBRARY_TIME_SLOT_SUCCESS = 'UPDATE_LIBRARY_TIME_SLOT_SUCCESS';
-export const UPDATE_LIBRARY_TIME_SLOT_FAILED = 'UPDATE_LIBRARY_TIME_SLOT_FAILED';
+export const UPDATE_LIBRARY_TIME_SLOT_SUCCESS =
+  'UPDATE_LIBRARY_TIME_SLOT_SUCCESS';
+export const UPDATE_LIBRARY_TIME_SLOT_FAILED =
+  'UPDATE_LIBRARY_TIME_SLOT_FAILED';
 
 export const DELETE_LIBRARY_TIME_SLOT = 'DELETE_LIBRARY_TIME_SLOT';
-export const DELETE_LIBRARY_TIME_SLOT_SUCCESS = 'DELETE_LIBRARY_TIME_SLOT_SUCCESS';
-export const DELETE_LIBRARY_TIME_SLOT_FAILED = 'DELETE_LIBRARY_TIME_SLOT_FAILED';
-
-
-
+export const DELETE_LIBRARY_TIME_SLOT_SUCCESS =
+  'DELETE_LIBRARY_TIME_SLOT_SUCCESS';
+export const DELETE_LIBRARY_TIME_SLOT_FAILED =
+  'DELETE_LIBRARY_TIME_SLOT_FAILED';
 
 export interface Library {
-  id?:number;
+  id?: number;
   announcements: any[];
   reservations: any[];
   user_preference_slots: any[];
@@ -184,17 +220,17 @@ export interface Library {
   mentors: any[];
   activeComputer: any | null;
   activeLibrary: any | null;
-  activeUserSlot:any | null;
-  activeComputerReservationSlot:any | null;
-  activeLibrarySlot:any | null;
+  activeUserSlot: any | null;
+  activeComputerReservationSlot: any | null;
+  activeLibrarySlot: any | null;
   isAcceptingNewMentors: boolean;
   name: string;
-  uniqueID:string;
+  uniqueID: string;
 }
 
 export interface GetLibraryAction {
   type: typeof GET_LIBRARY;
-  uniqueID:string;
+  uniqueID: string;
 }
 export interface SetLibraryAction {
   type: typeof SET_LIBRARY;
@@ -203,7 +239,7 @@ export interface SetLibraryAction {
 
 export interface GetLibraryAnnouncementsAction {
   type: typeof GET_LIBRARY_ANNOUNCEMENTS;
-  uniqueID:string;
+  uniqueID: string;
 }
 export interface SetLibraryAnnouncementsAction {
   type: typeof SET_LIBRARY_ANNOUNCEMENTS;
@@ -212,7 +248,7 @@ export interface SetLibraryAnnouncementsAction {
 
 export interface GetLibraryComputersAction {
   type: typeof GET_LIBRARY_COMPUTERS;
-  uniqueID:string;
+  uniqueID: string;
 }
 export interface SetLibraryComputersAction {
   type: typeof SET_LIBRARY_COMPUTERS;
@@ -221,7 +257,7 @@ export interface SetLibraryComputersAction {
 
 export interface GetLibraryStudentsAction {
   type: typeof GET_LIBRARY_STUDENTS;
-  uniqueID:string;
+  uniqueID: string;
 }
 export interface SetLibraryStudentsAction {
   type: typeof SET_LIBRARY_STUDENTS;
@@ -230,7 +266,7 @@ export interface SetLibraryStudentsAction {
 
 export interface GetLibraryMentorsAction {
   type: typeof GET_LIBRARY_MENTORS;
-  uniqueID:string;
+  uniqueID: string;
 }
 export interface SetLibraryMentorsAction {
   type: typeof SET_LIBRARY_MENTORS;
@@ -238,8 +274,8 @@ export interface SetLibraryMentorsAction {
 }
 
 /**
-* Library Computers
-**/
+ * Library Computers
+ **/
 
 export interface SetActiveLibraryComputerAction {
   type: typeof SET_ACTIVE_LIBRARY_COMPUTER;
@@ -256,17 +292,14 @@ export interface UpdateLibraryComputerAction {
   payload: any;
 }
 
-
 export interface DeleteLibraryComputerAction {
   type: typeof DELETE_LIBRARY_COMPUTER;
   uniqueID: string;
 }
 
-
-
 /**
-* Library Announcements
-**/
+ * Library Announcements
+ **/
 
 export interface SetActiveLibraryAnnouncementAction {
   type: typeof SET_ACTIVE_LIBRARY_ANNOUNCEMENT;
@@ -289,9 +322,8 @@ export interface DeleteLibraryAnnouncementAction {
 }
 
 /**
-* Library User and Mentor Updates
-**/
-
+ * Library User and Mentor Updates
+ **/
 
 export interface DeleteStudentAction {
   type: typeof DELETE_LIBRARY_STUDENT;
@@ -303,7 +335,6 @@ export interface DeleteMentorAction {
   id: number;
 }
 
-
 export interface ChangeStudentStatusAction {
   type: typeof UPDATE_LIBRARY_STUDENT_STATUS;
   payload: any;
@@ -314,22 +345,19 @@ export interface ChangeMentorStatusAction {
   payload: any;
 }
 
-
 /**
-* Library User Preference Slots
-**/
-
+ * Library User Preference Slots
+ **/
 
 export interface GetLibraryUserPreferenceSlotsAction {
   type: typeof GET_LIBRARY_USER_PREFERENCE_SLOTS;
-  uniqueID:string;
+  uniqueID: string;
 }
 
 export interface SetLibraryUserPreferenceSlotsAction {
   type: typeof SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOTS;
   payload: any;
 }
-
 
 export interface SetActiveLibraryUserPreferenceSlotAction {
   type: typeof SET_ACTIVE_LIBRARY_USER_PREFERENCE_SLOT;
@@ -352,14 +380,13 @@ export interface DeleteLibraryUserPreferenceSlotAction {
   uniqueID: string;
 }
 
-
 /**
-* Library Reservations Slots
-**/
+ * Library Reservations Slots
+ **/
 
 export interface GetLibraryComputerReservationsAction {
   type: typeof GET_LIBRARY_COMPUTER_RESERVATIONS;
-  uniqueID:string;
+  uniqueID: string;
 }
 
 export interface SetLibraryComputerReservationsAction {
@@ -388,14 +415,13 @@ export interface DeleteLibraryComputerReservationAction {
   uniqueID: any;
 }
 
-
 /**
-* Library Time Slots
-**/
+ * Library Time Slots
+ **/
 
 export interface GetLibraryTimeSlotsAction {
   type: typeof GET_LIBRARY_TIME_SLOTS;
-  uniqueID:string;
+  uniqueID: string;
 }
 
 export interface SetLibraryTimeSlotsAction {
@@ -424,6 +450,44 @@ export interface DeleteLibraryTimeSlotAction {
   uniqueID: string;
 }
 
-
-
-export type LibraryActions = DeleteMentorAction | DeleteStudentAction | ChangeMentorStatusAction | ChangeStudentStatusAction | DeleteLibraryAnnouncementAction | UpdateLibraryAnnouncementAction | SetActiveLibraryAnnouncementAction | CreateLibraryAnnouncementAction | CreateLibraryComputerAction | UpdateLibraryComputerAction | DeleteLibraryComputerAction | SetActiveLibraryComputerAction | GetLibraryMentorsAction | SetLibraryMentorsAction | GetLibraryStudentsAction | SetLibraryStudentsAction | GetLibraryAction | SetLibraryAction | GetLibraryAnnouncementsAction | SetLibraryAnnouncementsAction | SetLibraryComputersAction | GetLibraryComputersAction | GetLibraryUserPreferenceSlotsAction | SetActiveLibraryUserPreferenceSlotAction | SetLibraryUserPreferenceSlotsAction | CreateLibraryUserPreferenceSlotAction | UpdateLibraryUserPreferenceSlotAction | DeleteLibraryUserPreferenceSlotAction | GetLibraryComputerReservationsAction | SetLibraryComputerReservationsAction | SetActiveLibraryComputerReservationAction | CreateLibraryComputerReservationAction | UpdateLibraryComputerReservationAction | DeleteLibraryComputerReservationAction | GetLibraryTimeSlotsAction | SetLibraryTimeSlotsAction | SetActiveLibraryTimeSlotAction | CreateLibraryTimeSlotAction | UpdateLibraryTimeSlotAction | DeleteLibraryTimeSlotAction;
+export type LibraryActions =
+  | DeleteMentorAction
+  | DeleteStudentAction
+  | ChangeMentorStatusAction
+  | ChangeStudentStatusAction
+  | DeleteLibraryAnnouncementAction
+  | UpdateLibraryAnnouncementAction
+  | SetActiveLibraryAnnouncementAction
+  | CreateLibraryAnnouncementAction
+  | CreateLibraryComputerAction
+  | UpdateLibraryComputerAction
+  | DeleteLibraryComputerAction
+  | SetActiveLibraryComputerAction
+  | GetLibraryMentorsAction
+  | SetLibraryMentorsAction
+  | GetLibraryStudentsAction
+  | SetLibraryStudentsAction
+  | GetLibraryAction
+  | SetLibraryAction
+  | GetLibraryAnnouncementsAction
+  | SetLibraryAnnouncementsAction
+  | SetLibraryComputersAction
+  | GetLibraryComputersAction
+  | GetLibraryUserPreferenceSlotsAction
+  | SetActiveLibraryUserPreferenceSlotAction
+  | SetLibraryUserPreferenceSlotsAction
+  | CreateLibraryUserPreferenceSlotAction
+  | UpdateLibraryUserPreferenceSlotAction
+  | DeleteLibraryUserPreferenceSlotAction
+  | GetLibraryComputerReservationsAction
+  | SetLibraryComputerReservationsAction
+  | SetActiveLibraryComputerReservationAction
+  | CreateLibraryComputerReservationAction
+  | UpdateLibraryComputerReservationAction
+  | DeleteLibraryComputerReservationAction
+  | GetLibraryTimeSlotsAction
+  | SetLibraryTimeSlotsAction
+  | SetActiveLibraryTimeSlotAction
+  | CreateLibraryTimeSlotAction
+  | UpdateLibraryTimeSlotAction
+  | DeleteLibraryTimeSlotAction;

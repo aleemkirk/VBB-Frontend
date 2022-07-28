@@ -1,7 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { put, select, takeLatest, delay } from 'redux-saga/effects';
 import { setUser } from '../user/user.actions';
-import { apiRequest, apiSuccessful, apiFailed, setAppAlert} from '../app/app.actions';
+import {
+  apiRequest,
+  apiSuccessful,
+  apiFailed,
+  setAppAlert,
+} from '../app/app.actions';
 
 import { vbbAPIV1 } from '../../services/api';
 
@@ -39,29 +44,26 @@ export const completeMentorOnboard = (payload: MentorOnboardingForm) => ({
   payload,
 });
 
-export const completeMentorOnboardSuccess = (payload:any) => ({
+export const completeMentorOnboardSuccess = (payload: any) => ({
   type: COMPLETE_MENTOR_ONBOARD_SUCCESS,
-  payload:payload
+  payload: payload,
 });
 
-export const completeMentorOnboardFailed = (payload:any) => ({
+export const completeMentorOnboardFailed = (payload: any) => ({
   type: COMPLETE_MENTOR_ONBOARD_FAILED,
-  payload:payload
+  payload: payload,
 });
-
 
 export function* watchOnboardMentor() {
   yield takeLatest(COMPLETE_MENTOR_ONBOARD, handleSubmitMentorRegistration);
 }
 
-function* handleSubmitMentorRegistration(
-  action: CompleteMentorOnboardAction
-) {
+function* handleSubmitMentorRegistration(action: CompleteMentorOnboardAction) {
   try {
     const url = 'complete-mentor-onboard/';
 
     yield put(apiRequest(action.payload));
-    yield delay(1000)
+    yield delay(1000);
 
     const data = { ...action.payload };
     const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, data);
@@ -69,12 +71,18 @@ function* handleSubmitMentorRegistration(
     if (res.status === 201 && user) {
       yield put(apiSuccessful(user));
       yield put(setUser(user));
-      yield put(setAppAlert({alertMsg:'Mentor Onboarding complete! You will need to wait until the Village Book Builder Team can review your application before mentoring...', alertSeverity:'success'}));
+      yield put(
+        setAppAlert({
+          alertMsg:
+            'Mentor Onboarding complete! You will need to wait until the Village Book Builder Team can review your application before mentoring...',
+          alertSeverity: 'success',
+        })
+      );
       pushHistory('/?onboard_complete=true');
     } else {
       pushHistory('/');
     }
-  } catch (e:any) {
+  } catch (e: any) {
     console.error('Could not complete mentor profile', e);
     yield put(apiFailed(e.response.data));
   }
@@ -82,43 +90,42 @@ function* handleSubmitMentorRegistration(
 
 export const verifyMentorEmail = (payload: VerifyTokenForm) => ({
   type: SUBMIT_EMAIL_VERIFY,
-  payload
+  payload,
 });
 
 export function* watchVerifyMentorEmail() {
   yield takeLatest(SUBMIT_EMAIL_VERIFY, handleWatchVerifyMentorEmail);
 }
 
-function* handleWatchVerifyMentorEmail(
-  action: VerifyTokenAction
-) {
+function* handleWatchVerifyMentorEmail(action: VerifyTokenAction) {
   try {
     const url = 'mentor-email-confirmation/';
-    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, action.payload);
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(
+      url,
+      action.payload
+    );
     const response = res.data;
     if (res.status === 200 && response) {
-      console.log(response)
+      console.log(response);
       yield put(verifyEmailResponse());
       //yield pushHistory('/dashboard');
     } else {
       yield put(verifyEmailResponseFailed(response));
     }
-  } catch (e:any) {
+  } catch (e: any) {
     yield put(verifyEmailResponseFailed(e.response.data));
     console.error('Could not verify mentor email address', e);
   }
 }
 
-
 export const verifyEmailResponse = () => ({
-  type: VERIFY_RESPONSE
-});
-
-export const verifyEmailResponseFailed = (payload:any) => ({
   type: VERIFY_RESPONSE,
-  payload:payload
 });
 
+export const verifyEmailResponseFailed = (payload: any) => ({
+  type: VERIFY_RESPONSE,
+  payload: payload,
+});
 
 /*
  * Student registration actions
@@ -151,68 +158,83 @@ function* handleSubmitStudentRegistration(
     if (res.status >= 200 && res.status < 300) {
       yield put(setUser(user));
       yield put(apiSuccessful(res.data));
-      yield put(setAppAlert({alertMsg:'Student signup complete! You may log in now with your new username and password...', alertSeverity:'success'}));
+      yield put(
+        setAppAlert({
+          alertMsg:
+            'Student signup complete! You may log in now with your new username and password...',
+          alertSeverity: 'success',
+        })
+      );
       pushHistory('/login');
     } else {
-      yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
+      yield put(
+        setAppAlert({
+          alertMsg: 'Could not complete registration...',
+          alertSeverity: 'error',
+        })
+      );
     }
-  } catch (e:any) {
+  } catch (e: any) {
     console.error('Could not register student', e);
     yield put(apiFailed(e.response.data));
-    yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
-
+    yield put(
+      setAppAlert({
+        alertMsg: 'Could not complete registration...',
+        alertSeverity: 'error',
+      })
+    );
   }
 }
-
 
 export const completeStudentOnboard = (payload: StudentOnboardingForm) => ({
   type: COMPLETE_STUDENT_ONBOARD,
   payload,
 });
 
-export const completeStudentOnboardSuccess = (payload:any) => ({
+export const completeStudentOnboardSuccess = (payload: any) => ({
   type: COMPLETE_STUDENT_ONBOARD_SUCCESS,
-  payload:payload
+  payload: payload,
 });
 
-export const completeStudentOnboardFailed = (payload:any) => ({
+export const completeStudentOnboardFailed = (payload: any) => ({
   type: COMPLETE_STUDENT_ONBOARD_FAILED,
-  payload:payload
+  payload: payload,
 });
-
 
 export function* watchOnboardStudent() {
   yield takeLatest(COMPLETE_STUDENT_ONBOARD, handleOnboardStudent);
 }
 
-function* handleOnboardStudent(
-  action: CompleteStudentOnboardAction
-) {
+function* handleOnboardStudent(action: CompleteStudentOnboardAction) {
   try {
     const url = 'complete-student-onboard/';
     yield put(apiRequest(action.payload));
-    yield delay(1000)
+    yield delay(1000);
 
-    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(url, action.payload);
+    const res: AxiosResponse<User> = yield vbbAPIV1.post<User>(
+      url,
+      action.payload
+    );
     const user = res.data;
     if (res.status === 201 && user) {
       yield put(apiSuccessful(user));
       yield put(setUser(user));
-      yield put(setAppAlert({alertMsg:'Onboarding complete! You may now start setting your schedule for computer/mentor hours...', alertSeverity:'success'}));
+      yield put(
+        setAppAlert({
+          alertMsg:
+            'Onboarding complete! You may now start setting your schedule for computer/mentor hours...',
+          alertSeverity: 'success',
+        })
+      );
     } else {
       pushHistory('/');
       yield put(apiFailed(user));
-
     }
-  } catch (e:any) {
+  } catch (e: any) {
     console.error('Could not complete student profile', e);
     yield put(apiFailed(e.response.data));
   }
 }
-
-
-
-
 
 export const submitMentorSignUp = (
   payload: MentorSignUpForm
@@ -239,7 +261,13 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
       });
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));
-      yield put(setAppAlert({alertMsg:'Successful signup! Please check your email to activate your mentor account...', alertSeverity:'success'}));
+      yield put(
+        setAppAlert({
+          alertMsg:
+            'Successful signup! Please check your email to activate your mentor account...',
+          alertSeverity: 'success',
+        })
+      );
       pushHistory('/login');
     } else {
       const errors = {
@@ -248,13 +276,22 @@ function* handleSubmitMentorSignUpForm(action: SubmitMentorSignUpAction) {
       };
       yield put(setErrors(errors));
       yield put(apiFailed(res.data));
-      yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
-
+      yield put(
+        setAppAlert({
+          alertMsg: 'Could not complete registration...',
+          alertSeverity: 'error',
+        })
+      );
     }
-  } catch (err:any) {
+  } catch (err: any) {
     console.error('Error signing up mentor', { err });
     yield put(apiFailed(err.response?.data));
-    yield put(setAppAlert({alertMsg:'Could not complete registration...', alertSeverity:'error'}));
+    yield put(
+      setAppAlert({
+        alertMsg: 'Could not complete registration...',
+        alertSeverity: 'error',
+      })
+    );
 
     if (axios.isAxiosError(err)) {
       const error = err as AxiosError<any>;

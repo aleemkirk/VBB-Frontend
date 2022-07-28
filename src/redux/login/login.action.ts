@@ -9,9 +9,9 @@ import {
   LOGIN_ACTION,
   LOGIN_PAYLOAD,
 } from './login.types';
-import { setUser, getUserDetail} from '../user/user.actions';
-import { setAppToken, setAppAlert} from '../app/app.actions';
-import { User, AuthToken} from '../user/user.types';
+import { setUser, getUserDetail } from '../user/user.actions';
+import { setAppToken, setAppAlert } from '../app/app.actions';
+import { User, AuthToken } from '../user/user.types';
 import { pushHistory } from '../../utils/customHistory';
 
 // Login Action and Sagas
@@ -33,12 +33,19 @@ function* handleLogin(action: LOGIN_ACTION) {
 
     if (res.status === 200 && user) {
       //yield put(setUser(user));
-      yield localStorage.setItem('token', user.access)
-      yield localStorage.setItem('refresh_token', user.refresh)
+      yield localStorage.setItem('token', user.access);
+      yield localStorage.setItem('refresh_token', user.refresh);
 
-      yield put(setAppToken({refresh_token:user.refresh, access_token:user.access}));
-      yield put(setAppAlert({alertMsg:'Successful login! Redirecting to dashboard...', alertSeverity:'success'}));
-      yield put(getUserDetail())
+      yield put(
+        setAppToken({ refresh_token: user.refresh, access_token: user.access })
+      );
+      yield put(
+        setAppAlert({
+          alertMsg: 'Successful login! Redirecting to dashboard...',
+          alertSeverity: 'success',
+        })
+      );
+      yield put(getUserDetail());
       // if (user.isMentor && !user.mentorProfile) {
       //   pushHistory('/complete-registration');
       // }
@@ -46,10 +53,10 @@ function* handleLogin(action: LOGIN_ACTION) {
     } else {
       pushHistory('/login');
     }
-  } catch (e:any) {
-    console.log(e)
-    let message:any = e.response?.data?.detail
-    yield put(setAppAlert({alertMsg:message, alertSeverity:'error'}));
+  } catch (e: any) {
+    console.log(e);
+    let message: any = e.response?.data?.detail;
+    yield put(setAppAlert({ alertMsg: message, alertSeverity: 'error' }));
     console.error('Could not login user', e);
   }
 }
@@ -68,7 +75,7 @@ function* handleAutoLogin() {
     const user = res.data;
     if (res.status === 200 && user) {
       yield put(setUser(user));
-      yield localStorage.setItem('user', JSON.stringify(user))
+      yield localStorage.setItem('user', JSON.stringify(user));
       pushHistory('/dashboard');
     } else {
       pushHistory('/');

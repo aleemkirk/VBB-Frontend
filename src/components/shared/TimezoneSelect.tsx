@@ -21,12 +21,12 @@ const timezonesOptions = (timezones: string[]) =>
 interface Props {
   selectedTimezone: string;
   handleSelectTimezone: (timezone: string) => void;
-  isRequired?:boolean;
+  isRequired?: boolean;
 }
 const TimezonesDropdown = ({
   selectedTimezone,
   handleSelectTimezone,
-  isRequired
+  isRequired,
 }: Props) => {
   const timezones = useSelector((state: AppState) => state.timezones);
   const dispatch = useDispatch();

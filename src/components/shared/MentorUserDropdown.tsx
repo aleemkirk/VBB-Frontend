@@ -6,7 +6,7 @@ import {
   Select,
   SelectChangeEvent,
   Box,
-  Chip
+  Chip,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,35 +24,43 @@ const userOptions = (users: User[]) =>
 interface Props {
   selectedUser: number;
   handleSelectUser: (userIds: number) => void;
-  isRequired?:boolean;
-  defaultValue?:any;
+  isRequired?: boolean;
+  defaultValue?: any;
 }
 
-const MentorUserDropdown = ({ selectedUser, handleSelectUser, isRequired, defaultValue}: Props) => {
+const MentorUserDropdown = ({
+  selectedUser,
+  handleSelectUser,
+  isRequired,
+  defaultValue,
+}: Props) => {
   const users = useSelector((state: AppState) => state.library.mentors);
   const dispatch = useDispatch();
 
-  const [actvieUserOptions, setActvieUserOptions] = useState<any>([])
+  const [actvieUserOptions, setActvieUserOptions] = useState<any>([]);
 
   // useEffect(() => {
   //   dispatch(actions.getUsers());
   // }, [dispatch]);
 
-
   useEffect(() => {
     if (users !== undefined && users !== null) {
-      var tempArr:any = []
-      users.forEach(element => {
-        tempArr.push({id:element.user?.pk, name:`${element.user?.firstName} ${element.user?.lastName}`, value:element.user?.pk})
+      var tempArr: any = [];
+      users.forEach((element) => {
+        tempArr.push({
+          id: element.user?.pk,
+          name: `${element.user?.firstName} ${element.user?.lastName}`,
+          value: element.user?.pk,
+        });
       });
 
-      console.log(tempArr)
-      setActvieUserOptions(tempArr)
+      console.log(tempArr);
+      setActvieUserOptions(tempArr);
     }
   }, [users]);
 
   const handleSelect = (e: SelectChangeEvent<any>) => {
-    console.log(e)
+    console.log(e);
     const value = e.target.value;
     handleSelectUser(value);
   };
@@ -68,7 +76,6 @@ const MentorUserDropdown = ({ selectedUser, handleSelectUser, isRequired, defaul
         defaultValue={defaultValue ? defaultValue : null}
         value={selectedUser}
         onChange={handleSelect}
-
       >
         {userOptions(actvieUserOptions)}
       </Select>

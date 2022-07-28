@@ -67,10 +67,7 @@
       "react-app"
     ],
     "rules": {
-      "quotes": [
-        "error",
-        "single"
-      ]
+      "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true }]
     }
   },
   "browserslist": {

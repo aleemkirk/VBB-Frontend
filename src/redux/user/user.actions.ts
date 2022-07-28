@@ -1,18 +1,27 @@
 import { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
-import { SET_USER, GET_USER, SetUserAction,GetUserAction, User } from './user.types';
+import {
+  SET_USER,
+  GET_USER,
+  SetUserAction,
+  GetUserAction,
+  User,
+} from './user.types';
 import * as userTypes from './user.types';
 
 import { vbbAPIV1 } from '../../services/api';
-import { apiRequest, apiSuccessful, apiFailed, setAppAlert} from '../app/app.actions';
+import {
+  apiRequest,
+  apiSuccessful,
+  apiFailed,
+  setAppAlert,
+} from '../app/app.actions';
 import { renderAPIMsg } from '../../utils/api';
 
 export const setUser = (payload: User): SetUserAction => ({
   type: SET_USER,
   payload,
 });
-
-
 
 export const getUserDetail = (): GetUserAction => ({
   type: GET_USER,
@@ -29,7 +38,7 @@ function* handleGetUserDetail() {
     const user = res.data;
     if (res.status === 200 && user) {
       yield put(setUser(user));
-      yield localStorage.setItem('user', JSON.stringify(user))
+      yield localStorage.setItem('user', JSON.stringify(user));
       //pushHistory('/dashboard');
     } else {
       //pushHistory('/');
@@ -39,32 +48,32 @@ function* handleGetUserDetail() {
   }
 }
 
-
-export const updateMentorProfile = (payload: userTypes.UpdateMentorProfileAction) => ({
+export const updateMentorProfile = (
+  payload: userTypes.UpdateMentorProfileAction
+) => ({
   type: userTypes.UPDATE_MENTOR_PROFILE,
   payload,
 });
 
-export const updateMentorProfileSuccess = (payload:any) => ({
+export const updateMentorProfileSuccess = (payload: any) => ({
   type: userTypes.UPDATE_MENTOR_PROFILE_SUCCESS,
-  payload:payload
+  payload: payload,
 });
 
-export const updateMentorProfileFailed = (payload:any) => ({
+export const updateMentorProfileFailed = (payload: any) => ({
   type: userTypes.UPDATE_MENTOR_PROFILE_FAILED,
-  payload:payload
+  payload: payload,
 });
-
 
 export function* watchUpdateMentorProfile() {
   yield takeLatest(userTypes.UPDATE_MENTOR_PROFILE, handleMentorUpdate);
-  yield takeLatest(userTypes.UPDATE_MENTOR_PROFILE_SUCCESS, handleGetUserDetail);
-
+  yield takeLatest(
+    userTypes.UPDATE_MENTOR_PROFILE_SUCCESS,
+    handleGetUserDetail
+  );
 }
 
-function* handleMentorUpdate(
-  action: userTypes.UpdateMentorProfileAction
-) {
+function* handleMentorUpdate(action: userTypes.UpdateMentorProfileAction) {
   try {
     const url = 'profile/mentor/';
 
@@ -75,12 +84,22 @@ function* handleMentorUpdate(
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));
       //yield put(setUser(res.data));
-      yield put(setAppAlert({alertMsg:'Profile updated successfully...', alertSeverity:'success'}));
+      yield put(
+        setAppAlert({
+          alertMsg: 'Profile updated successfully...',
+          alertSeverity: 'success',
+        })
+      );
     } else {
       yield put(apiFailed(res.data));
-      yield put(setAppAlert({alertMsg:'Profile updated failed...', alertSeverity:'error'}));
+      yield put(
+        setAppAlert({
+          alertMsg: 'Profile updated failed...',
+          alertSeverity: 'error',
+        })
+      );
     }
-  } catch (e:any) {
+  } catch (e: any) {
     console.error('Could not complete mentor profile', e);
     yield put(apiFailed(e.response.data));
   }

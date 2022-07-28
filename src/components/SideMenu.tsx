@@ -1,6 +1,17 @@
 import * as React from 'react';
-import { AppBar, Avatar, Box, Button, Toolbar, Typography, Menu, ListItemIcon, IconButton, MenuItem} from '@mui/material';
-import { Link, useNavigate} from 'react-router-dom';
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Toolbar,
+  Typography,
+  Menu,
+  ListItemIcon,
+  IconButton,
+  MenuItem,
+} from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppState } from '../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@mui/material';
@@ -19,7 +30,11 @@ const SideMenu = () => {
   return (
     <div className="card-container">
       <div className="card-header">
-        <Typography variant="h6" alignSelf="flex-start" color={scss_variables.primary_color}>
+        <Typography
+          variant="h6"
+          alignSelf="flex-start"
+          color={scss_variables.primary_color}
+        >
           Quick Links
         </Typography>
       </div>
@@ -27,8 +42,8 @@ const SideMenu = () => {
         <Grid item xs={12}>
           <Link to="/">Dashboard</Link>
         </Grid>
-        {user && (user.role === 0 || user.role === 1 || user.role === 2) &&
-          (<>
+        {user && (user.role === 0 || user.role === 1 || user.role === 2) && (
+          <>
             <Grid item xs={12}>
               <Link to="/bookings">Bookings</Link>
             </Grid>
@@ -38,13 +53,11 @@ const SideMenu = () => {
             <Grid item xs={12}>
               <Link to="/profile">My Profile</Link>
             </Grid>
-           </>
-          )
-        }
+          </>
+        )}
 
-
-        {user && user.role === 3 &&
-          (<>
+        {user && user.role === 3 && (
+          <>
             <Grid item xs={12}>
               <Link to="/reservations">Reservations</Link>
             </Grid>
@@ -63,12 +76,11 @@ const SideMenu = () => {
             <Grid item xs={12}>
               <Link to="/library-profile">Library Profile</Link>
             </Grid>
-           </>
-          )
-        }
+          </>
+        )}
 
-        {user && user.role === 4 &&
-          (<>
+        {user && user.role === 4 && (
+          <>
             <Grid item xs={12}>
               <Link to="/students">Students</Link>
             </Grid>
@@ -78,9 +90,8 @@ const SideMenu = () => {
             <Grid item xs={12}>
               <Link to="/announcements">Announcements</Link>
             </Grid>
-           </>
-          )
-        }
+          </>
+        )}
 
         <Grid item xs={12}>
           <Link to="/account">Account Settings</Link>

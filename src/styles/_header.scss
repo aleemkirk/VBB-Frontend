@@ -1,6 +1,6 @@
 @import './_variables';
 
-.header{
+.header {
   background-color: #fff;
   min-height: 100px;
   position: fixed;
@@ -8,8 +8,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index:99;
-  @media(max-width:$xs_max){
+  z-index: 99;
+  @media (max-width: $xs_max) {
     position: relative;
   }
 }
