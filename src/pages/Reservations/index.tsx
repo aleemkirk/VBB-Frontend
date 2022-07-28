@@ -71,7 +71,7 @@ const Reservations = () => {
 
     React.useEffect(() => {
       if (appState !== undefined && appState !== null && appState.success === true) {
-        setTimeout(set_deleteUserPrefSlotConfirmModalOpen(false), 10000)
+        set_deleteUserPrefSlotConfirmModalOpen(false)
       }
     }, [appState]);
 
@@ -97,7 +97,7 @@ const Reservations = () => {
         if (user.studentProfile.assignedLibrary) {
           var libraryID = user.studentProfile?.assignedLibrary.uniqueID
           set_libID(user.studentProfile?.assignedLibrary.id)
-          dispatch(getLibraryReservations(libraryID))
+          dispatch(getLibraryComputerReservations(libraryID))
 
 
         }
@@ -106,7 +106,7 @@ const Reservations = () => {
           var libraryID2 = user.mentorProfile.assignedLibrary.uniqueID
           set_libID(user.mentorProfile.assignedLibrary.id)
 
-          dispatch(getLibraryReservations(libraryID2))
+          dispatch(getLibraryComputerReservations(libraryID2))
         }
       }else if (user && user.role === 3 && user.advisorProfile) {
         if (user.advisorProfile.library) {
@@ -521,7 +521,7 @@ const Reservations = () => {
               <FormLabel>Assigned Mentor</FormLabel>
               <p>Current: <b>{(activeReservation && activeReservation.mentor) ? `${activeReservation && activeReservation.mentor.firstName} ${activeReservation && activeReservation.mentor.lastName}`: 'No mentor assigned'}</b></p>
 
-              <FormLabel mt={2}>Change Active Mentor</FormLabel>
+              <FormLabel >Change Active Mentor</FormLabel>
               {activeReservationForm !== undefined && activeReservationForm !== null
                 ? (
                   <MentorUserDropdown
@@ -626,7 +626,7 @@ const Reservations = () => {
               <FormLabel>Assigned Mentor</FormLabel>
               <p>Current: <b>{activeUserPrefSlot && activeUserPrefSlot.mentor ? `${activeUserPrefSlot && activeUserPrefSlot.mentor.firstName} ${activeUserPrefSlot && activeUserPrefSlot.mentor.lastName}`: 'No mentor assigned'}</b></p>
 
-              <FormLabel mt={2}>Change Active Mentor</FormLabel>
+              <FormLabel>Change Active Mentor</FormLabel>
               {activeUserPrefSlotForm !== undefined && activeUserPrefSlotForm !== null
                 ? (
                   <MentorUserDropdown

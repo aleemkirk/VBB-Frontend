@@ -5,7 +5,7 @@ import * as userTypes from './user.types';
 
 import { vbbAPIV1 } from '../../services/api';
 import { apiRequest, apiSuccessful, apiFailed, setAppAlert} from '../app/app.actions';
-import { renderAPIMsg } from '../utils/api';
+import { renderAPIMsg } from '../../utils/api';
 
 export const setUser = (payload: User): SetUserAction => ({
   type: SET_USER,
@@ -63,7 +63,7 @@ export function* watchUpdateMentorProfile() {
 }
 
 function* handleMentorUpdate(
-  action: UpdateMentorProfileAction
+  action: userTypes.UpdateMentorProfileAction
 ) {
   try {
     const url = 'profile/mentor/';

@@ -33,7 +33,6 @@ const defaultForm = {
   careers: [] as number[],
   subjects: [] as number[],
   mentoringLanguages: [] as number[],
-  // should be a list from all subjects in the backend
   applicationVideoUrl: '',
   meetProvider: '',
   corporateCode: '',
@@ -41,7 +40,7 @@ const defaultForm = {
   opportunities: [] as number[],
   canMeetConsistently: false,
   crimesOrMisdemeanor: false,
-  crimesOrMisdemanorsResponses: '',
+  crimesOrMisdemeanorResponses: '',
 };
 
 
@@ -92,7 +91,7 @@ const Profile = () => {
           corporateCode: user.mentorProfile?.organization.corporateCode,
           timezone: user.timeZone,
           opportunities: selectedMentorOpps,
-          canMeetConsistently: user.mentorProfile.canMeetConsistently,
+          canMeetConsistently: user.mentorProfile.canMeetConsistently || true,
           crimesOrMisdemeanor: user.mentorProfile.crimesOrMisdemeanor,
           crimesOrMisdemeanorResponses: (user.mentorProfile.crimesOrMisdemeanorResponses || ''),
         };

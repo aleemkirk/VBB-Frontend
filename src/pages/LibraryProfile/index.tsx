@@ -62,25 +62,25 @@ const LibraryProfile = () => {
     const [selectedOpenReservationNotes, set_selectedOpenReservationNotes] = React.useState('');
 
 
-    React.useEffect(() => {
-      if (user && user.studentProfile && user.studentProfile !== null ) {
-        if (user.studentProfile.assignedLibrary) {
-          var libraryID = user.studentProfile?.assignedLibrary.uniqueID
-          dispatch(getLibraryComputerSlots(libraryID))
-          dispatch(getUserPreferenceSlots())
-          setActiveLibrary(user.studentProfile.assignedLibrary)
-          dispatch(getUserComputerReservationSlots())
-        }
-      }else if (user && user.mentorProfile && user.mentorProfile !== null) {
-        if (user.mentorProfile.assignedLibrary) {
-          var libraryID2 = user.mentorProfile.assignedLibrary.uniqueID
-          dispatch(getLibraryComputerSlots(libraryID2))
-          dispatch(getLibraryStudentPreferenceSlots(libraryID2))
-          setActiveLibrary(user.mentorProfile.assignedLibrary)
-          dispatch(getUserComputerReservationSlots())
-        }
-      }
-    }, [user]);
+    // React.useEffect(() => {
+    //   if (user && user.studentProfile && user.studentProfile !== null ) {
+    //     if (user.studentProfile.assignedLibrary) {
+    //       var libraryID = user.studentProfile?.assignedLibrary.uniqueID
+    //       dispatch(getLibraryComputerSlots(libraryID))
+    //       dispatch(getUserPreferenceSlots())
+    //       setActiveLibrary(user.studentProfile.assignedLibrary)
+    //       dispatch(getUserComputerReservationSlots())
+    //     }
+    //   }else if (user && user.mentorProfile && user.mentorProfile !== null) {
+    //     if (user.mentorProfile.assignedLibrary) {
+    //       var libraryID2 = user.mentorProfile.assignedLibrary.uniqueID
+    //       dispatch(getLibraryComputerSlots(libraryID2))
+    //       dispatch(getLibraryStudentPreferenceSlots(libraryID2))
+    //       setActiveLibrary(user.mentorProfile.assignedLibrary)
+    //       dispatch(getUserComputerReservationSlots())
+    //     }
+    //   }
+    // }, [user]);
 
 
     React.useEffect(() => {
@@ -113,7 +113,7 @@ const LibraryProfile = () => {
           var libraryID4 = user.librarianProfile.library.uniqueID
           dispatch(getLibraryComputerSlots(libraryID4))
           //dispatch(getLibraryStudentPreferenceSlots(libraryID2))
-          setActiveLibrary(user.mentorProfile.assignedLibrary)
+          setActiveLibrary(user.librarianProfile.library)
           //dispatch(getUserComputerReservationSlots())
 
         }

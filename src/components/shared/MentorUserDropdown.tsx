@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../redux/rootReducer';
 import * as actions from '../../redux/actions';
-import { User } from '../../redux/users/users.types';
+import { User } from '../../redux/user/user.types';
 
 const userOptions = (users: User[]) =>
   users.map((user) => (
@@ -51,7 +51,7 @@ const MentorUserDropdown = ({ selectedUser, handleSelectUser, isRequired, defaul
     }
   }, [users]);
 
-  const handleSelect = (e: SelectChangeEvent<number>) => {
+  const handleSelect = (e: SelectChangeEvent<any>) => {
     console.log(e)
     const value = e.target.value;
     handleSelectUser(value);

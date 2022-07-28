@@ -22,6 +22,7 @@ export interface GetUserAction {
 
 
 export interface User {
+  id:number;
   pk:number;
   email?: string;
   firstName: string;
@@ -45,6 +46,7 @@ export interface User {
 export interface MentorProfile {
   assignedLibrary: Library;
   organization: any | null;
+  opportunities: any[];
   careers: Career[];
   subjects: Subject[];
   hasCompletedTraining: boolean;
@@ -55,8 +57,8 @@ export interface MentorProfile {
   mentoringLanguages: Language[];
   approvalStatus: ApprovalStatus;
   isOnboarded:boolean;
-  canMeetConsistently?:boolean;
-  crimesOrMisdemeanor?:boolean;
+  canMeetConsistently:boolean;
+  crimesOrMisdemeanor:boolean;
   crimesOrMisdemeanorResponses?: string;
   meetProvider:any;
   corporateCode:string;

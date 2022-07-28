@@ -66,12 +66,17 @@ export interface MentorOnboardingForm {
   mentoringLanguages: number[];
   subjects: number[];
   applicationVideoUrl: string;
-  interests: string;
   phoneNumber: string;
   secondaryEmail: string;
   isOfAge: boolean;
   timezone: string;
   dateOfBirth: string;
+  crimesOrMisdemeanorResponses:string;
+  crimesOrMisdemeanor:boolean;
+  canMeetConsistently: boolean;
+  opportunities:any[];
+  meetProvider:string;
+  corporateCode:string;
 }
 
 export interface CompleteMentorOnboardAction {

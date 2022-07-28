@@ -385,7 +385,7 @@ const Mentors = () => {
                 </Typography>
 
                 {activeMentor ?(<>
-                  {activeMentor.careers.map(career => {
+                  {activeMentor.careers.map((career:any) => {
                     return <Chip label={career.name}/>
                   })}
                   </>
@@ -399,7 +399,7 @@ const Mentors = () => {
                 </Typography>
 
                 {activeMentor ?(<>
-                  {activeMentor.subjects.map(sub => {
+                  {activeMentor.subjects.map((sub:any) => {
                     return <Chip label={sub.name}/>
                   })}
                   </>
@@ -414,7 +414,7 @@ const Mentors = () => {
                 </Typography>
 
                 {activeMentor ?(<>
-                  {activeMentor.mentoringLanguages?.map(lang => {
+                  {activeMentor.mentoringLanguages?.map((lang:any) => {
                     return <Chip label={lang.englishDisplayName}/>
                   })}
                   </>
@@ -428,7 +428,7 @@ const Mentors = () => {
                 </Typography>
 
                 {activeMentor ?(<>
-                  {activeMentor.opportunities?.map(opp => {
+                  {activeMentor.opportunities?.map((opp:any) => {
                     return <Chip label={opp.name}/>
                   })}
                   </>

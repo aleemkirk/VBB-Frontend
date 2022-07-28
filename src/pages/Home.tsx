@@ -82,7 +82,7 @@ const Home = () => {
 
         let today = moment().format("YYYY-MM-DD");
 
-        let displaySort = newSort.filter(item => moment(item.displayEnd,'YYYY-MM-DD').isSameOrAfter(today));
+        let displaySort = newSort.filter((item:any) => moment(item.displayEnd,'YYYY-MM-DD').isSameOrAfter(today));
 
         set_announcements(displaySort)
       }

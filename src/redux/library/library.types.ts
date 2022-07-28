@@ -174,6 +174,7 @@ export const DELETE_LIBRARY_TIME_SLOT_FAILED = 'DELETE_LIBRARY_TIME_SLOT_FAILED'
 
 
 export interface Library {
+  id?:number;
   announcements: any[];
   reservations: any[];
   user_preference_slots: any[];
