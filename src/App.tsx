@@ -76,27 +76,27 @@ const PrivateRoute = ({
 
   const now = new Date();
 
-  // if(tokenCookie !== null && refreshCookie !== null){
-  //     let now = new Date();
-  //     var decoded_refresh:any = jwt_decode(tokenCookie);
-  //     var expires_at:any = decoded_refresh.exp
-  //     let expiresAt = new Date(parseInt(expires_at)*1000);
-  //     if(now > expiresAt){
-  //       return <Navigate to="/login" state={{ from: location }} />;
-  //     }
-  //
-  //     // if(!user){
-  //     //   return <Navigate to="/login" state={{ from: location }} />;
-  //     // }
-  //     console.log(user)
-  //     if (user && !userHasRequiredRole) {
-  //       return <Navigate to="/access-denied" state={{ from: location }} />;
-  //     }
-  // }else{
-  //   if (!appState.isAuthenticated) {
-  //     return <Navigate to="/login" state={{ from: location }} />;
-  //   }
-  // }
+  if(tokenCookie !== null && refreshCookie !== null){
+      let now = new Date();
+      var decoded_refresh:any = jwt_decode(refreshCookie);
+      var expires_at:any = decoded_refresh.exp
+      let expiresAt = new Date(parseInt(expires_at)*1000);
+      if(now > expiresAt){
+        return <Navigate to="/login" state={{ from: location }} />;
+      }
+
+      // if(!user){
+      //   return <Navigate to="/login" state={{ from: location }} />;
+      // }
+      console.log(user)
+      if (user && !userHasRequiredRole) {
+        return <Navigate to="/access-denied" state={{ from: location }} />;
+      }
+  }else{
+    if (!appState.isAuthenticated) {
+      return <Navigate to="/login" state={{ from: location }} />;
+    }
+  }
 
   return children;
 };
