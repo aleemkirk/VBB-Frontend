@@ -348,6 +348,8 @@ const MentorOnboardForm = ({ handleSubmit }: OnboardProps) => {
                 }
                 label="I agree to the Village Book Terms and Conditions and its Privacy Policy."
               />
+              <a href="https://villagebookbuilders.org/privacy-policy">Privacy Policy</a>
+              <a href="https://villagebookbuilders.org/">Terms and Services</a>
             </RadioGroup>
           </FormControl>
         </Grid>
