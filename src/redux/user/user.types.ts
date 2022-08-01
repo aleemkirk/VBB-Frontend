@@ -10,6 +10,11 @@ export const UPDATE_MENTOR_PROFILE = 'UPDATE_MENTOR_PROFILE';
 export const UPDATE_MENTOR_PROFILE_SUCCESS = 'UPDATE_MENTOR_PROFILE_SUCCESS';
 export const UPDATE_MENTOR_PROFILE_FAILED = 'UPDATE_MENTOR_PROFILE_FAILED';
 
+export const UPDATE_STUDENT_PROFILE = 'UPDATE_STUDENT_PROFILE';
+export const UPDATE_STUDENT_PROFILE_SUCCESS = 'UPDATE_STUDENT_PROFILE_SUCCESS';
+export const UPDATE_STUDENT_PROFILE_FAILED = 'UPDATE_STUDENT_PROFILE_FAILED';
+
+
 export interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
@@ -34,6 +39,7 @@ export interface User {
   isMentor: boolean;
   isStudent: boolean;
   profileImage?: string;
+  gender?: string;
   dateOfBirth: string | null;
   mentorProfile?: MentorProfile;
   studentProfile?: StudentProfile;
@@ -70,6 +76,17 @@ export interface StudentProfile {
   subjects: Subject[];
   isOnboarded: boolean;
   approvalStatus: ApprovalStatus;
+  // should be a list from all subjects in the backend
+  struggleSubjects: Subject[];
+  favoriteSubjects: Subject[];
+  favoriteGenres: any[];
+  familyStatus: string;
+  familySupportLevel: number;
+  graduationObstacle: string;
+  gradeLevel: string;
+  yearOfBirth:string;
+  gender:string;
+  timezone:string;
 }
 
 export interface AdvisorProfile {
@@ -92,6 +109,12 @@ export interface UpdateMentorProfileAction {
   payload: any;
 }
 
+export interface UpdateStudentProfileAction {
+  type: typeof UPDATE_STUDENT_PROFILE;
+  payload: any;
+}
+
+
 // Values are kept in backend
 enum ApprovalStatus {
   APPROVED = 'Approved',
@@ -99,4 +122,4 @@ enum ApprovalStatus {
   REJECTED = 'Rejected',
 }
 
-export type UserActions = SetUserAction | UpdateMentorProfileAction;
+export type UserActions = SetUserAction | UpdateMentorProfileAction | UpdateStudentProfileAction;

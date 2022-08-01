@@ -12,6 +12,12 @@ import {
   RadioGroup,
   Checkbox,
   CircularProgress,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  Chip,
+  OutlinedInput,
+  Select,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppState } from '../../redux/rootReducer';
@@ -26,9 +32,10 @@ import LanguageDropdown from '../../components/shared/LanguageDropdown';
 import CareerDropdown from '../../components/shared/CareerDropdown';
 import SubjectDropdown from '../../components/shared/SubjectDropdown';
 import TimezonesDropdown from '../../components/shared/TimezoneSelect';
+import GenreDropdown from '../../components/shared/GenreDropdown';
 import * as actions from '../../redux/actions';
 import moment from 'moment-timezone';
-import { updatestudentProfile } from '../../redux/user/user.actions';
+import { updateStudentProfile } from '../../redux/user/user.actions';
 import { renderAPIMsg } from '../../utils/api';
 
 const defaultForm = {
@@ -38,12 +45,23 @@ const defaultForm = {
   favoriteSubjects: [] as number[],
   favoriteGenres: [] as number[],
   familyStatus: '',
-  familySupportLevel: null,
+  familySupportLevel: 0,
   graduationObstacle: '',
-  gradeLevel: null,
+  gradeLevel: '',
   yearOfBirth: '',
   timezone: '',
   gender: '',
+};
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
 };
 
 const StudentProfile = () => {
@@ -60,20 +78,20 @@ const StudentProfile = () => {
   React.useEffect(() => {
     if (user.studentProfile !== undefined && user.studentProfile !== null) {
 
-      // var selectedCareers = user.studentProfile.careers.map((career: any) => {
-      //   return career.id;
-      // });
-      //
-      // var selectedSubjects = user.studentProfile.subjects.map((sub: any) => {
-      //   return sub.id;
-      // });
+      var selectedCareers = user.studentProfile.careersOfInterest.map((career: any) => {
+        return career.id;
+      });
 
-      // var selectedMentorLangugages = user.studentProfile.mentoringLanguages.map(
-      //   (ml: any) => {
-      //     return ml.id;
-      //   }
-      // );
-      //
+      var selectedSubjects = user.studentProfile.subjects.map((sub: any) => {
+        return sub.id;
+      });
+
+      var selectedMentorLangugages = user.studentProfile.mentoringLanguages.map(
+        (ml: any) => {
+          return ml.id;
+        }
+      );
+
       // var selectedMentorOpps = user.studentProfile.opportunities.map(
       //   (opp: any) => {
       //     return opp.id;
@@ -93,7 +111,7 @@ const StudentProfile = () => {
         gradeLevel: user.studentProfile?.gradeLevel,
         timezone: user.timeZone,
         yearOfBirth: '',
-        gender: user.gender
+        gender: ''
       };
 
       console.log(userFormData);
@@ -443,35 +461,6 @@ const StudentProfile = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={6} sx={{ mt: 3 }}>
-                        <FormControl>
-                          <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                          >
-                            <FormControlLabel
-                              value={formValue.agreedToTerms}
-                              control={
-                                <Checkbox
-                                  required
-                                  onChange={(e) =>
-                                    setFormValue({
-                                      ...formValue,
-                                      agreedToTerms: !formValue.agreedToTerms,
-                                    })
-                                  }
-                                />
-                              }
-                              label="I agree to the Village Book Terms and Conditions and its Privacy Policy."
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </Grid>
-
-
-
-
                     <Grid item xs={12} sx={{ mt: 5, mb: 3 }}>
                       {appState.loading ? (
                         <CircularProgress />
@@ -520,4 +509,4 @@ const StudentProfile = () => {
     </PageLayout>
   );
 };
-export default Profile;
+export default StudentProfile;
