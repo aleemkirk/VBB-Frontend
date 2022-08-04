@@ -151,7 +151,7 @@ const Header = () => {
           <Button
             color="inherit"
             component={Link}
-            to="/register"
+            to="/register?type=mentor"
             sx={{ color: '#003066' }}
           >
             Register
