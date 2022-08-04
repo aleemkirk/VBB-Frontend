@@ -122,8 +122,9 @@ function App() {
     if (tokenCookie !== null && refreshCookie !== null) {
       let now = new Date();
 
-      var decoded_refresh: any = jwt_decode(tokenCookie);
+      var decoded_refresh: any = jwt_decode(refreshCookie);
       var expires_at: any = decoded_refresh.exp;
+
       let expiresAt = new Date(parseInt(expires_at) * 1000);
 
       if (now > expiresAt) {
