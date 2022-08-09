@@ -193,6 +193,13 @@ const Reservations = () => {
     set_activePaginationIndex(value);
   };
 
+  const handlePageChange2 = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    set_activePaginationIndex2(value);
+  };
+
   const handleToggleActiveReservationView = (reservation: any) => {
     if (editReservationModalOpen) {
       set_activeReservation(null);
@@ -1567,7 +1574,7 @@ const Reservations = () => {
                             ).totalPages
                           }
                           page={activePaginationIndex2}
-                          onChange={handlePageChange}
+                          onChange={handlePageChange2}
                         />
                       </Box>
                     )}

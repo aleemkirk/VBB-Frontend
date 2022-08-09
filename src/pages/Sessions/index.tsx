@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MentorSessionCard, {
   EmptySessionMsg,
 } from '../../components/mentor/MentorSessionCard';
-import { getUserComputerReservationSlots } from '../../redux/bookings/bookings.actions';
+import { getUserComputerReservationSlots, updateUserComputerReservationAttendance} from '../../redux/bookings/bookings.actions';
 import StudentSessionCard from '../../components/mentor/StudentSessionCard';
 
 const Sessions = () => {
@@ -41,6 +41,29 @@ const Sessions = () => {
     }
   }, [user_reservations]);
 
+  function handleLinkRedirect(sessionObj: any) {
+    if (sessionObj.conferenceURL) {
+      if (user.studentProfile !== null) {
+        dispatch(
+          updateUserComputerReservationAttendance({
+            unique_id: sessionObj.uniqueID,
+            student_attended: true,
+          })
+        );
+      } else {
+        dispatch(
+          updateUserComputerReservationAttendance({
+            unique_id: sessionObj.uniqueID,
+            mentor_attended: true,
+          })
+        );
+      }
+      window.open(sessionObj.conferenceURL, '_blank');
+    } else {
+      return;
+    }
+  }
+
   return (
     <PageLayout>
       <MainCardLayoutWithSideMenu>
@@ -66,7 +89,9 @@ const Sessions = () => {
                         <Grid item xs={12} key={session.id}>
                           <MentorSessionCard
                             session={session}
-                            onCheckIn={() => null}
+                            onCheckIn={(sess: any) =>
+                              handleLinkRedirect(sess)
+                            }
                           />
                         </Grid>
                       ))
@@ -81,7 +106,9 @@ const Sessions = () => {
                         <Grid item xs={12} key={session.id}>
                           <StudentSessionCard
                             session={session}
-                            onCheckIn={() => null}
+                            onCheckIn={(sess: any) =>
+                              handleLinkRedirect(sess)
+                            }
                             manage={true}
                           />
                         </Grid>
