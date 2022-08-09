@@ -45,7 +45,7 @@ const Login = () => {
                 <TextField
                   fullWidth
                   variant="standard"
-                  label="Username"
+                  label="Username/Email"
                   name="username"
                 />
               </Grid>

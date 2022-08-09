@@ -317,9 +317,9 @@ const Home = () => {
                         </b>
                       </Typography>
                       <Box display="flex" flexDirection="column" pb={1}>
-                        <Link to="#">Book Your Mentoring Orientation</Link>
-                        <Link to="#">Village Portal FAQs</Link>
-                        <Link to="#">Show Me A Tour</Link>
+                        <a href="https://calendly.com/admin-5496/mentor-orientation-and-scheduling" target="_blank" rel="noreferrer noopener">Book Your Mentoring Orientation</a>
+                        <a href="https://work.me/g/qt70QTGMs/R3dUS5iu" target="_blank" rel="noreferrer noopener">Join us on Meta Workplace</a>
+                        <a href="https://villagebookbuilders.workplace.com/work/knowledge/995531177915339" target="_blank" rel="noreferrer noopener">The Knowledge Library</a>
                       </Box>
                     </>
                   ) : user.role === 3 ? (
