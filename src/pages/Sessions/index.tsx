@@ -41,8 +41,8 @@ const Sessions = () => {
       let todaySessions = newSort.filter((session: any) =>{
         let todayDate = new Date()
         let sessionDate = new Date(session.startTime)
-          //return ((sessionDate.getUTCDate() == todayDate.getUTCDate()) && (sessionDate.getUTCMonth() == todayDate.getUTCMonth()))
-          return (todayDate.getTime() === sessionDate.getTime())
+          return ((sessionDate.getUTCDate() === todayDate.getUTCDate()) && (sessionDate.getUTCMonth() === todayDate.getUTCMonth()))
+          //return (todayDate.getTime() === sessionDate.getTime())
         }
       );
       setSessions(todaySessions);
