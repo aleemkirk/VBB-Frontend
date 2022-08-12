@@ -37,7 +37,14 @@ const Sessions = () => {
           new Date(a.startTime).valueOf() - new Date(b.startTime).valueOf()
         );
       });
-      setSessions(newSort);
+      //get today's session only
+      let todaySessions = newSort.filter((session: any) =>{
+        let todayDate = new Date()
+        let sessionDate = new Date(session.startTime)
+          return ((sessionDate.getUTCDate() == todayDate.getUTCDate()) && (sessionDate.getUTCMonth() == todayDate.getUTCMonth()))
+        }
+      );
+      setSessions(todaySessions);
     }
   }, [user_reservations]);
 
