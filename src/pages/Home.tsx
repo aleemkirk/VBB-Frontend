@@ -29,6 +29,7 @@ import moment from 'moment';
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let todayDate = new Date()
 
   const appState = useSelector((store: AppState) => store.appState);
   const user = useSelector((store: AppState) => store.user);
@@ -487,14 +488,17 @@ const Home = () => {
                               width="100%"
                             >
                               {reservations.map((reserve: any) => {
-                                return (
-                                  <MentorSessionCard
-                                    session={reserve}
-                                    onCheckIn={(sess: any) =>
-                                      handleLinkRedirect(sess)
+                                let sessionDate = new Date(reserve.startTime)
+                                if ((sessionDate.getUTCDate() === todayDate.getUTCDate()) && (sessionDate.getUTCMonth() === todayDate.getUTCMonth())){
+                                  return (
+                                    <MentorSessionCard
+                                      session={reserve}
+                                      onCheckIn={(sess: any) =>
+                                        handleLinkRedirect(sess)
+                                      }
+                                    />
+                                  );
                                     }
-                                  />
-                                );
                               })}
                             </Box>
                           </>
