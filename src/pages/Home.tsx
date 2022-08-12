@@ -25,7 +25,7 @@ import StudentSessionCard from '../components/mentor/StudentSessionCard';
 import MentorSessionCard from '../components/mentor/MentorSessionCard';
 import { getLibraryAnnouncements } from '../redux/library/library.actions';
 import moment from 'moment';
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
 
 const Home = () => {

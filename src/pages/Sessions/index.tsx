@@ -13,7 +13,7 @@ import MentorSessionCard, {
 } from '../../components/mentor/MentorSessionCard';
 import { getUserComputerReservationSlots, updateUserComputerReservationAttendance} from '../../redux/bookings/bookings.actions';
 import StudentSessionCard from '../../components/mentor/StudentSessionCard';
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
 const Sessions = () => {
   const dispatch = useDispatch();
