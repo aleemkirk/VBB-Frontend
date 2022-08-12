@@ -25,11 +25,13 @@ import StudentSessionCard from '../components/mentor/StudentSessionCard';
 import MentorSessionCard from '../components/mentor/MentorSessionCard';
 import { getLibraryAnnouncements } from '../redux/library/library.actions';
 import moment from 'moment';
+import { DateTime } from "luxon";
+
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let todayDate = new Date()
+  let todayDate = DateTime.fromJSDate(new Date())
 
   const appState = useSelector((store: AppState) => store.appState);
   const user = useSelector((store: AppState) => store.user);
@@ -488,8 +490,8 @@ const Home = () => {
                               width="100%"
                             >
                               {reservations.map((reserve: any) => {
-                                let sessionDate = new Date(reserve.startTime)
-                                if ((sessionDate.getUTCDate() === todayDate.getUTCDate()) && (sessionDate.getUTCMonth() === todayDate.getUTCMonth())){
+                                let sessionDate = DateTime.fromJSDate(new Date(reserve.startTime))
+                                if ((sessionDate.weekNumber === todayDate.weekNumber) && (sessionDate.year === todayDate.year)){
                                   return (
                                     <MentorSessionCard
                                       session={reserve}
