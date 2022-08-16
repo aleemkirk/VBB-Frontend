@@ -170,14 +170,18 @@ const Bookings = () => {
           ) {
             let start = moment(slot.startTime); // some random moment in time (in ms)
             let end = moment(slot.endTime); // some random moment after start (in ms)
-            let startTime = moment.utc(start).format('HH:mm');
-            let endTime = moment.utc(end).format('HH:mm');
+
+            const userTimzezone = moment.tz.guess();
+
+            let startTime = moment(slot.startTime).tz(userTimzezone).format('HH:mm')
+            let endTime = moment(slot.endTime).tz(userTimzezone).format('HH:mm')
+
             newSlot = {
               title: 'Open Library Slot',
               start: slot.startTime,
               end: slot.endTime,
-              startTime: '12:00',
-              endTime: '18:00',
+              startTime: startTime,
+              endTime: endTime,
               startRecur: slot.startRecurring,
               endRecur: slot.endRecurring,
               daysOfWeek: [slot.day],
