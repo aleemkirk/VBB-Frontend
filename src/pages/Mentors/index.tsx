@@ -87,6 +87,7 @@ const Mentors = () => {
         );
       });
       set_mentors(newSort);
+      console.log(mentors);
     }
   }, [mentorsState]);
 
