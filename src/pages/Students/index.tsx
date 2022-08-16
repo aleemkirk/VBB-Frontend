@@ -247,7 +247,7 @@ const Students = () => {
     } else {
       filteredList = students.filter(
         (item: any) =>
-          item.name && item.name.toLowerCase().includes(filterTxt.toLowerCase())
+          item.user?.name && item.user?.name.toLowerCase().includes(filterTxt.toLowerCase())
       );
     }
     renderList = filteredList.map((student) => {
