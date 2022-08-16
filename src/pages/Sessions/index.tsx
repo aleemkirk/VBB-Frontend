@@ -13,6 +13,7 @@ import MentorSessionCard, {
 } from '../../components/mentor/MentorSessionCard';
 import { getUserComputerReservationSlots, updateUserComputerReservationAttendance} from '../../redux/bookings/bookings.actions';
 import StudentSessionCard from '../../components/mentor/StudentSessionCard';
+import { DateTime } from 'luxon';
 
 const Sessions = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,15 @@ const Sessions = () => {
           new Date(a.startTime).valueOf() - new Date(b.startTime).valueOf()
         );
       });
-      setSessions(newSort);
+      //get week's session only
+      let weekSessions = newSort.filter((session: any) =>{
+        let todayDate = DateTime.fromJSDate(new Date())
+        let sessionDate = DateTime.fromJSDate(new Date(session.startTime))
+          return ((sessionDate.weekNumber === todayDate.weekNumber) && (sessionDate.year === todayDate.year))
+          //return (todayDate.getTime() === sessionDate.getTime())
+        }
+      );
+      setSessions(weekSessions);
     }
   }, [user_reservations]);
 
