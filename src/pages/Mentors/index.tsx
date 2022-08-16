@@ -83,7 +83,7 @@ const Mentors = () => {
       let mentorSort: any = [...mentorsState];
       let newSort = mentorSort.sort(function (a: any, b: any) {
         return (
-          new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+          new Date(a.user?.dateJoined).valueOf() - new Date(b.user?.dateJoined).valueOf()
         );
       });
       set_mentors(newSort);
@@ -465,7 +465,7 @@ const Mentors = () => {
                   Created At: <br />
                   <b>
                     {activeMentor &&
-                      moment(activeMentor.createdAt).format('MM/DD/YY HH:MM A')}
+                      moment(activeMentor.user?.dateJoined).format('MM/DD/YY HH:MM A')}
                   </b>
                 </Typography>
                 <br />
