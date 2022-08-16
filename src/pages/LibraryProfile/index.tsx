@@ -24,7 +24,9 @@ import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import moment from 'moment';
+//import moment from 'moment';
+import moment from 'moment-timezone';
+
 import {
   getUserComputerReservationSlots,
   getLibraryComputerSlots,
@@ -212,8 +214,15 @@ const LibraryProfile = () => {
           ) {
             let start = moment(slot.startTime); // some random moment in time (in ms)
             let end = moment(slot.endTime); // some random moment after start (in ms)
-            let startTime = moment.utc(start).format('HH:mm');
-            let endTime = moment.utc(end).format('HH:mm');
+
+
+            const userTimzezone = moment.tz.guess();
+
+            let startTime = moment(slot.startTime).tz(userTimzezone).format('HH:mm')
+            let endTime = moment(slot.endTime).tz(userTimzezone).format('HH:mm')
+
+            // let startTime = moment.utc(start).format('HH:mm');
+            // let endTime = moment.utc(end).format('HH:mm');
             newSlot = {
               title: 'Open Library Slot',
               start: slot.startTime,
@@ -461,13 +470,25 @@ const LibraryProfile = () => {
   };
 
   const handleCreateLibraryHourSlot = (event: any) => {
-    //console.log(event)
+    console.log(event)
     var endDte = event.endRecur.split('-');
 
     let newDate = moment(event.start);
     const day = newDate.day();
 
-    //console.log(endDte)
+
+    const userTimzezone = moment.tz.guess();
+
+    let start = moment(event.start).tz(userTimzezone).format('YYYY-MM-DDTHH:mm:ssZ')
+    let end = moment(event.end).tz(userTimzezone).format('YYYY-MM-DDTHH:mm:ssZ')
+
+    console.log(start)
+    console.log(end)
+
+    var starDate = new Date(start).toISOString()
+    var endDate = new Date(end).toISOString()
+
+
     var endDateRecurr = new Date(endDte[0], endDte[1] - 1, endDte[2]);
     let payloadObj = {};
     if (
@@ -477,9 +498,9 @@ const LibraryProfile = () => {
       event.endRecur !== ''
     ) {
       payloadObj = {
-        startTime: event.start,
-        endTime: event.end,
-        start_recurring: event.start,
+        startTime: starDate,
+        endTime: endDate,
+        start_recurring: starDate,
         end_recurring: endDateRecurr,
         library: activeLibrary.uniqueID,
         day: day,
