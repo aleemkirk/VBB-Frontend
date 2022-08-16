@@ -87,7 +87,6 @@ const Mentors = () => {
         );
       });
       set_mentors(newSort);
-      console.log(mentors);
     }
   }, [mentorsState]);
 
@@ -240,7 +239,7 @@ const Mentors = () => {
     } else {
       filteredList = mentors.filter(
         (item: any) =>
-          item.name && item.name.toLowerCase().includes(filterTxt.toLowerCase())
+          item.user?.name && item.user?.name.toLowerCase().includes(filterTxt.toLowerCase())
       );
     }
     renderList = filteredList.map((mentor) => {
