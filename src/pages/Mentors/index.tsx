@@ -184,7 +184,7 @@ const Mentors = () => {
         </TableCell>
         <TableCell>{mentor.approvalStatus}</TableCell>
         <TableCell>
-          {moment(mentor.user?.date_joined).format('MM/DD/YY HH:MM A') || '-'}
+          {mentor.user?.date_joined}
         </TableCell>
         <TableCell align="right">
           <Button
