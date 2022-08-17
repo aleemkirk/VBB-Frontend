@@ -540,7 +540,7 @@ function* handleGetLibraryMentors(action: GetLibraryMentorsAction) {
       console.error('Error getting library mentors');
       yield put(apiFailed(res.data));
     }
-  } catch (e) {
+  } catch (e:any) {
     yield put(apiFailed(e.response.data));
     console.error('Failed to get library mentors', { e });
   }
