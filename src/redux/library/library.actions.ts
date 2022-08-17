@@ -531,7 +531,7 @@ export function* watchGetLibraryMentors() {
 function* handleGetLibraryMentors(action: GetLibraryMentorsAction) {
   try {
     const url = `library/all-mentors/${action.uniqueID}`;
-    yield put(apiRequest(action.payload));
+    yield put(apiRequest(action.uniqueID));
     const res: AxiosResponse<any> = yield vbbAPIV1.get<any>(url);
     if (res.status >= 200 && res.status < 300) {
       yield put(apiSuccessful(res.data));
