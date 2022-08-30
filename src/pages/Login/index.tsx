@@ -124,8 +124,6 @@ const Login = () => {
                 Register As A Mentor
               </Button>
               <Button
-                component={Link}
-                to="/register?type=mentor"
                 sx={{
                   color: scss_variables.primary_color,
                   textDecoration: 'underline',
