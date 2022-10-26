@@ -408,6 +408,8 @@ const Reservations = () => {
   const handleDeleteUserPrefSlot = (userPrefSlot: any) => {
     console.log(userPrefSlot);
     dispatch(deleteLibraryUserSlot(userPrefSlot.uniqueID));
+    set_activeUserPrefSlot(null);
+    set_deleteUserPrefSlotConfirmModalOpen(false);
   };
 
   const UserPreferenceSlotRow = ({ userPrefSlot }: { userPrefSlot: any }) => {

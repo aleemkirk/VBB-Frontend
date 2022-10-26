@@ -91,7 +91,7 @@ const Profile = () => {
         // should be a list from all subjects in the backend
         applicationVideoUrl: user.mentorProfile.applicationVideoUrl,
         meetProvider: user.mentorProfile.meetProvider,
-        corporateCode: user.mentorProfile?.organization.corporateCode,
+        corporateCode: user.mentorProfile.organization ? (user.mentorProfile?.organization?.corporateCode) : '',
         timezone: user.timeZone,
         opportunities: selectedMentorOpps,
         canMeetConsistently: user.mentorProfile.canMeetConsistently || true,
@@ -118,7 +118,7 @@ const Profile = () => {
   };
 
   return (<>
-      {user && (user.role === 0 || user.role === 1)
+      {user && (user.role === 0)
         ? <StudentProfile/>
         : (
           <PageLayout>

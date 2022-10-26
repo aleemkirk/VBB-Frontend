@@ -49,7 +49,7 @@ const MentorUserDropdown = ({
       users.forEach((element) => {
         tempArr.push({
           id: element.user?.pk,
-          name: `${element.user?.firstName} ${element.user?.lastName}`,
+          name: `${element.user?.firstName} ${element.user?.lastName} - ${element.user?.email}`,
           value: element.user?.pk,
         });
       });
