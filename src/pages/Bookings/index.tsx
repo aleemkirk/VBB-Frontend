@@ -117,7 +117,7 @@ const Bookings = () => {
     React.useState(false);
 
   const [selectedConferenceType, set_selectedConferenceType] =
-    React.useState('GoogleMeet');
+    React.useState('google');
   const [selectedOpenReservationNotes, set_selectedOpenReservationNotes] =
     React.useState('');
 
@@ -891,6 +891,10 @@ const Bookings = () => {
           {selectedOpenReservation ? (
             <MentorBookingModal
               eventOrSlot={selectedOpenReservation.event}
+              selectedConferenceType={selectedConferenceType}
+              set_selectedConferenceType={set_selectedConferenceType}
+              selectedOpenReservationNotes={selectedOpenReservationNotes}
+              set_selectedOpenReservationNotes={set_selectedOpenReservationNotes}
               onClose={() => null}
             />
           ) : null}
