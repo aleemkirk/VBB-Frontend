@@ -39,14 +39,14 @@ const Sessions = () => {
         );
       });
       //get week's session only
-      let weekSessions = newSort.filter((session: any) =>{
-        let todayDate = DateTime.fromJSDate(new Date())
-        let sessionDate = DateTime.fromJSDate(new Date(session.startTime))
-          return ((sessionDate.weekNumber === todayDate.weekNumber) && (sessionDate.year === todayDate.year))
-          //return (todayDate.getTime() === sessionDate.getTime())
-        }
-      );
-      setSessions(weekSessions);
+      // let weekSessions = newSort.filter((session: any) =>{
+      //   let todayDate = DateTime.fromJSDate(new Date())
+      //   let sessionDate = DateTime.fromJSDate(new Date(session.startTime))
+      //     return ((sessionDate.weekNumber === todayDate.weekNumber) && (sessionDate.year === todayDate.year))
+      //     //return (todayDate.getTime() === sessionDate.getTime())
+      //   }
+      // );
+      setSessions(newSort);
     }
   }, [user_reservations]);
 
