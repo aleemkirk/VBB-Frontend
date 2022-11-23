@@ -89,9 +89,9 @@ const SideMenu = () => {
         {user && user.role === 4 && (
           <>
             <Grid item xs={12}>
-            <Grid item xs={12}>
               <Link to="/reservations">Reservations</Link>
             </Grid>
+            <Grid item xs={12}>
               <Link to="/students">Students</Link>
             </Grid>
             <Grid item xs={12}>
