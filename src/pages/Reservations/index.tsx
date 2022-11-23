@@ -112,6 +112,7 @@ const Reservations = () => {
 
   const [assignStudentSlotModalOpen, set_assignStudentSlotModalOpen] = React.useState(false);
 
+  const [viewAssigned, set_viewAssigned] = React.useState(false);
 
 
   const [
@@ -154,7 +155,7 @@ const Reservations = () => {
       let prefSlotSort: any = [...userPrefSlots];
       let newSort = prefSlotSort.sort(function (a: any, b: any) {
         return (
-          new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+          new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
         );
       });
       set_user_preference_slots(newSort);
@@ -209,6 +210,33 @@ const Reservations = () => {
     value: number
   ) => {
     set_activePaginationIndex2(value);
+  };
+
+
+  const toggleViewAssignedFilter = (value:boolean) => {
+
+    if (userPrefSlots !== undefined && userPrefSlots !== null) {
+      let prefSlotSort: any = [...userPrefSlots];
+      if (value === true) {
+        prefSlotSort = prefSlotSort.filter(pref => pref.student === null)
+
+        let newSort = prefSlotSort.sort(function (a: any, b: any) {
+          return (
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+          );
+        });
+        set_user_preference_slots(newSort);
+      }else{
+        let newSort = prefSlotSort.sort(function (a: any, b: any) {
+          return (
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+          );
+        });
+        set_user_preference_slots(newSort);
+      }
+
+      set_viewAssigned(value)
+    }
   };
 
   const handleToggleActiveReservationView = (reservation: any) => {
@@ -1549,6 +1577,45 @@ const Reservations = () => {
                           variant="standard"
                         />
                       </FormControl>
+                      <Box>
+
+
+
+                      {viewAssigned
+                        ? (
+                          <Button
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                              toggleViewAssignedFilter(false)}}
+                            sx={{ mt: 2, ml: 2 }}
+                          >
+                            {appState.loading ? (
+                              <CircularProgress />
+                            ) : (
+                              `View All`
+                            )}
+                          </Button>
+                        )
+                        : (
+                          <Button
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                              toggleViewAssignedFilter(true)
+                            }}
+                            sx={{ mt: 2, ml: 2 }}
+                          >
+                            {appState.loading ? (
+                              <CircularProgress />
+                            ) : (
+                              `View Unassigned`
+                            )}
+                          </Button>
+                        )
+                      }
+
+
                       <Button
                         variant="contained"
                         color="info"
@@ -1561,6 +1628,7 @@ const Reservations = () => {
                           `View Computer Reservations`
                         )}
                       </Button>
+                      </Box>
                     </Box>
                     <Box
                       display="flex"
