@@ -14,7 +14,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  MenuProps,
   Chip,
   ListItemText,
   OutlinedInput
@@ -35,6 +34,17 @@ import * as actions from '../../redux/actions';
 import { BasicModal } from '../../components/Modals';
 import { OnboardProps } from '.';
 import moment from 'moment-timezone';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const defaultForm = {
   careers: [] as number[],

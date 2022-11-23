@@ -218,7 +218,7 @@ const Reservations = () => {
     if (userPrefSlots !== undefined && userPrefSlots !== null) {
       let prefSlotSort: any = [...userPrefSlots];
       if (value === true) {
-        prefSlotSort = prefSlotSort.filter(pref => pref.student === null)
+        prefSlotSort = prefSlotSort.filter((pref:any) => pref.student === null)
 
         let newSort = prefSlotSort.sort(function (a: any, b: any) {
           return (
@@ -282,7 +282,7 @@ const Reservations = () => {
       comp = reservation.computer?.id;
     }
 
-    if (reservation.student && typeof reservation.student === "obj") {
+    if (reservation.student && typeof reservation.student === 'object') {
       studentId = reservation?.student?.id;
     }else{
       studentId = reservation.student

@@ -23,7 +23,7 @@ import { SlotSessions } from '../../utils/Session';
 import { useState } from 'react';
 import { BasicModal } from '../../components/Modals';
 import StudentUserDropdown from '../../components/shared/StudentUserDropdown';
-import moment from "moment";
+import moment from 'moment';
 
 interface EventModalProps {
   eventOrSlot: any;
@@ -94,9 +94,7 @@ const AssignStudentModal = ({ loading, eventOrSlot, set_activeUserPrefSlotForm, 
         <Grid item xs={12} mt={3}>
             <Box display="flex" flexDirection="row" justifyContent="flex-end">
               <Button
-                onClick={() =>
-                  onClose(activeUserPrefSlot)
-                }
+                onClick={onClose}
                 variant="contained"
                 color="error"
                 sx={{ mt: 2 }}
