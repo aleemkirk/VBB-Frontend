@@ -8,10 +8,17 @@ import {
   FormControlLabel,
   Checkbox,
   RadioGroup,
+  Radio,
   CircularProgress,
   TextField,
   Tooltip,
 } from '@mui/material';
+import {
+  AccessTime,
+  Notes,
+  Person,
+  PhotoCameraFront,
+} from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppState } from '../../redux/rootReducer';
 import {
@@ -50,8 +57,8 @@ const Bookings = () => {
   const lib_slots = useSelector(
     (store: AppState) => store.bookings.library_slots
   );
-  const student_preference_slots = useSelector(
-    (store: AppState) => store.bookings.student_preference_slots
+  const mentor_preference_slots = useSelector(
+    (store: AppState) => store.bookings.mentor_preference_slots
   );
   const user_reservation_slots = useSelector(
     (store: AppState) => store.bookings.user_reservation_slots
@@ -109,6 +116,10 @@ const Bookings = () => {
   const nextWeekDate = new Date();
   nextWeekDate.setDate(nextWeekDate.getDate() + 6);
 
+  const futureRecurrDate = new Date();
+  futureRecurrDate.setDate(futureRecurrDate.getDate() + 365);
+
+
   const [createUserSlotModalOpen, set_createUserSlotModalOpen] =
     React.useState(false);
   const [deleteSlotConfirmModalOpen, set_deleteSlotConfirmModalOpen] =
@@ -122,19 +133,12 @@ const Bookings = () => {
     React.useState('');
 
   React.useEffect(() => {
-    if (user && user.studentProfile && user.studentProfile !== null) {
-      if (user.studentProfile.assignedLibrary) {
-        var libraryID = user.studentProfile?.assignedLibrary.uniqueID;
-        dispatch(getLibraryComputerSlots(libraryID));
-        dispatch(getUserPreferenceSlots());
-        setActiveLibrary(user.studentProfile.assignedLibrary);
-        dispatch(getUserComputerReservationSlots());
-      }
-    } else if (user && user.mentorProfile && user.mentorProfile !== null) {
+    if (user && user.mentorProfile && user.mentorProfile !== null) {
       if (user.mentorProfile.assignedLibrary) {
         var libraryID2 = user.mentorProfile.assignedLibrary.uniqueID;
         dispatch(getLibraryComputerSlots(libraryID2));
-        dispatch(getLibraryStudentPreferenceSlots(libraryID2));
+        //dispatch(getLibraryStudentPreferenceSlots(libraryID2));
+        dispatch(getUserPreferenceSlots())
         setActiveLibrary(user.mentorProfile.assignedLibrary);
         dispatch(getUserComputerReservationSlots());
       }
@@ -220,12 +224,12 @@ const Bookings = () => {
 
   React.useEffect(() => {
     if (
-      student_preference_slots !== undefined &&
-      student_preference_slots !== null &&
+      mentor_preference_slots !== undefined &&
+      mentor_preference_slots !== null &&
       user !== undefined &&
       user !== null
     ) {
-      var student_slots: any = [];
+      var mentor_slots: any = [];
 
       //Duplicate Check
       // for (let index = 0; index < student_preference_slots.length; index++) {
@@ -244,7 +248,7 @@ const Bookings = () => {
 
       let filteredSlots = [];
 
-      const sortedSlots = student_preference_slots
+      const sortedSlots = mentor_preference_slots
         .slice()
         .sort((a, b) => b.createdAt - a.createdAt);
 
@@ -297,18 +301,18 @@ const Bookings = () => {
               },
               allDay: false, // will make the time show
             };
-            student_slots.push(newStudentSlot);
+            mentor_slots.push(newStudentSlot);
           }
         }
       }
-      let tempArrFinal = [...student_slots, ...scheduleEvents];
+      let tempArrFinal = [...mentor_slots, ...scheduleEvents];
       set_scheduleEvents(tempArrFinal);
       if (calendarRef.current) {
         const api = calendarRef.current.getApi();
         api.refetchEvents();
       }
     }
-  }, [student_preference_slots, user]);
+  }, [mentor_preference_slots, user]);
 
   React.useEffect(() => {
     if (
@@ -644,9 +648,6 @@ const Bookings = () => {
 
   const handleCreateUserPreferenceSlot = (event: any) => {
     //console.log(event)
-    var endDte = event.endRecur.split('-');
-    //console.log(endDte)
-    var endDateRecurr = new Date(endDte[0], endDte[1] - 1, endDte[2]);
     let payloadObj = {};
     if (
       event.startRecur &&
@@ -654,20 +655,27 @@ const Bookings = () => {
       event.startRecur !== '' &&
       event.endRecur !== ''
     ) {
+
+      var endDte = event.endRecur.split('-');
+      //console.log(endDte)
+      var endDateRecurr = new Date(endDte[0], endDte[1] - 1, endDte[2]);
+      
       payloadObj = {
         startTime: event.start,
         endTime: event.end,
         start_recurring: event.start,
         end_recurring: endDateRecurr,
         lib_computer_slot: event.libComputerSlotID,
-        student: user.pk,
+        conferenceType: selectedConferenceType,
+        mentor: user.pk,
       };
     } else {
       payloadObj = {
         startTime: event.start,
         endTime: event.end,
         lib_computer_slot: event.libComputerSlotID,
-        student: user.pk,
+        conferenceType: selectedConferenceType,
+        mentor: user.pk,
       };
     }
     console.log(payloadObj);
@@ -712,8 +720,8 @@ const Bookings = () => {
             alignSelf="flex-start"
             color={scss_variables.primary_color}
           >
-            Are you sure you want to create this open slot? Mentors will be able
-            to schedule 1:1 video calls with you based on your timeslot.
+            Are you sure you want to create this open slot? Your librarian will be able
+            to schedule student 1:1 video calls with you based on your timeslot.
           </Typography>
           <Typography
             mt={1}
@@ -774,17 +782,6 @@ const Bookings = () => {
             </FormControl>
           ) : null}
 
-          <Typography
-            mt={1}
-            mb={1}
-            variant="body1"
-            alignSelf="flex-start"
-            color={scss_variables.primary_color}
-          >
-            You confirm that you will be commited to the given timeslot each
-            week for the forseeable future, and use the computer hours even if
-            no mentor is assigned yet.
-          </Typography>
 
           <Typography
             mt={1}
@@ -793,9 +790,48 @@ const Bookings = () => {
             alignSelf="flex-start"
             color={scss_variables.primary_color}
           >
-            You can lose your reservation spot if you do not show up to your
-            session consistently.
+            You confirm that you will be commited to the given timeslot each
+            week for the forseeable future, and meet with students consistently.
           </Typography>
+
+          <Box display="flex" justifyContent="flex-start" width="100%">
+            <FormControlLabel
+              control={<Checkbox />}
+              label="I Agree"
+              sx={{ align: 'center' }}
+            />
+          </Box>
+
+          <Typography variant="h6" mt={1}>Select Your Conference Type</Typography>
+
+          <Box display="flex" alignItems="center">
+            <PhotoCameraFront sx={{ mr: 2 }} />
+            <RadioGroup
+              row
+              aria-labelledby="meeting-type"
+              name="meetingType"
+              value={selectedConferenceType}
+              defaultValue="google"
+              onChange={(e:any) =>
+                set_selectedConferenceType(e.target.value)
+              }
+            >
+              <FormControlLabel
+                value="ms-teams"
+                control={<Radio />}
+                label="Microsoft Teams"
+              />
+              <FormControlLabel
+                value="google"
+                control={<Radio />}
+                label="Google Meet"
+              />
+          </RadioGroup>
+          </Box>
+
+
+
+
 
           <Button
             onClick={() => handleCreateUserPreferenceSlot(newBooking)}
@@ -1012,9 +1048,7 @@ const Bookings = () => {
                           variant="contained"
                           color={rescheduleActive ? `error` : `info`}
                         >
-                          {rescheduleActive
-                            ? `Cancel`
-                            : `Reserve New Student Slots`}
+                        {rescheduleActive ? `Cancel` : `Modify My Open Slots`}
                         </Button>
                       </Grid>
                     ) : null}
@@ -1036,7 +1070,9 @@ const Bookings = () => {
                         ]}
                         ref={calendarRef}
                         initialView={isMobile ? 'timeGridDay' : 'timeGridWeek'}
-                        selectable={false}
+                        defaultTimedEventDuration={'1:00:00'}
+                        selectable={rescheduleActive ? true : false}
+                        slotDuration={'00:60:00'}
                         editable={false}
                         aspectRatio={1}
                         contentHeight={'auto'}
@@ -1062,9 +1098,9 @@ const Bookings = () => {
                         }
                         events={rescheduleActive ? scheduleEvents : events}
                         select={onEventAdded}
-                        selectOverlap={selectOverlapMentor}
-                        selectAllow={allowedSelectionMentor}
-                        eventContent={renderInnerContent2}
+                        selectOverlap={selectOverlap}
+                        selectAllow={allowedSelection}
+                        eventContent={renderInnerContent}
                         eventOverlap={eventOverlap}
                         eventAllow={allowedDrop}
                         validRange={{
@@ -1121,7 +1157,7 @@ const Bookings = () => {
                         }}
                       />
                     ) : user &&
-                      user.studentProfile &&
+                      user.mentorProfile &&
                       scheduleEvents &&
                       scheduleEvents.length === 0 ? (
                       <h6>No open hours found for this library.</h6>

@@ -29,6 +29,8 @@ import {
   MainCardLayoutWithSideMenu,
 } from '../../components/layout/Page';
 import MentorUserDropdown from '../../components/shared/MentorUserDropdown';
+import StudentUserDropdown from '../../components/shared/StudentUserDropdown';
+
 import scss_variables from '../../styles/_variables.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { paginate } from '../../utils/api';
@@ -42,6 +44,7 @@ import {
   getLibraryMentors,
   createLibraryComputerReservation,
   deleteLibraryUserSlot,
+  getLibraryStudents,
 } from '../../redux/library/library.actions';
 import { FaDesktop, FaEllipsisV } from 'react-icons/fa';
 import { BasicModal } from '../../components/Modals';
@@ -55,7 +58,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
+import AssignStudentModal from './AssignStudentModal'
 const defaultForm = {
   name: '',
   notes: '',
@@ -106,6 +109,12 @@ const Reservations = () => {
     React.useState(false);
   const [editReservationModalOpen, set_editReservationModalOpen] =
     React.useState(false);
+
+  const [assignStudentSlotModalOpen, set_assignStudentSlotModalOpen] = React.useState(false);
+
+  const [viewAssigned, set_viewAssigned] = React.useState(false);
+
+
   const [
     deleteReservationConfirmModalOpen,
     set_deleteReservationConfirmModalOpen,
@@ -146,7 +155,7 @@ const Reservations = () => {
       let prefSlotSort: any = [...userPrefSlots];
       let newSort = prefSlotSort.sort(function (a: any, b: any) {
         return (
-          new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+          new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
         );
       });
       set_user_preference_slots(newSort);
@@ -174,6 +183,7 @@ const Reservations = () => {
         dispatch(getLibraryUserSlots(libraryID3));
         dispatch(getLibraryComputerReservations(libraryID3));
         dispatch(getLibraryMentors(libraryID3));
+        dispatch(getLibraryStudents(libraryID3));
       }
     } else if (user && user.role === 4 && user.librarianProfile) {
       if (user.librarianProfile.library) {
@@ -182,6 +192,8 @@ const Reservations = () => {
         dispatch(getLibraryUserSlots(libraryID4));
         dispatch(getLibraryComputerReservations(libraryID4));
         dispatch(getLibraryMentors(libraryID4));
+        dispatch(getLibraryStudents(libraryID4));
+
       }
     }
   }, [user]);
@@ -200,7 +212,36 @@ const Reservations = () => {
     set_activePaginationIndex2(value);
   };
 
+
+  const toggleViewAssignedFilter = (value:boolean) => {
+
+    if (userPrefSlots !== undefined && userPrefSlots !== null) {
+      let prefSlotSort: any = [...userPrefSlots];
+      if (value === true) {
+        prefSlotSort = prefSlotSort.filter((pref:any) => pref.student === null)
+
+        let newSort = prefSlotSort.sort(function (a: any, b: any) {
+          return (
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+          );
+        });
+        set_user_preference_slots(newSort);
+      }else{
+        let newSort = prefSlotSort.sort(function (a: any, b: any) {
+          return (
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+          );
+        });
+        set_user_preference_slots(newSort);
+      }
+
+      set_viewAssigned(value)
+    }
+  };
+
   const handleToggleActiveReservationView = (reservation: any) => {
+    console.log(reservation)
+
     if (editReservationModalOpen) {
       set_activeReservation(null);
       set_editReservationModalOpen(false);
@@ -241,8 +282,10 @@ const Reservations = () => {
       comp = reservation.computer?.id;
     }
 
-    if (reservation.student) {
+    if (reservation.student && typeof reservation.student === 'object') {
       studentId = reservation?.student?.id;
+    }else{
+      studentId = reservation.student
     }
 
     if (reservation.mentor) {
@@ -392,6 +435,19 @@ const Reservations = () => {
     }
   };
 
+
+  const handleToggleAssignStudentPrefView = (userPrefSlot: any) => {
+    if (assignStudentSlotModalOpen) {
+      set_activeUserPrefSlot(null);
+      set_assignStudentSlotModalOpen(false);
+      set_activeUserPrefSlotForm(defaultForm);
+    } else {
+      set_activeUserPrefSlot(userPrefSlot);
+      set_assignStudentSlotModalOpen(true);
+      set_activeUserPrefSlotForm(userPrefSlot);
+    }
+  };
+
   const handleAddUserPrefSlot = (userPrefSlot: any) => {
     console.log(userPrefSlot);
     let obj = { ...userPrefSlot, library: libID };
@@ -400,7 +456,14 @@ const Reservations = () => {
   };
 
   const handleEditUserPrefSlot = (userPrefSlot: any) => {
+    console.log(userPrefSlot)
     let obj = { ...userPrefSlot, student: userPrefSlot?.student.id };
+    console.log(obj);
+    dispatch(updateLibraryUserSlot(obj, obj.uniqueID));
+  };
+
+  const handleAssignUserSlot = (userPrefSlot: any, studentId:number) => {
+    let obj = { ...userPrefSlot, student: studentId, mentor:userPrefSlot?.mentor.id};
     console.log(obj);
     dispatch(updateLibraryUserSlot(obj, obj.uniqueID));
   };
@@ -493,6 +556,11 @@ const Reservations = () => {
               onClick={() => handleToggleActiveUserPrefView(userPrefSlot)}
             >
               View/Edit...
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleToggleAssignStudentPrefView(userPrefSlot)}
+            >
+              Assign a Student...
             </MenuItem>
             <MenuItem
               onClick={() => handleToggleDeleteUserPrefConfirm(userPrefSlot)}
@@ -806,6 +874,27 @@ const Reservations = () => {
                     {activeReservationForm &&
                       activeReservationForm.student?.lastName}
                   </b>
+
+                  <FormLabel>Change Active Mentor</FormLabel>
+                  {activeReservationForm !== undefined &&
+                  activeReservationForm !== null ? (
+                    <StudentUserDropdown
+                      selectedUser={activeReservationForm.student}
+                      isRequired={false}
+                      defaultValue={
+                        activeReservationForm.student
+                          ? activeReservationForm.student?.pk
+                          : null
+                      }
+                      handleSelectUser={(id) =>
+                        set_activeReservationForm({
+                          ...activeReservationForm,
+                          student: id,
+                        })
+                      }
+                    />
+                  ) : null}
+
                 </FormControl>
                 <br />
                 <br />
@@ -1444,6 +1533,8 @@ const Reservations = () => {
         </Box>
       </BasicModal>
 
+      <AssignStudentModal loading={appState.loading} set_activeUserPrefSlotForm={set_activeUserPrefSlotForm} eventOrSlot={activeUserPrefSlotForm} handleSubmit={handleAssignUserSlot} title={'Assign Student'} onClose={() => set_assignStudentSlotModalOpen(false)} open={assignStudentSlotModalOpen}/>
+
       <PageLayout>
         <MainCardLayoutWithSideMenu>
           <Grid container spacing={3}>
@@ -1486,6 +1577,45 @@ const Reservations = () => {
                           variant="standard"
                         />
                       </FormControl>
+                      <Box>
+
+
+
+                      {viewAssigned
+                        ? (
+                          <Button
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                              toggleViewAssignedFilter(false)}}
+                            sx={{ mt: 2, ml: 2 }}
+                          >
+                            {appState.loading ? (
+                              <CircularProgress />
+                            ) : (
+                              `View All`
+                            )}
+                          </Button>
+                        )
+                        : (
+                          <Button
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                              toggleViewAssignedFilter(true)
+                            }}
+                            sx={{ mt: 2, ml: 2 }}
+                          >
+                            {appState.loading ? (
+                              <CircularProgress />
+                            ) : (
+                              `View Unassigned`
+                            )}
+                          </Button>
+                        )
+                      }
+
+
                       <Button
                         variant="contained"
                         color="info"
@@ -1498,6 +1628,7 @@ const Reservations = () => {
                           `View Computer Reservations`
                         )}
                       </Button>
+                      </Box>
                     </Box>
                     <Box
                       display="flex"

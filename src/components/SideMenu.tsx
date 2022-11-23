@@ -42,11 +42,17 @@ const SideMenu = () => {
         <Grid item xs={12}>
           <Link to="/">Dashboard</Link>
         </Grid>
-        {user && (user.role === 0 || user.role === 1 || user.role === 2) && (
+        {user && (user.role === 2) && (
           <>
             <Grid item xs={12}>
               <Link to="/bookings">Bookings</Link>
             </Grid>
+          </>
+        )}
+
+
+        {user && (user.role === 0 || user.role === 1 || user.role === 2) && (
+          <>
             <Grid item xs={12}>
               <Link to="/sessions">My Sessions</Link>
             </Grid>
@@ -55,6 +61,7 @@ const SideMenu = () => {
             </Grid>
           </>
         )}
+
 
         {user && user.role === 3 && (
           <>
