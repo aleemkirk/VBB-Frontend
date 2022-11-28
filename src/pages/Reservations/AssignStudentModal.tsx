@@ -92,6 +92,37 @@ const AssignStudentModal = ({ loading, eventOrSlot, set_activeUserPrefSlotForm, 
             }
         </Grid>
         <Grid item xs={12} mt={3}>
+          <Typography variant="h6" mt={1}>Selected Conference Type</Typography>
+
+          <Box display="flex" alignItems="center">
+            <PhotoCameraFront sx={{ mr: 2 }} />
+                <RadioGroup
+                  row
+                  aria-labelledby="meeting-type"
+                  name="meetingType"
+                  value={eventOrSlot.conferenceType}
+                  defaultValue="google"
+                  onChange={(e:any) =>
+                    set_activeUserPrefSlotForm({
+                      ...eventOrSlot,
+                      conferenceType: e.target.value,
+                    })
+                  }
+                >
+                  <FormControlLabel
+                    value="ms-teams"
+                    control={<Radio />}
+                    label="Microsoft Teams"
+                  />
+                  <FormControlLabel
+                    value="google"
+                    control={<Radio />}
+                    label="Google Meet"
+                  />
+              </RadioGroup>
+          </Box>
+        </Grid>
+        <Grid item xs={12} mt={3}>
             <Box display="flex" flexDirection="row" justifyContent="flex-end">
               <Button
                 onClick={onClose}
