@@ -113,11 +113,14 @@ const Bookings = () => {
   const [activeLibrary, setActiveLibrary] = React.useState<any>(null);
 
   const today = moment();
+
+  const todayDate = new Date();
+
   const nextWeekDate = new Date();
   nextWeekDate.setDate(nextWeekDate.getDate() + 6);
 
   const futureRecurrDate = new Date();
-  futureRecurrDate.setDate(futureRecurrDate.getDate() + 365);
+  futureRecurrDate.setDate(futureRecurrDate.getDate() + 1825);
 
 
   const [createUserSlotModalOpen, set_createUserSlotModalOpen] =
@@ -555,7 +558,7 @@ const Bookings = () => {
           const { extendedProps, defId } = evt._def;
 
           const { start, end } = event;
-          console.log(extendedProps.uniqueID);
+          console.log(extendedProps);
           //console.log(event)
           let eventObj: any = {
             start: start,
@@ -659,7 +662,7 @@ const Bookings = () => {
       var endDte = event.endRecur.split('-');
       //console.log(endDte)
       var endDateRecurr = new Date(endDte[0], endDte[1] - 1, endDte[2]);
-      
+
       payloadObj = {
         startTime: event.start,
         endTime: event.end,
@@ -752,6 +755,8 @@ const Bookings = () => {
                       set_newBooking({
                         ...newBooking,
                         is_recurring: !newBooking.is_recurring,
+                        startRecur: newBooking.is_recurring === true ? null : todayDate.toISOString().split('T')[0],
+                        endRecur: newBooking.is_recurring === true ? null : futureRecurrDate.toISOString().split('T')[0]
                       })
                     }
                   />
@@ -768,6 +773,7 @@ const Bookings = () => {
                 type="date"
                 sx={{ width: 220 }}
                 inputProps={{ min: nextWeekDate.toISOString().split('T')[0] }}
+                value={newBooking.endRecur}
                 onChange={(e) =>
                   set_newBooking({
                     ...newBooking,

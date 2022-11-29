@@ -552,21 +552,28 @@ const Reservations = () => {
               horizontal: 'left',
             }}
           >
-            <MenuItem
-              onClick={() => handleToggleActiveUserPrefView(userPrefSlot)}
-            >
-              View/Edit...
-            </MenuItem>
-            <MenuItem
-              onClick={() => handleToggleAssignStudentPrefView(userPrefSlot)}
-            >
-              Assign a Student...
-            </MenuItem>
-            <MenuItem
-              onClick={() => handleToggleDeleteUserPrefConfirm(userPrefSlot)}
-            >
-              <div style={{ color: 'red' }}>Delete...</div>
-            </MenuItem>
+            {user && user.role === 3 &&
+              <MenuItem
+                onClick={() => handleToggleActiveUserPrefView(userPrefSlot)}
+              >
+                View/Edit...
+              </MenuItem>
+            }
+
+            {user && (user.role === 3 || user.role === 4) &&
+              <MenuItem
+                onClick={() => handleToggleAssignStudentPrefView(userPrefSlot)}
+              >
+                Assign a Student...
+              </MenuItem>
+            }
+            {user && user.role === 3 &&
+              <MenuItem
+                onClick={() => handleToggleDeleteUserPrefConfirm(userPrefSlot)}
+              >
+                <div style={{ color: 'red' }}>Delete...</div>
+              </MenuItem>
+            }
           </Menu>
         </TableCell>
       </TableRow>
