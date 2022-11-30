@@ -755,9 +755,7 @@ const Bookings = () => {
                       set_newBooking({
                         ...newBooking,
                         is_recurring: !newBooking.is_recurring,
-                        startRecur: newBooking.is_recurring === true ? '' : todayDate.toISOString().split('T')[0],
-                        endRecur: newBooking.is_recurring === true ? '' : futureRecurrDate.toISOString().split('T')[0]
-                      })
+                        startRecur: newBooking.is_recurring === true ? '' : todayDate.toISOString().split('T')[0]                      })
                     }
                   />
                 }
@@ -766,26 +764,37 @@ const Bookings = () => {
             </RadioGroup>
           </FormControl>
           {newBooking.is_recurring ? (
-            <FormControl>
-              <TextField
-                id="date"
-                label="Recurring End Date"
-                type="date"
-                sx={{ width: 220 }}
-                inputProps={{ min: nextWeekDate.toISOString().split('T')[0] }}
-                value={newBooking.endRecur}
-                onChange={(e) =>
-                  set_newBooking({
-                    ...newBooking,
-                    startRecur: newBooking.start,
-                    endRecur: e.target.value,
-                  })
-                }
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </FormControl>
+            <Box display="flex" flexWrap="wrap" alignItems="center">
+              <FormControl>
+                <TextField
+                  id="date"
+                  label="Recurring End Date"
+                  type="date"
+                  sx={{ width: 220 }}
+                  inputProps={{ min: nextWeekDate.toISOString().split('T')[0] }}
+                  value={newBooking.endRecur}
+                  onChange={(e) =>
+                    set_newBooking({
+                      ...newBooking,
+                      startRecur: newBooking.start,
+                      endRecur: e.target.value,
+                    })
+                  }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </FormControl>
+              <Typography
+                ml={2}
+                mt={1}
+                variant="body1"
+                alignSelf="flex-start"
+                color={scss_variables.primary_color}
+              >
+                <b>Recommended End Date:</b> {futureRecurrDate.toISOString().split('T')[0]}
+              </Typography>
+            </Box>
           ) : null}
 
 
