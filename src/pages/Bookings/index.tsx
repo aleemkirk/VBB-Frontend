@@ -755,8 +755,8 @@ const Bookings = () => {
                       set_newBooking({
                         ...newBooking,
                         is_recurring: !newBooking.is_recurring,
-                        startRecur: newBooking.is_recurring === true ? null : todayDate.toISOString().split('T')[0],
-                        endRecur: newBooking.is_recurring === true ? null : futureRecurrDate.toISOString().split('T')[0]
+                        startRecur: newBooking.is_recurring === true ? '' : todayDate.toISOString().split('T')[0],
+                        endRecur: newBooking.is_recurring === true ? '' : futureRecurrDate.toISOString().split('T')[0]
                       })
                     }
                   />
