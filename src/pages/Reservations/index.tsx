@@ -457,7 +457,7 @@ const Reservations = () => {
 
   const handleEditUserPrefSlot = (userPrefSlot: any) => {
     console.log(userPrefSlot)
-    let stud:number = null
+    let stud:number | null = null
     if (userPrefSlot.student && userPrefSlot?.student.id) {
       stud = userPrefSlot?.student.id
     }
