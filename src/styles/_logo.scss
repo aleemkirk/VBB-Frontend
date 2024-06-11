@@ -1,0 +1,12 @@
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2rem;
+}
+
+.logo-full-img {
+  object-fit: cover;
+  height: $logo_full_height;
+  width: $logo_full_width;
+}

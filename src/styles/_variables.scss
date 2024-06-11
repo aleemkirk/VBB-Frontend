@@ -1,0 +1,62 @@
+// Brand Colors
+$primary: #003066; // Navy blue
+$secondary: #0078ff; // Bright nlue
+$tertiary: #e9eef4; // grey
+$white: #fff; // White
+$black: #000;
+$grey: #e9eef4; // Black
+
+// Canvas
+$canvas: linear-gradient(180deg, #ffffff 25%, #eff7fe 100%);
+
+//Box Shadow
+$shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+// Supporting Colors
+
+$valid: #389b48; // Green
+$error: #ed4e66; // Coral pink
+
+// Break Points (min)
+$xxs_min: 500px;
+$xs_min: 600px;
+$sm_min: 768px;
+$md_min: 992px;
+$lg_min: 1200px;
+$xl_min: 1400px;
+$xxl_min: 1600px;
+$xxxl_min: 1920px;
+
+// Break Points (max)
+$xxs_max: $xxs_min - 1;
+$xs_max: $xs_min - 1;
+$sm_max: $sm_min - 1;
+$md_max: $md_min - 1;
+$lg_max: $lg_min - 1;
+$xl_max: $xl_min - 1;
+$xxl_max: $xxl_min - 1;
+$xxxl_max: $xxxl_min - 1;
+
+// Fonts
+$font_family: 'Inter', sans-serif;
+
+// Logo_Dimensions
+$logo_full_height: 50%;
+$logo_full_width: 100%;
+
+// Typography
+$header01: 25px;
+$header02: 22px;
+$header03: 18px;
+$paragraph01: 22px;
+$paragraph02: 18px;
+$paragraph03: 14px;
+
+:export {
+  primary_color: $primary;
+  secondary_color: $secondary;
+  tertiary_color: $tertiary;
+  white_color: $white;
+  black_color: $black;
+  grey_color: $grey;
+}
